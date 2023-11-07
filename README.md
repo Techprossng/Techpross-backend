@@ -26,3 +26,5 @@ $ npm install
     
     - `npm run db-migrate-down`: To undo the last run migration. Like above, the migration file can also be specified.
 
+    Please refer to this [documentation](https://knexjs.org/guide/migrations.html) about knex migrations.
+

@@ -1,0 +1,1 @@
+// define course schema here

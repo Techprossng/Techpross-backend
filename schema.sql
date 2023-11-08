@@ -1,11 +1,13 @@
-CREATE INDEX idx_user_id ON users(id);
-CREATE INDEX idx_user_email ON users(email);
+CREATE INDEX user_id_index ON users(id);
+CREATE INDEX user_email_index ON users(email);
 
-CREATE INDEX idx_instructor_id ON instructors(id);
-CREATE INDEX idx_instructor_email ON instructors(email);
+CREATE INDEX instructor_id_index ON instructors(id);
+CREATE INDEX instructor_email_index ON instructors(email);
 
-CREATE INDEX idx_course_id ON courses(id);
+CREATE INDEX course_id_index ON courses(id);
+CREATE INDEX instructor_id_index ON courses (instructor_id);
 
-CREATE INDEX idx_module_id ON moduless(id);
+CREATE INDEX module_id_index ON moduless(id);
+CREATE INDEX course_id_index ON moduless (course_id);
 
-CREATE INDEX idx_user_course_id ON user_courses(id);
+CREATE INDEX user_id_index ON users_courses (user_id);

@@ -5,3 +5,4 @@ CREATE INDEX idx_instructor_id ON instructors(id);
 CREATE INDEX idx_instructor_email ON instructors(email);
 
 CREATE INDEX idx_course_id ON courses(id);
+CREATE INDEX idx_course_email ON courses(email);

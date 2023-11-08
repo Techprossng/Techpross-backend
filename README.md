@@ -28,3 +28,7 @@ $ npm install
 
     Please refer to this [documentation](https://knexjs.org/guide/migrations.html) about knex migrations.
 
+  ## 📝 License <a name="license"></a>
+
+This project is [MIT](./LICENSE) licensed.
+

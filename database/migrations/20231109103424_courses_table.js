@@ -13,7 +13,6 @@ exports.up = function(knex) {
       table.bigint('id').primary().notNullable();
       table.string('name', 100).notNullable();
       table.string('description', 256).notNullable();
-      table.enum('course_level', ['Beginner', 'Advanced']).notNullable();
       table.bigint('instructor_id');
       table.integer('price');
       table.foreign('instructor_id').references('instructors.id').onDelete('CASCADE');

@@ -12,10 +12,24 @@ async function hashPassword(password) {
         const hash = await promisify(bcrypt.hash).bind(bcrypt)(password, salt);
         return hash;
     } catch (error) {
-        throw error;
+        throw new Error('Could not generate hash');
+    }
+}
+
+/**
+ * returns a boolean for hash comparison
+ */
+async function verifyPassword(password, hash) {
+
+    try {
+        const match = await bcrypt.compare(password, hash);
+        return match;
+    } catch (error) {
+        throw new Error('could not verify password');
     }
 }
 
 module.exports = {
-    hashPassword
+    hashPassword,
+    verifyPassword
 }

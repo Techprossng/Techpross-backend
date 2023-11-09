@@ -1,1 +1,0 @@
-// middlewares can be added to the folder

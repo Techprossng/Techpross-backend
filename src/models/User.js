@@ -21,14 +21,58 @@ class User {
                 password: hash,
                 email
             };
-            // insert the user data
+            // insert the user data and returns defined data
             const [returnedData] = await db(TABLES.USERS)
-                .returning(['id', 'first_name', 'last_name', 'email'])
-                .insert({ ...data });
+                .insert({ ...data })
+                .returning(['id', 'first_name', 'last_name', 'email']);
+
             console.log(returnedData);
             return returnedData;
+
         } catch (error) {
             throw new Error('User could not be created');
         }
     }
+
+    /** 
+     * get a user by email
+     */
+    static async getUserByEmail(userEmail) {
+        const selectFields = [
+            'id', 'first_name', 'last_name', 'email', 'bio',
+            'country', 'phone_number'
+        ]
+        try {
+            const user = await db(TABLES.USERS)
+                .select(...selectFields)
+                .where({ email: userEmail }).first();
+
+            return user;
+
+        } catch (error) {
+            throw new Error('Could not find user');
+        }
+    }
+
+    /** 
+     * get a user by id
+     */
+    static async getUserById(userId) {
+        const selectFields = [
+            'id', 'first_name', 'last_name', 'email', 'bio',
+            'country', 'phone_number'
+        ]
+        try {
+            const user = await db(TABLES.USERS)
+                .select(...selectFields)
+                .where({ id: userId }).first();
+
+            return user;
+
+        } catch (error) {
+            throw new Error('Could not find user');
+        }
+    }
 }
+
+module.exports = User;

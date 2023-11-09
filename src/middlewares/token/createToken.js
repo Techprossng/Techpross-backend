@@ -6,7 +6,7 @@ const secretKey = process.env.JWT_SECRET;
 /**
  * creates a json web token for the login route. Token gets
  * saved to the cookie response
- * @param: userEmail - user's email
+ * @param - user's email
  */
 function createAccessToken(userEmail) {
 

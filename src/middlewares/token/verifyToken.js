@@ -19,6 +19,9 @@ function decodeAccessToken(accessToken) {
     });
 }
 
+/**
+ * ### Verification middleware for protected routes
+ */
 async function verifyAccessToken(request, response, next) {
     let userEmail;
 

@@ -20,7 +20,7 @@ const checkEmailExists = async (email) => {
     // check if user exists
     const user = db(TABLES.USERS).where({ email: email }).first();
     if (user) {
-        throw new Error('User email already exists');
+        throw new Error('Email already exists');
     }
 }
 

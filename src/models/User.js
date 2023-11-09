@@ -30,7 +30,7 @@ class User {
             return returnedData;
 
         } catch (error) {
-            throw new Error('User could not be created');
+            throw error;
         }
     }
 
@@ -50,7 +50,7 @@ class User {
             return user;
 
         } catch (error) {
-            throw new Error('Could not find user');
+            throw error;
         }
     }
 

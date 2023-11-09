@@ -1,6 +1,6 @@
 // courses_table.js
 
-const instructors = require('./instructors_table');
+const instructors = require('./20231109103300_instructors_table');
 
 
 /**

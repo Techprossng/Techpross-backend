@@ -1,7 +1,7 @@
 // users_courses_table.js
 
-const users = require('./users_table');
-const courses = require('./courses_table');
+const users = require('./20231109103234_users_table');
+const courses = require('./20231109103424_courses_table');
 
 /**
  * @param { import("knex").Knex } knex

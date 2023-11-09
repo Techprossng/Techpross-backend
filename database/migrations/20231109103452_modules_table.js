@@ -1,6 +1,6 @@
 // modules_table.js
 
-const courses = require('./courses_table');
+const courses = require('./20231109103424_courses_table');
 
 /**
  * @pram { import("knex").Knex } knex

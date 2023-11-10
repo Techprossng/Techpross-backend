@@ -18,9 +18,10 @@ class UserController {
         }
         try {
             const user = await User.createUser(userData);
-            return response.status(201).json({ message: 'Registration successful', ...user });
-            //  send email for verification
-            // code here
+
+            const returnData = { message: 'Registration successful', ...user }
+            return response.status(201).json(returnData);
+
         } catch (error) {
             return response.status(500).json({ error: 'Internal server error' });
         }
@@ -75,7 +76,7 @@ class UserController {
             // clear cookie in response object
             response.clearCookie(rememberUserTechPros);
 
-            return response.status(204).json({ message: 'Logout successful' });
+            return response.status(200).json({ message: 'Logout successful' });
 
         } catch (error) {
             return response.status(500).json({ error: 'Internal server error' });

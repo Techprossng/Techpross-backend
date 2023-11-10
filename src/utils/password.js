@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const { promisify } = require('util');
 
+
 /**
  * hashes a user password
  */
@@ -30,6 +31,5 @@ async function verifyPassword(password, hash) {
 }
 
 module.exports = {
-    hashPassword,
-    verifyPassword
+    hashPassword, verifyPassword
 }

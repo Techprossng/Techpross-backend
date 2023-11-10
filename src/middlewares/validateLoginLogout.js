@@ -1,6 +1,4 @@
-const { db, TABLES } = require('../db');
-const { body } = require('express-validator');
-const { verifyPassword } = require('../utils/password');
+const { body, param } = require('express-validator');
 
 const validateLogin = [
     // email
@@ -10,10 +8,18 @@ const validateLogin = [
     body('password').notEmpty().withMessage('Missing password'),
 ];
 
+const validateLogout = [
+    // email
+    param('userId').notEmpty().withMessage('Missing userId'),
+    param('userId').isString().withMessage('Invalid userId')
+];
+
+
 // END VALIDATION CHAINS
 
 
 // exported to routes
 module.exports = {
-    validateLogin
+    validateLogin,
+    validateLogout
 };

@@ -58,6 +58,8 @@ class UserController {
         }
     }
 
+    static async loginWithGoogle() { }
+
     static async logout(request, response) {
         const { userId } = request.params;
         if (!userId) {

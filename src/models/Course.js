@@ -1,1 +1,1 @@
-// define course schema here
+class Course { }

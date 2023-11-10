@@ -1,18 +1,5 @@
 const { db, TABLES } = require('../db');
-const { body, validationResult } = require('express-validator');
-
-// Middleware function
-
-function checkValidationResult(req, res) {
-    // check for errors
-    const errorsResult = validationResult(req)
-    // This is an array of { msg: "error msg", path: 'field' }
-    // field can be email, password, firstName etc...
-    if (errorsResult) {
-        return res.status(400).json({ error: errorsResult.array() })
-    }
-    next();
-}
+const { body } = require('express-validator');
 
 // DEFINE CUSTOM VALIDATORS HERE
 
@@ -47,6 +34,5 @@ const validateSignUp = [
 
 // exported to routes
 module.exports = {
-    checkValidationResult,
     validateSignUp
 };

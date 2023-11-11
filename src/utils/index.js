@@ -6,5 +6,6 @@ const { hashPassword, verifyPassword } = require('./password');
 exports.Util = {
     hashPassword: hashPassword,
     verifyPassword: verifyPassword,
-    checkDigit: /^[0-9]+$/
+    checkDigit: /^[0-9]+$/,
+    getOffset: (pageNum, limit) => pageNum > 0 ? (pageNum - 1) * limit : 0
 }

@@ -87,7 +87,7 @@ class UserController {
 
     static async update(request, response) {
         const { userId } = request.params;
-        const { first_name, last_name, bio } = request.body;
+        const { firstName, lastName, bio } = request.body;
         if (!userId) {
             return response.status(400).json({ error: 'Missing userId' });
         }
@@ -97,7 +97,7 @@ class UserController {
         }
 
         try {
-            const updatedData = await User.updateUser({ first_name, last_name, bio });
+            const updatedData = await User.updateUser({ firstName, lastName, bio });
 
             const returnData = { message: 'Update successful', ...updatedData };
             return response.status(200).json(returnData);

@@ -1,23 +1,20 @@
 // courses_table.js
 
-const instructors = require('./20231109103300_instructors_table');
-
 
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = function(knex) {
+exports.up = function (knex) {
   return knex.schema
-    .createTable('courses', function(table) {
-      table.bigint('id').primary().notNullable();
+    .createTable('courses', function (table) {
+      table.bigIncrements('id').primary().notNullable();
       table.string('name', 100).notNullable();
       table.string('description', 256).notNullable();
-      table.bigint('instructor_id');
-      table.integer('price');
-      table.foreign('instructor_id').references('instructors.id').onDelete('CASCADE');
+      table.integer('price').notNullable();
+      table.bigInteger('instructorId').unsigned().unique().notNullable();
       table.index('id');
-      table.index('instructor_id', 'instructor_id_index');
+      table.index('instructorId', 'instructorId_index');
     })
 };
 
@@ -26,7 +23,7 @@ exports.up = function(knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema
     .dropTableIfExists('courses')
 };

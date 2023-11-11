@@ -11,7 +11,7 @@ const { validateSignUp } = require("../middlewares/validateSignUp");
 const { verifyToken } = require("../middlewares/verifyToken");
 
 //CONTROLLERS
-const { UserController } = require("../controllers/User.controller");
+const UserController = require("../controllers/User.controller");
 
 router.post(
   "/auth/users/signUp",

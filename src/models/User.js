@@ -8,26 +8,31 @@ const { Util } = require('../utils');
  */
 
 class User {
+
+    static selectFields = [
+        'id', 'firstName', 'lastName', 'email', 'bio',
+        'country', 'phoneNumber'
+    ];
+    static pageLimit = 20;
+
     static async createUser(userData) {
         // get user data and hash password
         const { firstName, lastName, password, email } = userData;
-        const returnFields = ['id', 'first_name', 'last_name', 'email'];
 
         try {
             const hash = await Util.hashPassword(password);
             const data = {
-                first_name: firstName,
-                last_name: lastName,
+                firstName: firstName,
+                lastName: lastName,
                 password: hash,
                 email
             };
             // insert the user data and returns defined data
-            const [returnedData] = await db(TABLES.USERS)
-                .insert({ ...data }, returnFields)
-            // .returning(['id', 'first_name', 'last_name', 'email']);
+            const [userId] = await db(TABLES.USERS)
+                .insert({ ...data })
 
-            console.log(returnedData);
-            return returnedData;
+            delete data.password;
+            return { userId, ...data };
 
         } catch (error) {
             throw error;
@@ -38,16 +43,11 @@ class User {
      * get a user by email
      */
     static async getUserByEmail(userEmail) {
-        const selectFields = [
-            'id', 'first_name', 'last_name', 'email', 'bio',
-            'country', 'phone_number'
-        ]
         try {
             const user = await db(TABLES.USERS)
-                .select(...selectFields)
+                .select(...this.selectFields)
                 .where({ email: userEmail }).first();
-            console.log(user);
-            return user;
+            return Object.assign({}, user);
 
         } catch (error) {
             throw error;
@@ -58,40 +58,83 @@ class User {
      * get a user by id
      */
     static async getUserById(userId) {
-        const selectFields = [
-            'id', 'first_name', 'last_name', 'email', 'bio',
-            'country', 'phone_number'
-        ]
+
         try {
             const user = await db(TABLES.USERS)
-                .select(...selectFields)
+                .select(...this.selectFields)
                 .where({ id: userId }).first();
-            return user;
+
+            return Object.assign({}, user);
 
         } catch (error) {
             throw new Error('Could not find user');
         }
     }
 
+    /**
+     * ### returns all users. also supports pagination
+     */
+    static async getAllUsers(pageNum = 0) {
+        // compute pagination
+        const offset = Util.getOffset(pageNum, this.pageLimit);
+
+
+        try {
+            const allUsers = await db(TABLES.USERS)
+                .select(...this.selectFields)
+                .limit(this.pageLimit) // No prepared value
+                .offset(offset)
+
+            const toReturn = allUsers.map(user => {
+                const userObj = Object.assign({}, user);
+                return userObj;
+            });
+            return toReturn;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     static async updateUser(userData, userId) {
         // define expected keys
         const expectedKeys = [
-            'first_name', 'last_name', 'bio',
+            'firstName', 'lastName', 'bio',
         ]
+        // get columns/keys to update
         const keysToUpdate = expectedKeys.filter((key) => userData[key] !== undefined);
+
+        // create object for update
         const dataToUpdate = {};
         for (const [key, value] of Object.entries(userData)) {
             if (keysToUpdate.indexOf(key) !== -1) {
-                dataToUpdate.key = value
+                dataToUpdate[key] = value
             }
         }
+
         try {
-            const [updatedData] = await db(TABLES.USERS)
+            const id = await db(TABLES.USERS)
                 .where({ id: userId })
                 .update({ ...dataToUpdate })
-                .returning(['id', ...keysToUpdate]);
 
-            return updatedData;
+            return { id, ...dataToUpdate }
+
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async deleteUser(userId) {
+        // get user
+        try {
+            const user = await this.getUserById(userId);
+            if (!user) {
+                throw new Error('User not found');
+            }
+            // delete user
+            await db(TABLES.USERS)
+                .where({ id: userId })
+                .del()
+            return true;
         } catch (error) {
             throw error;
         }

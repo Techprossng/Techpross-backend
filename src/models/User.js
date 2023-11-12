@@ -47,6 +47,11 @@ class User {
             const user = await db(TABLES.USERS)
                 .select(...this.selectFields)
                 .where({ email: userEmail }).first();
+            if (!user) {
+                return null;
+            }
+            // user object is of type ResultFormat
+            // assignment makes it more presentable
             return Object.assign({}, user);
 
         } catch (error) {
@@ -63,7 +68,9 @@ class User {
             const user = await db(TABLES.USERS)
                 .select(...this.selectFields)
                 .where({ id: userId }).first();
-
+            if (!user) {
+                return null;
+            }
             return Object.assign({}, user);
 
         } catch (error) {

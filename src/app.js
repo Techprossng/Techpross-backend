@@ -18,8 +18,6 @@ app.use(
         },
     })
 );
-// query parameters
-app.use(express.urlencoded({ extended: false }));
 
 // CORS
 const corsOptions = {

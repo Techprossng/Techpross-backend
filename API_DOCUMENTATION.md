@@ -19,7 +19,7 @@ Required `body` properties in `application/json` format:
 - `firstName`: `string`
 - `lastName`: `string`
 - `email`: `string`
-- `password`: string
+- `password`: `string`
 
 If the body is not in `application/json` format - status code: `400`
 ```js

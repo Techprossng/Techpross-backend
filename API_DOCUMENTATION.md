@@ -20,26 +20,22 @@ Required `body` properties in `application/json` format:
     - `email`: `string`
     - `password`: string
 
-If the body is not in `application/json` format:
-status code: `400`
+If the body is not in `application/json` format - status code: `400`
 ```js
 { error: 'Not a JSON' }
 ```
 
-Any missing parameter returns:
-status code: `400`
+Any missing parameter returns - status code: `400`
 ```js
 { error: <parameter_name> }
 ```
 
-if `firstName` is missing:
-status code: `400`
+if `firstName` is missing - status code: `400`
 ```js
 { error: 'Missing first name' }
 ```
 
-On successful user registration:
-status code: `201`
+On successful user registration - status code: `201`
 ```js
 { 
     message: 'Registration successful',

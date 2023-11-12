@@ -1,6 +1,6 @@
 # API DOCUMENTATION FOR TechProsNaija Backend endpoints
 
-Welcome to the API documentation for the routes/endpoints in the backend for TechProsNaija. This documentation has been prepared to help the engineers/developers working on the client-side to know the required parameters for sending a request and the expected response expected.
+Welcome to the API documentation for the routes/endpoints in the backend for TechProsNaija. This documentation has been prepared to help the engineers/developers working on the client-side to know the required parameters for sending requests and the expected responses.
 
 Endpoints are split into sections i.e `User`, `Course` e.t.c. Each section may or may not contain subsections which is dependent on the design of the endpoints.
 

@@ -105,7 +105,7 @@ class User {
     static async updateUser(userData, userId) {
         // define expected keys
         const expectedKeys = [
-            'firstName', 'lastName', 'bio',
+            'firstName', 'lastName', 'bio', 'phoneNumber'
         ]
         // get columns/keys to update
         const keysToUpdate = expectedKeys.filter((key) => userData[key] !== undefined);

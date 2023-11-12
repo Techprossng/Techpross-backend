@@ -4,7 +4,7 @@ Welcome to the API documentation for the routes/endpoints in the backend for Tec
 
 Endpoints are split into sections i.e `User`, `Course` e.t.c. Each section may or may not contain subsections which is dependent on the design of the endpoints.
 
-Status codes are sent in the response object. They are not part of the JSON data received.
+Status codes are sent in the response object. They are not part of the JSON data response.
 
 ## Sections
 - [User](#user)

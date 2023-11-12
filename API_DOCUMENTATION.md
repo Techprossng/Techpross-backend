@@ -28,7 +28,7 @@ If the body is not in `application/json` format - status code: `400`
 
 Any missing parameter returns - status code: `400`
 ```js
-{ error: <parameter_name> }
+{ error: 'Missing <parameter_name>' }
 ```
 
 if `firstName` is missing - status code: `400`

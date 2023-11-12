@@ -14,6 +14,7 @@ Status codes are sent in the response object. They are not part of the JSON data
 
 ### Create a user
 - `POST /api/v1/auth/users/signUp`
+
 Required `body` properties in `application/json` format:
     - `firstName`: `string`
     - `lastName`: `string`

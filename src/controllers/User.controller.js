@@ -1,14 +1,25 @@
 const { createAccessToken } = require('../middlewares/token');
 const User = require('../models/User');
 const { Util } = require('../utils');
-const { checkEmailExists } = require('../middlewares/validateSignUp')
+
+// DEFINED TYPES. Hover on types defined with `typedef` to view.
+/**
+ * @typedef {object} IUserUpdate
+ * @property {string?} firstName
+ * @property {string?} lastName
+ * @property {string?} bio 
+ * @property {string?} phoneNumber
+ */
+
 
 /**
- * ### controller for user. Handles login, logout, signup
+ * @class
+ * @classdesc ### controller for user. Handles login, logout, signup, and
+ * ### users defined actions.
  */
 class UserController {
     /**
-     * ### registration function
+     * ### registration function 
      */
     static async register(request, response) {
         const { email, password, firstName, lastName } = request.body;
@@ -17,14 +28,9 @@ class UserController {
         const userData = {
             email, password, firstName, lastName
         }
-        console.log(userData)
-        // validate email representation
-        if (!Util.checkIsEmail(email)) {
-            return response.status(400).json({ error: 'Invalid email' })
-        }
+
         try {
             const emailExists = await User.getUserByEmail(email);
-            console.log(emailExists)
             if (emailExists) {
                 return response.status(400).json({ error: 'Email already exists' });
             }
@@ -74,13 +80,7 @@ class UserController {
 
     static async logout(request, response) {
         const { userId } = request.params;
-        if (!userId) {
-            return response.status(400).json({ error: 'Missing userId' });
-        }
-        // check for valid id
-        if (!Util.checkDigit(userId)) {
-            return response.status(400).json({ error: 'Invalid userId' });
-        }
+
         try {
             // validate user existence
             const user = await User.getUserById(userId);
@@ -88,7 +88,7 @@ class UserController {
                 return response.status(404).json({ error: 'User not found' });
             }
             // clear cookie in response object
-            response.clearCookie(rememberUserTechPros);
+            response.clearCookie('rememberUserTechPros');
 
             return response.status(200).json({ message: 'Logout successful' });
 
@@ -99,7 +99,7 @@ class UserController {
 
     static async update(request, response) {
         const { userId } = request.params;
-        const { firstName, lastName, bio } = request.body;
+        const { firstName, lastName, bio, phoneNumber } = request.body;
         if (!userId) {
             return response.status(400).json({ error: 'Missing userId' });
         }
@@ -108,8 +108,13 @@ class UserController {
             return response.status(400).json({ error: 'Invalid userId' });
         }
 
+        /** @type {IUserUpdate} */
+        const dataToUpdate = {
+            firstName, lastName, bio, phoneNumber
+        }
+
         try {
-            const updatedData = await User.updateUser({ firstName, lastName, bio });
+            const updatedData = await User.updateUser(dataToUpdate);
 
             const returnData = { message: 'Update successful', ...updatedData };
             return response.status(200).json(returnData);

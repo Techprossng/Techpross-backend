@@ -2,6 +2,22 @@ const { db, TABLES } = require('../db');
 const { Util } = require('../utils');
 
 
+/* DEFINED DATA TYPES. Hover on the declaration to see the types */
+/**
+ * @typedef {object} IUser
+ * @property {string} firstName
+ * @property {string} lastName
+ * @property {string} password
+ * @property {string} email
+ *
+ * @typedef {object} IUserUpdate
+ * @property {string?} firstName
+ * @property {string?} lastName
+ * @property {string?} bio 
+ * @property {string?} phoneNumber
+ */
+
+
 /**
  * User class is defined here. It contains the actions that can be
  * performed on a row in the database `users` table
@@ -15,6 +31,10 @@ class User {
     ];
     static pageLimit = 20;
 
+    /**
+     * @async
+     * @param {IUser} userData 
+     */
     static async createUser(userData) {
         // get user data and hash password
         const { firstName, lastName, password, email } = userData;
@@ -35,12 +55,14 @@ class User {
             return { userId, ...data };
 
         } catch (error) {
-            throw error;
+            throw new Error('Unable to get user');
         }
     }
 
-    /** 
+    /**
+     * @async
      * get a user by email
+     * @param {string} userEmail 
      */
     static async getUserByEmail(userEmail) {
         try {
@@ -55,12 +77,14 @@ class User {
             return Object.assign({}, user);
 
         } catch (error) {
-            throw error;
+            throw new Error('Unable to get user');
         }
     }
 
-    /** 
+    /**
+     * @async
      * get a user by id
+     * @param {string} userId 
      */
     static async getUserById(userId) {
 
@@ -79,7 +103,10 @@ class User {
     }
 
     /**
+     * @async
      * ### returns all users. also supports pagination
+     * @param {number} [pageNum=0]
+     * @returns {Array<object>}
      */
     static async getAllUsers(pageNum = 0) {
         // compute pagination
@@ -98,10 +125,17 @@ class User {
             });
             return toReturn;
         } catch (error) {
-            throw error;
+            throw new Error('Unable to get users');
         }
     }
 
+
+    /**
+     * updates a user info on the database
+     * @param {IUserUpdate} userData 
+     * @param {string} userId 
+     * @returns {Promise<IUserUpdate>}
+     */
     static async updateUser(userData, userId) {
         // define expected keys
         const expectedKeys = [
@@ -123,13 +157,18 @@ class User {
                 .where({ id: userId })
                 .update({ ...dataToUpdate })
 
-            return { id, ...dataToUpdate }
+            return { userId: id, ...dataToUpdate }
 
         } catch (error) {
-            throw error;
+            throw new Error('Unable to update');
         }
     }
 
+    /**
+     * deletes a user from the database
+     * @param {string} userId 
+     * @returns {Promise<boolean>}
+     */
     static async deleteUser(userId) {
         // get user
         try {
@@ -143,7 +182,7 @@ class User {
                 .del()
             return true;
         } catch (error) {
-            throw error;
+            throw new Error('Unable to delete');
         }
     }
 }

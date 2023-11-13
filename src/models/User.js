@@ -1,3 +1,4 @@
+// @ts-check
 const { db, TABLES } = require('../db');
 const { Util } = require('../utils');
 
@@ -29,21 +30,27 @@ class User {
         'id', 'firstName', 'lastName', 'email', 'bio',
         'country', 'phoneNumber'
     ];
+    /** @private */
     static pageLimit = 20;
 
     /**
      * @async
-     * @param {IUser} userData 
+     * @param {IUser} userData
+     * @returns {Promise<object>}
+     * @throws {Error} when there is an error in insertion 
      */
     static async createUser(userData) {
         // get user data and hash password
         const { firstName, lastName, password, email } = userData;
 
         try {
+            /** @see Util for implementation details */
             const hash = await Util.hashPassword(password);
+
+            /** @type {object} */
+            // type declared to allow password deletion before return
             const data = {
-                firstName: firstName,
-                lastName: lastName,
+                firstName, lastName,
                 password: hash,
                 email
             };
@@ -74,6 +81,7 @@ class User {
             }
             // user object is of type ResultFormat
             // assignment makes it more presentable
+            delete user.password;
             return Object.assign({}, user);
 
         } catch (error) {
@@ -95,6 +103,8 @@ class User {
             if (!user) {
                 return null;
             }
+            // delete password from object
+            delete user.password
             return Object.assign({}, user);
 
         } catch (error) {
@@ -106,12 +116,11 @@ class User {
      * @async
      * ### returns all users. also supports pagination
      * @param {number} [pageNum=0]
-     * @returns {Array<object>}
+     * @returns {Promise<Array.<object>>}
      */
     static async getAllUsers(pageNum = 0) {
         // compute pagination
         const offset = Util.getOffset(pageNum, this.pageLimit);
-
 
         try {
             const allUsers = await db(TABLES.USERS)
@@ -134,7 +143,7 @@ class User {
      * updates a user info on the database
      * @param {IUserUpdate} userData 
      * @param {string} userId 
-     * @returns {Promise<IUserUpdate>}
+     * @returns {Promise<object>}
      */
     static async updateUser(userData, userId) {
         // define expected keys
@@ -186,5 +195,4 @@ class User {
         }
     }
 }
-
 module.exports = User;

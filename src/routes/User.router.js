@@ -1,16 +1,15 @@
+// @ts-check
 //EXPRESS ROUTER
 const express = require("express");
 const router = express.Router();
 
-//MIDDLEWARES
-const {
-  checkValidationResult,
-} = require("../middlewares/checkValidationResult");
+// MIDDLEWARES
+const checkValidationResult = require("../middlewares/checkValidationResult");
 const { validateLoginLogout } = require("../middlewares/validateLoginLogout");
 const { validateSignUp, validateSignupInput } = require("../middlewares/validateSignUp");
 const { verifyToken } = require("../middlewares/verifyToken");
 
-//CONTROLLERS
+// CONTROLLERS
 const UserController = require("../controllers/User.controller");
 
 router.post(

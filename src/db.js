@@ -1,3 +1,4 @@
+// @ts-check
 /** db.js exposes a connection pool to manage database interactions.
  * This is to improve maintainability and debugging. Instead of initializing
  * the knex module in every file, a singular unit is defined here

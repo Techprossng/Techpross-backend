@@ -1,4 +1,5 @@
-const { createAccessToken } = require('../middlewares/token');
+// @ts-check
+const Token = require('../middlewares/token/index');
 const User = require('../models/User');
 const { Util } = require('../utils');
 
@@ -62,7 +63,7 @@ class UserController {
                 return response.status(400).json({ error: 'Wrong password' });
             }
             // create token
-            const accessToken = await createAccessToken(email);
+            const accessToken = await Token.createAccessToken(email);
 
             // set access token in cookies; maxAge is 5 days
             // cookie name is `rememberUser`, value is `accessToken`
@@ -97,12 +98,17 @@ class UserController {
         }
     }
 
+    /**
+     * Updates a user
+     */
     static async update(request, response) {
         const { userId } = request.params;
         const { firstName, lastName, bio, phoneNumber } = request.body;
         if (!userId) {
             return response.status(400).json({ error: 'Missing userId' });
         }
+
+        /** @see Util for implemtation details */
         // check for valid id
         if (!Util.checkDigit(userId)) {
             return response.status(400).json({ error: 'Invalid userId' });
@@ -114,7 +120,7 @@ class UserController {
         }
 
         try {
-            const updatedData = await User.updateUser(dataToUpdate);
+            const updatedData = await User.updateUser(dataToUpdate, userId);
 
             const returnData = { message: 'Update successful', ...updatedData };
             return response.status(200).json(returnData);

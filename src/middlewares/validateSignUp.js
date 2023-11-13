@@ -1,3 +1,4 @@
+// @ts-check
 const { body } = require('express-validator');
 const { Util } = require('../utils/index');
 
@@ -21,10 +22,6 @@ const validateSignUp = [
 
 /**
  * ### Throughly checks the parameters from the signup body
- * @param {Request} request
- * @param {Response} response
- * @param {NextFunction} next
- * @returns {response|next}
  */
 function validateSignupInput(request, response, next) {
     const { email, password, firstName, lastName } = request.body;

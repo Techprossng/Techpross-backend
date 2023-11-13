@@ -1,11 +1,16 @@
 // entry point of server
 const express = require("express");
 const cors = require("cors");
+const subscriberRoutes = require('./routes/Subscriber.routes');
 
 // initialize express app
 const app = express();
 
+app.use(express.json());
+
 // middleware for serializing and validating content-type
+app.use('/subscribers', subscriberRoutes);
+
 // JSON requests
 app.use(
     express.json({
@@ -33,6 +38,7 @@ app.use("/api/v1", userRouter);
 
 // listening port
 const port = 3000;
+
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);

@@ -1,6 +1,7 @@
 const { createAccessToken } = require('../middlewares/token');
 const User = require('../models/User');
 const { Util } = require('../utils');
+const { checkEmailExists } = require('../middlewares/validateSignUp')
 
 /**
  * ### controller for user. Handles login, logout, signup
@@ -16,7 +17,18 @@ class UserController {
         const userData = {
             email, password, firstName, lastName
         }
+        console.log(userData)
+        // validate email representation
+        if (!Util.checkIsEmail(email)) {
+            return response.status(400).json({ error: 'Invalid email' })
+        }
         try {
+            const emailExists = await User.getUserByEmail(email);
+            console.log(emailExists)
+            if (emailExists) {
+                return response.status(400).json({ error: 'Email already exists' });
+            }
+
             const user = await User.createUser(userData);
 
             const returnData = { message: 'Registration successful', ...user }
@@ -66,7 +78,7 @@ class UserController {
             return response.status(400).json({ error: 'Missing userId' });
         }
         // check for valid id
-        if (!Util.checkDigit.test(userId)) {
+        if (!Util.checkDigit(userId)) {
             return response.status(400).json({ error: 'Invalid userId' });
         }
         try {
@@ -87,17 +99,17 @@ class UserController {
 
     static async update(request, response) {
         const { userId } = request.params;
-        const { first_name, last_name, bio } = request.body;
+        const { firstName, lastName, bio } = request.body;
         if (!userId) {
             return response.status(400).json({ error: 'Missing userId' });
         }
         // check for valid id
-        if (!Util.checkDigit.test(userId)) {
+        if (!Util.checkDigit(userId)) {
             return response.status(400).json({ error: 'Invalid userId' });
         }
 
         try {
-            const updatedData = await User.updateUser({ first_name, last_name, bio });
+            const updatedData = await User.updateUser({ firstName, lastName, bio });
 
             const returnData = { message: 'Update successful', ...updatedData };
             return response.status(200).json(returnData);

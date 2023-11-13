@@ -7,12 +7,12 @@
     "start-server": "node ./src/app.js",
     "start-dev-server": "nodemon ./src/app.js",
     "db-init": "knex init",
-    "db-make-migration": "knex migrate:make --migrations-directory database/migrations",
-    "db-migrate-dev": "knex migrate:latest --migrations-directory database/migrations",
+    "db-make-migration": "knex migrate:make",
+    "db-migrate-dev": "knex migrate:latest",
     "db-migrate-prod": "knex migrate:latest --env production",
-    "db-rollback": "knex migrate:rollback",
-    "db-migrate-up": "knex migrate:up",
-    "db-migrate-down": "knex migrate:down"
+    "db-rollback": "knex migrate:rollback database/migrations",
+    "db-migrate-up": "knex migrate:up database/migrations",
+    "db-migrate-down": "knex migrate:down database/migrations"
   },
   "keywords": [],
   "author": "",

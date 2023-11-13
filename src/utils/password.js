@@ -13,6 +13,7 @@ async function hashPassword(password) {
         const hash = await bcrypt.hash(password, salt);
         return hash;
     } catch (error) {
+        console.error(error)
         throw new Error('Could not generate hash');
     }
 }

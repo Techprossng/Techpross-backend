@@ -14,10 +14,11 @@ exports.up = function (knex) {
       table.string('password', 256).notNullable();
       table.string('phoneNumber', 50);
       table.string('bio', 256);
+      table.boolean('isVerified').defaultTo(false);
       table.string('country', 50);
       table.index('email');
       table.index('id');
-    })
+    });
 };
 
 /**

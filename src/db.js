@@ -13,5 +13,6 @@ exports.db = knex(knexConfig.development);
 exports.TABLES = {
     USERS: 'users',
     COURSES: 'courses',
-    INSTRUCTORS: 'instructors'
+    INSTRUCTORS: 'instructors',
+    SUBSCRIBERS: 'subscribers'
 };

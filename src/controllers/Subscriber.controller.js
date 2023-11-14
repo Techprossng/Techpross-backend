@@ -33,6 +33,7 @@ function validateEmail(email) {
     // Email validation using a regular expression
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+    
 }
 
 module.exports = SubscriberController;

@@ -21,7 +21,7 @@ const validateSignUp = [
 // END VALIDATION CHAINS
 
 /**
- * ### Throughly checks the parameters from the signup body
+ * Throughly checks the parameters from the signup body
  */
 function validateSignupInput(request, response, next) {
     const { email, password, firstName, lastName } = request.body;
@@ -44,16 +44,16 @@ function validateSignupInput(request, response, next) {
     if (!firstName) {
         return response.status(400).json({ error: 'Missing firstName' });
     }
-    if (typeof firstName !== 'string') {
+    if (typeof firstName !== 'string' || !Util.checkString(firstName)) {
         return response.status(400).json({ error: 'Invalid firstName' });
     }
     if (!lastName) {
         return response.status(400).json({ error: 'Missing lastName' });
     }
-    if (typeof lastName !== 'string') {
+    if (typeof lastName !== 'string' || !Util.checkString(lastName)) {
         return response.status(400).json({ error: 'Invalid lastName' });
     }
-    return next();
+    next();
 }
 
 

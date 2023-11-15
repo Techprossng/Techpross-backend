@@ -26,7 +26,7 @@ class Subscriber {
    * @async
    * Gets a subscriber by id
    * @param {string} subscriberEmail
-   * @returns {Promise<object> | null} containing id and email
+   * @returns {Promise<object | null>} containing id and email
    */
   static async getSubscriberByEmail(subscriberEmail) {
 

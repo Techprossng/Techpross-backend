@@ -1,3 +1,4 @@
+//@ts-check
 const { db, TABLES } = require('../db');
 
 

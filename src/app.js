@@ -3,6 +3,7 @@
 const express = require("express");
 const cors = require("cors");
 const { Buffer } = require('node:buffer');
+const subscriberRouter = require('./routes/Subscriber.routes');
 
 // initialize express app
 const app = express();

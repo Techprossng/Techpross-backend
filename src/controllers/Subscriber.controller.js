@@ -1,39 +1,65 @@
-
 const Subscriber = require('../models/Subscriber');
 
+
+// DEFINED TYPE
+/**
+ * @callback Handler
+ * @param {import('express').Request} request
+ * @param {import('express').Response} response
+ * @returns {import('express').Response}
+ */
+
 class SubscriberController {
+
+  /**
+   * adds a subscriber to the database 
+   * @type {Handler}
+   */
   static async addSubscriber(request, response) {
+    const { email } = request.body;
+
     try {
-      const { email } = request.body;
-
-      // Validate email format
-      if (!validateEmail(email)) {
-        return response.status(400).json({ error: 'Invalid email format' });
-      }
-
-      // Check if email already exists
-      const existingSubscriber = await Subscriber.query().findOne({ email });
-      if (existingSubscriber) {
-        return response.status(400).json({ error: 'Email already subscribed' });
-      }
-
       // Create a new subscriber
-      const newSubscriber = await Subscriber.query().insert({ email });
-
-      return response.status(201).json({ message: 'Subscriber added successfully', ...newSubscriber });
+      const newSubscriber = await Subscriber.addSubscriber(email);
+      const toReturn = {
+        message: 'Subscriber added successfully',
+        ...newSubscriber
+      }
+      return response.status(201).json(toReturn);
     } catch (error) {
-      console.error(error);
+      return response.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
+  /**
+   * removes a subscriber from the database
+   * @type {Handler}
+   */
+  static async deleteSubscriber(request, response) {
+    /** @type {string} */
+    const email = request.body.email;
+
+    try {
+      // Enforce idempotency in requests
+      const subscriberExists = await Subscriber.getSubscriberByEmail(email);
+
+      if (!subscriberExists) {
+        response.status(404).json({});
+      }
+
+      // delete resource
+      const isDeleted = await Subscriber.deleteSubscriber(email)
+
+      const toReturn = {
+        message: 'Subscriber removed successfully'
+      }
+      return response.status(200).json(toReturn);
+
+    } catch (error) {
       return response.status(500).json({ error: 'Internal server error' });
     }
   }
 }
 
-
-function validateEmail(email) {
-    // Email validation using a regular expression
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-    
-}
 
 module.exports = SubscriberController;

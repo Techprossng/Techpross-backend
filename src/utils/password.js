@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 
 /**
  * hashes a user password
+ * @param {string} password
+ * @returns {Promise<string>} the hashed/encrypted password
  */
 async function hashPassword(password) {
 
@@ -20,6 +22,9 @@ async function hashPassword(password) {
 
 /**
  * returns a boolean for hash comparison
+ * @param {string} password user's password
+ * @param {string} hash hashed password in database
+ * @returns {Promise<boolean>}
  */
 async function verifyPassword(password, hash) {
 

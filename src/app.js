@@ -8,6 +8,7 @@ const { Buffer } = require('node:buffer');
 const app = express();
 
 // middleware for serializing and validating content-type
+
 // JSON requests
 app.use(
     express.json({
@@ -37,9 +38,11 @@ const userRouter = require("./routes/User.router");
 
 // MOUNT ROUTERS
 app.use("/api/v1", userRouter);
+app.use('/api/v1', subscriberRouter);
 
 // listening port
 const port = 3000;
+
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);

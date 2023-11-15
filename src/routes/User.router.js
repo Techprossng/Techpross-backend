@@ -1,23 +1,20 @@
+// @ts-check
 //EXPRESS ROUTER
 const express = require("express");
 const router = express.Router();
 
-//MIDDLEWARES
-const {
-  checkValidationResult,
-} = require("../middlewares/checkValidationResult");
+// MIDDLEWARES
+const checkValidationResult = require("../middlewares/checkValidationResult");
 const { validateLoginLogout } = require("../middlewares/validateLoginLogout");
-const { validateSignUp } = require("../middlewares/validateSignUp");
+const { validateSignUp, validateSignupInput } = require("../middlewares/validateSignUp");
 const { verifyToken } = require("../middlewares/verifyToken");
 
-//CONTROLLERS
+// CONTROLLERS
 const UserController = require("../controllers/User.controller");
 
 router.post(
-  "/auth/users/signUp",
-  validateSignUp,
-  checkValidationResult,
-  UserController.register
+  "/auth/users/signUp", validateSignUp, checkValidationResult,
+  validateSignupInput, UserController.register
 );
 
 module.exports = router;

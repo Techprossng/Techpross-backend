@@ -1,7 +1,8 @@
+// @ts-check
 // entry point of server
 const express = require("express");
 const cors = require("cors");
-const subscriberRouter = require('./routes/Subscriber.routes');
+const { Buffer } = require('node:buffer');
 
 // initialize express app
 const app = express();
@@ -11,11 +12,16 @@ const app = express();
 // JSON requests
 app.use(
     express.json({
-        verify: async (req, res, buffer, encoding) => {
+        verify: async (req, res, buffer) => {
+            let data = '';
+            if (Buffer.isBuffer(buffer)) {
+                /** @type {string} */
+                data = buffer.toString();
+            }
             try {
-                await JSON.parse(buffer);
+                JSON.parse(data);
             } catch (error) {
-                return res.status(400).json({ message: "Not a JSON" });
+                return res.status(400).json({ error: "Not a JSON" });
             }
         },
     })

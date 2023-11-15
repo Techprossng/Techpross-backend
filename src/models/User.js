@@ -1,5 +1,22 @@
+// @ts-check
 const { db, TABLES } = require('../db');
 const { Util } = require('../utils');
+
+
+/* DEFINED DATA TYPES. Hover on the declaration to see the types */
+/**
+ * @typedef {object} IUser
+ * @property {string} firstName
+ * @property {string} lastName
+ * @property {string} password
+ * @property {string} email
+ *
+ * @typedef {object} IUserUpdate
+ * @property {string?} firstName
+ * @property {string?} lastName
+ * @property {string?} bio 
+ * @property {string?} phoneNumber
+ */
 
 
 /**
@@ -13,17 +30,27 @@ class User {
         'id', 'firstName', 'lastName', 'email', 'bio',
         'country', 'phoneNumber'
     ];
+    /** @private */
     static pageLimit = 20;
 
+    /**
+     * @async
+     * @param {IUser} userData
+     * @returns {Promise<object>}
+     * @throws {Error} when there is an error in insertion 
+     */
     static async createUser(userData) {
         // get user data and hash password
         const { firstName, lastName, password, email } = userData;
 
         try {
+            /** @see Util for implementation details */
             const hash = await Util.hashPassword(password);
+
+            /** @type {object} */
+            // type declared to allow password deletion before return
             const data = {
-                firstName: firstName,
-                lastName: lastName,
+                firstName, lastName,
                 password: hash,
                 email
             };
@@ -35,12 +62,14 @@ class User {
             return { userId, ...data };
 
         } catch (error) {
-            throw error;
+            throw new Error('Unable to get user');
         }
     }
 
-    /** 
+    /**
+     * @async
      * get a user by email
+     * @param {string} userEmail 
      */
     static async getUserByEmail(userEmail) {
         try {
@@ -52,15 +81,18 @@ class User {
             }
             // user object is of type ResultFormat
             // assignment makes it more presentable
+            delete user.password;
             return Object.assign({}, user);
 
         } catch (error) {
-            throw error;
+            throw new Error('Unable to get user');
         }
     }
 
-    /** 
+    /**
+     * @async
      * get a user by id
+     * @param {string} userId 
      */
     static async getUserById(userId) {
 
@@ -71,6 +103,8 @@ class User {
             if (!user) {
                 return null;
             }
+            // delete password from object
+            delete user.password
             return Object.assign({}, user);
 
         } catch (error) {
@@ -79,12 +113,14 @@ class User {
     }
 
     /**
+     * @async
      * ### returns all users. also supports pagination
+     * @param {number} [pageNum=0]
+     * @returns {Promise<Array.<object>>}
      */
     static async getAllUsers(pageNum = 0) {
         // compute pagination
         const offset = Util.getOffset(pageNum, this.pageLimit);
-
 
         try {
             const allUsers = await db(TABLES.USERS)
@@ -98,10 +134,17 @@ class User {
             });
             return toReturn;
         } catch (error) {
-            throw error;
+            throw new Error('Unable to get users');
         }
     }
 
+
+    /**
+     * updates a user info on the database
+     * @param {IUserUpdate} userData 
+     * @param {string} userId 
+     * @returns {Promise<object>}
+     */
     static async updateUser(userData, userId) {
         // define expected keys
         const expectedKeys = [
@@ -123,13 +166,18 @@ class User {
                 .where({ id: userId })
                 .update({ ...dataToUpdate })
 
-            return { id, ...dataToUpdate }
+            return { userId: id, ...dataToUpdate }
 
         } catch (error) {
-            throw error;
+            throw new Error('Unable to update');
         }
     }
 
+    /**
+     * deletes a user from the database
+     * @param {string} userId 
+     * @returns {Promise<boolean>}
+     */
     static async deleteUser(userId) {
         // get user
         try {
@@ -143,9 +191,8 @@ class User {
                 .del()
             return true;
         } catch (error) {
-            throw error;
+            throw new Error('Unable to delete');
         }
     }
 }
-
 module.exports = User;

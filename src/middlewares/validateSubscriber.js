@@ -41,7 +41,11 @@ async function validateSubscriberBody(request, response, next) {
 async function validateSubscriberParam(request, response, next) {
     const { email } = request.params;
 
-    if (!email || typeof email !== 'string' || !Util.checkIsEmail(email)) {
+    if (!email) {
+        return response.status(400).json({ error: 'Missing email' });
+    }
+
+    if (typeof email !== 'string' || !Util.checkIsEmail(email)) {
         return response.status(400).json({ error: 'Invalid email' })
     }
 

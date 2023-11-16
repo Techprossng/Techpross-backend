@@ -23,7 +23,7 @@ class SubscriberController {
       // Create a new subscriber
       const newSubscriber = await Subscriber.addSubscriber(email);
       const toReturn = {
-        message: 'Subscriber added successfully',
+        message: 'success',
         ...newSubscriber
       }
       return response.status(201).json(toReturn);
@@ -77,7 +77,7 @@ class SubscriberController {
         throw new Error('Could not delete');
       }
       const toReturn = {
-        message: 'Subscriber removed successfully',
+        message: 'success',
         email
       }
       return response.status(200).json(toReturn);

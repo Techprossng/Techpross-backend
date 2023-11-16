@@ -5,7 +5,7 @@ const { Util } = require('../utils');
 
 class Subscriber {
   /**@private @readonly */
-  static pageLimit = 30;
+  static pageLimit = 20;
 
   /**
    * @async

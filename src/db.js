@@ -14,5 +14,6 @@ exports.TABLES = {
     USERS: 'users',
     COURSES: 'courses',
     INSTRUCTORS: 'instructors',
-    SUBSCRIBERS: 'subscribers'
+    SUBSCRIBERS: 'subscribers',
+    CONTACTS: 'contacts'
 };

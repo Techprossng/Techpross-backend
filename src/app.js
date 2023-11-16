@@ -5,7 +5,8 @@ const cors = require("cors");
 const { Buffer } = require('node:buffer');
 
 const userRouter = require("./routes/User.router");
-const subscriberRouter = require("./routes/Subscriber.router")
+const subscriberRouter = require("./routes/Subscriber.router");
+const contactRouter = require("./routes/Contact.router");
 
 // initialize express app
 const app = express();
@@ -41,6 +42,7 @@ app.use(cors(corsOptions));
 // MOUNT ROUTERS
 app.use("/api/v1", userRouter);
 app.use('/api/v1', subscriberRouter);
+app.use("/api/v1", contactRouter);
 
 // listening port
 const port = 3000;

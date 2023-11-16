@@ -17,8 +17,6 @@ exports.up = function (knex) {
 
       // Indexes
       table.index('id');
-      table.index('firstName');
-      table.index('lastName');
       table.index('email');
     });
 };

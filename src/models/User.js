@@ -115,10 +115,10 @@ class User {
     /**
      * @async
      * ### returns all users. also supports pagination
-     * @param {number} [pageNum=0]
-     * @returns {Promise<Array.<object>>}
+     * @param {number} [pageNum=1]
+     * @returns {Promise<object>}
      */
-    static async getAllUsers(pageNum = 0) {
+    static async getAllUsers(pageNum = 1) {
         // compute pagination
         const offset = Util.getOffset(pageNum, this.pageLimit);
 
@@ -128,11 +128,19 @@ class User {
                 .limit(this.pageLimit) // No prepared value
                 .offset(offset)
 
-            const toReturn = allUsers.map(user => {
+            // set new offset and get next page number
+            const newOffset = this.pageLimit + offset;
+            const nextPageNum = await Util.
+                getNextPage(newOffset, this.pageLimit, TABLES.USERS);
+
+            // cleanup object. knex returns RowData {}, set to pure object
+            const data = allUsers.map(user => {
                 const userObj = Object.assign({}, user);
                 return userObj;
             });
-            return toReturn;
+
+            return { data, nextPageNum };
+
         } catch (error) {
             throw new Error('Unable to get users');
         }

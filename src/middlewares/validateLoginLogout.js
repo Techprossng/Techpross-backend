@@ -1,26 +1,17 @@
-const { body, param } = require('express-validator');
+// @ts-check
 const { Util } = require('../utils/index');
 
-const validateLogin = [
-    // email
-    body('email').notEmpty().withMessage('Missing email'),
-    body('email').isEmail().withMessage('Invalid email'),
-    //password
-    body('password').notEmpty().withMessage('Missing password'),
-];
-
-const validateLogout = [
-    // email
-    param('userId').notEmpty().withMessage('Missing userId'),
-    param('userId').isString().withMessage('Invalid userId')
-];
 
 /**
- * Revalidate the login request body
- * @param {Request} request 
- * @param {Response} response 
- * @param {NextFunction} next
- * @returns {Response|NextFunction}
+ * @callback Handler
+ * @param {import('express').Request} request 
+ * @param {import('express').Response} response 
+ * @param {import('express').NextFunction} next
+ */
+
+/**
+ * validate the login request body
+ * @type {Handler}
  */
 function validateLoginInput(request, response, next) {
     const { email, password } = request.body
@@ -44,10 +35,7 @@ function validateLoginInput(request, response, next) {
 
 /**
  * Revalidate the login request body
- * @param {Request} request 
- * @param {Response} response 
- * @param {NextFunction} next
- * @returns {Response|NextFunction}
+ * @type {Handler}
  */
 function validateLogoutParam(request, response, next) {
     const { userId } = request.params;
@@ -67,8 +55,6 @@ function validateLogoutParam(request, response, next) {
 
 // exported to routes
 module.exports = {
-    validateLogin,
     validateLoginInput,
-    validateLogout,
     validateLogoutParam
 };

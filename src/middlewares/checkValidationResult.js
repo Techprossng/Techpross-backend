@@ -19,7 +19,7 @@ function checkValidationResult(request, response, next) {
         // returns the first field that does not pass
         return response.status(400).json({ error: errorsResult.array()[0] });
     }
-    next();
+    return next();
 }
 
 module.exports = checkValidationResult;

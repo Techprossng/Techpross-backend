@@ -1,27 +1,19 @@
 // @ts-check
-const { body } = require('express-validator');
 const { Util } = require('../utils/index');
 
-// DEFINE VALIDATION CHAINS
+/**
+ * @callback Handler
+ * @param {import('express').Request} request
+ * @param {import('express').Response} response
+ * @param {import('express').NextFunction} next
+ */
 
-// check for non empty fields
-const validateSignUp = [
-    // email
-    body('email').notEmpty().withMessage('Missing email'),
-    //password
-    body('password').notEmpty().withMessage('Missing password'),
-    body('password').isString().withMessage('Invalid password'),
-    body('password').isLength({ min: 8 })
-        .withMessage('password must have a minimum of 8 characters'),
-    // Names
-    body('firstName').notEmpty().withMessage('Missing first name'),
-    body('lastName').notEmpty().withMessage('Missing last name')
-];
 
 // END VALIDATION CHAINS
 
 /**
  * Throughly checks the parameters from the signup body
+ * @type {Handler}
  */
 function validateSignupInput(request, response, next) {
     const { email, password, firstName, lastName } = request.body;
@@ -59,6 +51,5 @@ function validateSignupInput(request, response, next) {
 
 // exported to routes
 module.exports = {
-    validateSignUp,
     validateSignupInput
 };

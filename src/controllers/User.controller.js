@@ -10,6 +10,10 @@ const { Util } = require('../utils');
  * @property {string?} lastName
  * @property {string?} bio 
  * @property {string?} phoneNumber
+ * 
+ * @callback Handler
+ * @param {import('express').Request} request
+ * @param {import('express').Response} response
  */
 
 
@@ -20,7 +24,8 @@ const { Util } = require('../utils');
  */
 class UserController {
     /**
-     * ### registration function 
+     * ### registration function
+     * @type {Handler}
      */
     static async register(request, response) {
         const { email, password, firstName, lastName } = request.body;
@@ -32,6 +37,7 @@ class UserController {
 
         try {
             const emailExists = await User.getUserByEmail(email);
+            console.log(emailExists)
             if (emailExists) {
                 return response.status(400).json({ error: 'Email already exists' });
             }
@@ -48,6 +54,7 @@ class UserController {
 
     /**
      * ### Login function
+     * @type {Handler}
      */
     static async login(request, response) {
         const { email, password } = request.body;
@@ -79,6 +86,10 @@ class UserController {
 
     static async loginWithGoogle() { }
 
+    /**
+     * Logout handler
+     * @type {Handler}
+     */
     static async logout(request, response) {
         const { userId } = request.params;
 
@@ -99,7 +110,8 @@ class UserController {
     }
 
     /**
-     * Updates a user
+     * Update handler
+     * @type {Handler}
      */
     static async update(request, response) {
         const { userId } = request.params;

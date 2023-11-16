@@ -9,29 +9,54 @@ const { Util } = require('../utils');
  * @param {import('express').Request} request
  * @param {import('express').Response} response
  * @param {import('express').NextFunction} next
- * @returns {import('express').Response | void}
  */
 
 /**
- * ## validates email from subscriber
+ * ## validates email from subscriber for POST requests
  * @type {Handler}
  */
-function validateSubscriber(request, response, next) {
+async function validateSubscriberBody(request, response, next) {
     const { email } = request.body;
 
-    if (!email || typeof email !== 'string' || !Util.checkIsEmail(email)) {
-        return response.status(400).json({ error: 'Invalid email' })
+    if (!email) {
+        return response.status(400).json({ error: 'Missing email' })
     }
-    // check HTTP method for DELETE
-    if (request.method === 'DELETE') {
-        next();
+
+    if (typeof email !== 'string' || !Util.checkIsEmail(email)) {
+        return response.status(400).json({ error: 'Invalid email' });
     }
+
     // check resource/subscriber's existence
-    const subscriber = Subscriber.getSubscriberByEmail(email);
+    const subscriber = await Subscriber.getSubscriberByEmail(email);
     if (subscriber) {
         return response.status(400).json({ error: 'Email already exists' });
     }
     next();
 }
 
-module.exports = validateSubscriber;
+/**
+ * ## validates email from subscriber for GET and DELETE requests
+ * @type {Handler}
+ */
+async function validateSubscriberParam(request, response, next) {
+    const { email } = request.params;
+
+    if (!email || typeof email !== 'string' || !Util.checkIsEmail(email)) {
+        return response.status(400).json({ error: 'Invalid email' })
+    }
+
+    // check resource/subscriber's existence
+    const subscriber = await Subscriber.getSubscriberByEmail(email);
+
+    // check HTTP method for DELETE
+    if (request.method === 'DELETE') {
+        // enforce idempotency
+        if (!subscriber) {
+            return response.status(404).json({});
+        }
+        return next();
+    }
+    next();
+}
+
+module.exports = { validateSubscriberBody, validateSubscriberParam };

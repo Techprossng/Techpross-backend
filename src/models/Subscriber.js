@@ -1,8 +1,12 @@
 //@ts-check
 const { db, TABLES } = require('../db');
+const { Util } = require('../utils');
 
 
 class Subscriber {
+  /**@private @readonly */
+  static pageLimit = 30;
+
   /**
    * @async
    * creates a new subscriber
@@ -32,14 +36,52 @@ class Subscriber {
 
     try {
       const subscriber = await db(TABLES.SUBSCRIBERS)
-        .select('id', 'email')
-        .where({ email: subscriberEmail });
+        .where({ email: subscriberEmail }).first();
+
       if (!subscriber) {
         return null
       }
       return Object.assign({}, subscriber);
     } catch (error) {
       throw new Error('Could not get subscriber');
+    }
+  }
+
+  /**
+   * retrieves all subscribers by page
+   * @param {number} pageNum 
+   * @returns {Promise<object>} contains subscribers data by page and
+   * next page number 
+   */
+  static async getAllSubscribers(pageNum = 1) {
+    // get offset for pagination
+    const offset = Util.getOffset(pageNum, this.pageLimit);
+    try {
+      const allSubscribers = await db(TABLES.SUBSCRIBERS)
+        .select('id', 'email')
+        .limit(this.pageLimit)
+        .offset(offset)
+        .orderBy('id')
+
+      if (!allSubscribers) {
+        return { data: [], nextPageNum: null };
+      }
+
+      // set new offset and get next page number
+      const newOffset = this.pageLimit + offset;
+      const nextPageNum = await Util.
+        getNextPage(newOffset, this.pageLimit, TABLES.SUBSCRIBERS);
+
+      // cleanup object. knex returns RowData {}, set to pure object
+      const data = allSubscribers.map(subscriber => {
+        const subscriberObj = Object.assign({}, subscriber);
+        return subscriberObj;
+      });
+
+      return { data, nextPageNum };
+
+    } catch (error) {
+      throw new Error(`Could not get subscribers for ${pageNum}`);
     }
   }
 

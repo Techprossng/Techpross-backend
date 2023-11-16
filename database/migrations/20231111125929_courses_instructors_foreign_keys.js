@@ -1,3 +1,5 @@
+// courses_instructors_foreign_keys.js
+
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }

@@ -16,6 +16,8 @@ exports.up = function (knex) {
       table.primary(['userId', 'courseId']);
       table.foreign('userId').references('users.id').onDelete('CASCADE');
       table.foreign('courseId').references('courses.id').onDelete('CASCADE');
+
+      // Indexes
       table.index('userId', 'userId_index');
     });
 };

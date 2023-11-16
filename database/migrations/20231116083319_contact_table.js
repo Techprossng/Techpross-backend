@@ -1,4 +1,4 @@
-//contacts_table.js
+// contacts_table.js
 
 /**
  * @param { import("knex").Knex } knex
@@ -15,7 +15,7 @@ exports.up = function (knex) {
       table.string('email', 50).notNullable().unique();
       table.string('description', 255).notNullable();
 
-      // Adding indexes
+      // Indexes
       table.index('id');
       table.index('firstName');
       table.index('lastName');

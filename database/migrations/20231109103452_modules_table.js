@@ -14,6 +14,8 @@ exports.up = function (knex) {
       table.string('description', 256).notNullable();
       table.bigInteger('courseId').notNullable().unsigned();
       table.foreign('courseId').references('courses.id').onDelete('CASCADE');
+
+      // Indexes
       table.index('id');
       table.index('courseId');
     });

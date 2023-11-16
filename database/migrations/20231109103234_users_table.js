@@ -1,4 +1,4 @@
-//users_table.js
+// users_table.js
 
 /**
  * @param { import("knex").Knex } knex
@@ -16,6 +16,8 @@ exports.up = function (knex) {
       table.string('bio', 256);
       table.boolean('isVerified').defaultTo(false);
       table.string('country', 50);
+
+      // Indexes
       table.index('email');
       table.index('id');
     });

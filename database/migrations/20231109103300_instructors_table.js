@@ -11,6 +11,8 @@ exports.up = function (knex) {
       table.string('name', 256).notNullable();
       table.string('email', 128).unique().notNullable();
       table.bigInteger('courseId').unsigned().unique().notNullable();
+
+      // Indexes
       table.index('courseId', 'courseId_index');
       table.index('id');
     });

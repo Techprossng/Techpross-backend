@@ -1,5 +1,6 @@
 // contacts_table.js
 
+
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }

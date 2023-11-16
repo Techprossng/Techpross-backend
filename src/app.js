@@ -4,6 +4,9 @@ const express = require("express");
 const cors = require("cors");
 const { Buffer } = require('node:buffer');
 
+const userRouter = require("./routes/User.router");
+const subscriberRouter = require("./routes/Subscriber.router")
+
 // initialize express app
 const app = express();
 
@@ -34,7 +37,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // SET ROUTE HANDLERS HERE
-const userRouter = require("./routes/User.router");
 
 // MOUNT ROUTERS
 app.use("/api/v1", userRouter);

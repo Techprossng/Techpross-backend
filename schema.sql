@@ -64,4 +64,15 @@ CREATE TABLE IF NOT EXISTS instructors (
   FOREIGN KEY (id) REFERENCES courses(id)
 );
 
+-- contacts table; for getting information or booking a session with techpros
+CREATE TABLE IF NOT EXISTS contacts (
+	id BIGINT(60) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`firstName` VARCHAR(100) NOT NULL,
+	`lastName` VARCHAR(100) NOT NULL,
+	email VARCHAR(50) NOT NULL UNIQUE,
+	description VARCHAR(255) NOT NULL,
+)
+
 -- create index here for tables

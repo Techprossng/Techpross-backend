@@ -78,3 +78,6 @@ CREATE INDEX module_id_index ON modules(id);
 CREATE INDEX course_id_index ON modules(course_id);
 
 CREATE INDEX user_id_index ON users_courses(user_id);
+
+CREATE INDEX contact_id_index ON contacts(id);
+CREATE INDEX contact_email_index ON contacts(email);

@@ -19,8 +19,7 @@ Welcome to the API documentation for the routes/endpoints in the backend for Tec
 ```
 - If the request supports pagination, a page query parameter will be appended as part of the API endpoint. For example, consider an api `GET /api/v1/users` that fetches all the users data in `GET` request; if the request sent does not contain a `page` query parameter, a default value of `1` will be given to the `page`. Number values can be put in place to specify the page you want to fetch:
 
-`GET /api/v1/users?page=4`
-**Only number values are allowed.**
+`GET /api/v1/users?page=4` -  **Only number values are allowed.**
 
 
 ## Sections
@@ -28,6 +27,14 @@ Welcome to the API documentation for the routes/endpoints in the backend for Tec
     - [Create a user](#create-a-user)
 - [Subscriber](#subscriber)
     - [Add a subscriber](#add-a-subscriber)
+    - [Get a subscriber](#get-a-subscriber)
+    - [Delete a subscriber](#delete-a-subscriber)
+    - [Get all subscribers](#get-all-subscribers)
+- [Contact](#contact)
+    - [Add a contact](#add-a-contact)
+    - [Get a contact](#get-a-contact)
+    - [Delete a contact](#delete-a-contact)
+    - [Get all contacts](#get-all-contacts)
 
 ## User
 
@@ -97,7 +104,31 @@ Successful response - status code - `200`
 ```
 
 ### Get a subscriber
-- `GET /api/v1/subscribers/:email`
+- `GET /api/v1/subscribers/:id` - `Get by id` **default endpoint**
+
+Missing parameter returns - status code: `400`
+```js
+{ error: 'Missing id' }
+```
+
+An invalid parameter returns - status code: `400`
+```js
+{ error: 'Invalid id' }
+```
+If id does not exists - status code: `404`
+```js
+{ error: 'Not found' }
+```
+Successful response - status code - `200`
+```js
+{ 
+    message: "success",
+    id: number,  // subscriber's id
+    email : string // subscriber's email
+}
+```
+
+- `GET /api/v1/subscribers/emails/:email` - `Get by email`
 
 
 Missing parameter returns - status code: `400`
@@ -123,7 +154,32 @@ Successful response - status code - `200`
 ```
 
 ### Delete a subscriber
-- `DELETE /api/v1/subscribers/:email` - **_This endpoint is idempotent_**
+
+- **_These endpoints are idempotent_**
+
+- `DELETE /api/v1/subscribers/:id` - Delete by id **Default endpoint**
+
+Missing parameter returns - status code: `400`
+```js
+{ error: 'Missing id' }
+```
+
+An invalid parameter returns - status code: `400`
+```js
+{ error: 'Invalid id' }
+```
+If email does not exists - status code: `404`
+```js
+{}
+```
+Successful response - status code - `200`
+```ts
+{ 
+    message: "Subscriber removed successfully",
+    id : number // subscriber's id
+}
+
+- `DELETE /api/v1/subscribers/emails/:email` - Delete by email
 
 Missing parameter returns - status code: `400`
 ```js
@@ -148,6 +204,7 @@ Successful response - status code - `200`
 
 ### Get all subscribers
 - `GET /api/v1/subscribers?page=1`
+
 **_This endpoint supports pagination_**
 
 Successful response - status code - `200`
@@ -156,6 +213,176 @@ Successful response - status code - `200`
 { 
     message: "success",
     data: [], // An array of { id, email }
+    current: number, // current page number
+    next: number // next page number or null
+}
+```
+
+
+## Contact
+
+### Add a contact
+- `POST /api/v1/contacts`
+
+Required `body` properties in `application/json` format:
+- `email`: `string`
+- `firstName`: `string`
+- `lastName`: `string`
+- `description`: `string`
+- `website`: `string` (optional)
+
+Missing parameter returns - status code: `400`
+```js
+{ error: 'Missing paramter name' } // website can be omitted
+```
+
+An invalid parameter returns - status code: `400`
+```js
+{ error: 'Invalid paramter name' }
+```
+If email already exists - status code: `400`
+```js
+{ error: 'Contact already exists' }
+```
+Successful response - status code - `200`
+```ts
+{ 
+    message: "Subscriber added successfully",
+    id: string,
+    email: string
+    firstName: string,
+    lastName: string,
+    website: string | null,
+    description: string
+}
+```
+
+### Get a Contact
+- `GET /api/v1/contacts/:id` - `Get by id` **default endpoint**
+
+Missing parameter returns - status code: `400`
+```js
+{ error: 'Missing id' }
+```
+
+An invalid parameter returns - status code: `400`
+```js
+{ error: 'Invalid id' }
+```
+If id does not exists - status code: `404`
+```js
+{ error: 'Not found' }
+```
+Successful response - status code - `200`
+```ts
+{ 
+    message: "success",
+    id: number,
+    createdAt: Date,
+    updatedAt: Date,
+    firstName: string,
+    lastName: string,
+    email : string,
+    description: string,
+    website: string | null
+}
+```
+
+- `GET /api/v1/subscribers/emails/:email` - `Get by email`
+
+
+Missing parameter returns - status code: `400`
+```js
+{ error: 'Missing email' }
+```
+
+An invalid parameter returns - status code: `400`
+```js
+{ error: 'Invalid email' }
+```
+If email does not exists - status code: `404`
+```js
+{ error: 'Not found' }
+```
+Successful response - status code - `200`
+```ts
+{ 
+
+    message: "success",
+    id: number,
+    createdAt: Date,
+    updatedAt: Date,
+    firstName: string,
+    lastName: string,
+    email : string,
+    description: string,
+    website: string | null
+
+}
+```
+
+### Delete a contact
+
+- **_These endpoints are idempotent_**
+
+- `DELETE /api/v1/subscribers/:id` - Delete by id **Default endpoint**
+
+Missing parameter returns - status code: `400`
+```js
+{ error: 'Missing id' }
+```
+
+An invalid parameter returns - status code: `400`
+```js
+{ error: 'Invalid id' }
+```
+If email does not exists - status code: `404`
+```js
+{}
+```
+Successful response - status code - `200`
+```ts
+{ 
+    message: "success",
+    id : number
+}
+```
+
+- `DELETE /api/v1/subscribers/emails/:email` - Delete by email
+
+Missing parameter returns - status code: `400`
+```ts
+{ error: "Missing email" }
+```
+
+An invalid parameter returns - status code: `400`
+```js
+{ error: 'Invalid email' }
+```
+If email does not exists - status code: `404`
+```js
+{}
+```
+Successful response - status code - `200`
+```ts
+{ 
+    message: "success",
+    email : string
+}
+```
+
+### Get all contacts
+
+- `GET /api/v1/contacts?page=1`
+
+**_This endpoint supports pagination_**
+
+Successful response - status code - `200`
+
+```ts
+{ 
+    message: "success",
+    data: [], // An array of { id, firstName, lastName, description, website, email }
     current: number, // current page number
     next: number // next page number or null
 }

@@ -15,6 +15,7 @@ exports.up = function (knex) {
       table.string('lastName', 100).notNullable();
       table.string('email', 50).notNullable().unique();
       table.string('description', 255).notNullable();
+      table.string('website', 50).nullable();
 
       // Indexes
       table.index('id');
@@ -26,6 +27,6 @@ exports.up = function (knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTableIfExists('contacts');
 };

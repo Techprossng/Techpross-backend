@@ -23,7 +23,7 @@ class SubscriberController {
       // Create a new subscriber
       const newSubscriber = await Subscriber.addSubscriber(email);
       const toReturn = {
-        message: 'Subscriber added successfully',
+        message: 'success',
         ...newSubscriber
       }
       return response.status(201).json(toReturn);
@@ -33,10 +33,10 @@ class SubscriberController {
   }
 
   /**
-   * retrieves a subscriber
+   * retrieves a subscriber by email
    * @type {Handler}
    */
-  static async getSubscriber(request, response) {
+  static async getSubscriberByEmail(request, response) {
     const { email } = request.params;
     if (!email || !Util.checkIsEmail(email)) {
       return response.status(400).json({ error: 'Invalid email' });
@@ -56,10 +56,32 @@ class SubscriberController {
   }
 
   /**
-   * removes a subscriber from the database
+   * retrieves a subscriber by id
    * @type {Handler}
    */
-  static async deleteSubscriber(request, response) {
+  static async getSubscriberById(request, response) {
+    const { id } = request.params;
+
+    const subscriberId = parseInt(id, 10);
+
+    try {
+      const subscriber = await Subscriber.getSubscriberById(subscriberId);
+      if (!subscriber) {
+        return response.status(400).json({ error: 'Not found' });
+      }
+      const { email } = subscriber;
+
+      return response.status(200).json({ mesage: 'success', id, email })
+    } catch (error) {
+      return response.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
+  /**
+   * removes a subscriber from the database by email
+   * @type {Handler}
+   */
+  static async deleteByEmail(request, response) {
     /** @type {string} */
     const { email } = request.params;
 
@@ -72,13 +94,46 @@ class SubscriberController {
       }
 
       // delete resource
-      const isDeleted = await Subscriber.deleteSubscriber(email)
+      const isDeleted = await Subscriber.deleteByEmail(email)
       if (!isDeleted) {
         throw new Error('Could not delete');
       }
       const toReturn = {
-        message: 'Subscriber removed successfully',
+        message: 'success',
         email
+      }
+      return response.status(200).json(toReturn);
+
+    } catch (error) {
+      return response.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
+  /**
+   * removes a subscriber from the database by email
+   * @type {Handler}
+   */
+  static async deleteById(request, response) {
+    /** @type {string} */
+    const { id } = request.params;
+
+    try {
+      const subscriberId = parseInt(id, 10);
+      // Enforce idempotency in requests
+      const subscriberExists = await Subscriber.getSubscriberById(subscriberId);
+
+      if (!subscriberExists) {
+        response.status(404).json({});
+      }
+
+      // delete resource
+      const isDeleted = await Subscriber.deleteById(subscriberId)
+      if (!isDeleted) {
+        throw new Error('Could not delete');
+      }
+      const toReturn = {
+        message: 'success',
+        id
       }
       return response.status(200).json(toReturn);
 

@@ -38,10 +38,14 @@ async function validateSubscriberBody(request, response, next) {
  * ## validates email from subscriber for GET and DELETE requests
  * @type {Handler}
  */
-async function validateSubscriberParam(request, response, next) {
+async function validateEmailParam(request, response, next) {
     const { email } = request.params;
 
-    if (!email || typeof email !== 'string' || !Util.checkIsEmail(email)) {
+    if (!email) {
+        return response.status(400).json({ error: 'Missing email' });
+    }
+
+    if (typeof email !== 'string' || !Util.checkIsEmail(email)) {
         return response.status(400).json({ error: 'Invalid email' })
     }
 
@@ -59,4 +63,40 @@ async function validateSubscriberParam(request, response, next) {
     next();
 }
 
-module.exports = { validateSubscriberBody, validateSubscriberParam };
+/**
+ * ## validates id from subscriber for GET and DELETE requests
+ * @type {Handler}
+ */
+async function validateIdParam(request, response, next) {
+    const { id } = request.params;
+
+
+    if (!id) {
+        return response.status(400).json({ error: 'Missing id' });
+    }
+
+    // parse
+    const subscriberId = parseInt(id, 10);
+
+    if (!Util.checkDigit(id) || typeof subscriberId !== 'number' || isNaN(subscriberId)) {
+        return response.status(400).json({ error: 'Invalid id' })
+    }
+
+    // check resource/subscriber's existence
+    const subscriber = await Subscriber.getSubscriberById(subscriberId);
+
+    // check HTTP method for DELETE
+    if (request.method === 'DELETE') {
+        // enforce idempotency
+        if (!subscriber) {
+            return response.status(404).json({});
+        }
+        return next();
+    }
+    next();
+}
+
+module.exports = {
+    validateSubscriberBody,
+    validateEmailParam, validateIdParam
+};

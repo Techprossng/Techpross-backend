@@ -66,7 +66,7 @@ async function validateContactBody(request, response, next) {
  * ## validates email from contact for GET and DELETE requests
  * @type {Handler}
  */
-async function validateContactParam(request, response, next) {
+async function validateEmailParam(request, response, next) {
     const { email } = request.params;
 
     if (!email) {
@@ -91,4 +91,39 @@ async function validateContactParam(request, response, next) {
     next();
 }
 
-module.exports = { validateContactBody, validateContactParam };
+/**
+ * ## validates id from contact for GET and DELETE requests
+ * @type {Handler}
+ */
+async function validateIdParam(request, response, next) {
+    const { id } = request.params;
+
+    if (!id) {
+        return response.status(400).json({ error: 'Missing id' });
+    }
+
+    const contactId = parseInt(id, 10);
+
+    if (!Util.checkDigit(id) || typeof contactId !== 'number' || isNaN(contactId)) {
+        return response.status(400).json({ error: 'Invalid id' })
+    }
+
+    // check resource/contact's existence
+    const contact = await Contact.getContactById(contactId);
+
+    // check HTTP method for DELETE
+    if (request.method === 'DELETE') {
+        // enforce idempotency
+        if (!contact) {
+            return response.status(404).json({});
+        }
+        return next();
+    }
+    next();
+}
+
+module.exports = {
+    validateContactBody,
+    validateEmailParam,
+    validateIdParam
+};

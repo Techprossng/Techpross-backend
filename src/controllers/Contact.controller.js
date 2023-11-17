@@ -42,11 +42,33 @@ class ContactController {
    * retrieves a contact resource
    * @type {Handler}
    */
-  static async getContact(request, response) {
+  static async getContactByEmail(request, response) {
     const { email } = request.params;
 
     try {
       const contact = await Contact.getContactByEmail(email);
+      if (!contact) {
+        return response.status(400).json({ error: 'Not found' });
+      }
+
+      return response.status(200).json({ mesage: 'success', ...contact });
+
+    } catch (error) {
+      return response.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
+  /**
+   * retrieves a contact resource
+   * @type {Handler}
+   */
+  static async getContactById(request, response) {
+    const { id } = request.params;
+
+    try {
+      const contactId = parseInt(id, 10);
+
+      const contact = await Contact.getContactById(contactId);
       if (!contact) {
         return response.status(400).json({ error: 'Not found' });
       }
@@ -93,18 +115,44 @@ class ContactController {
    * removes a contact from the database
    * @type {Handler}
    */
-  static async deleteContact(request, response) {
+  static async deleteByEmail(request, response) {
     const { email } = request.params;
 
     try {
       // delete resource
-      const isDeleted = await Contact.deleteContact(email)
+      const isDeleted = await Contact.deleteByEmail(email)
       if (!isDeleted) {
         throw new Error('Could not delete');
       }
       const toReturn = {
         message: 'success',
         email
+      }
+      return response.status(200).json(toReturn);
+
+    } catch (error) {
+      return response.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
+  /**
+   * removes a contact from the database
+   * @type {Handler}
+   */
+  static async deleteById(request, response) {
+    const { id } = request.params;
+
+    try {
+      // delete resource
+      const contactId = parseInt(id, 10);
+
+      const isDeleted = await Contact.deleteById(contactId)
+      if (!isDeleted) {
+        throw new Error('Could not delete');
+      }
+      const toReturn = {
+        message: 'success',
+        id
       }
       return response.status(200).json(toReturn);
 

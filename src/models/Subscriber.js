@@ -48,6 +48,27 @@ class Subscriber {
   }
 
   /**
+   * @async
+   * Gets a subscriber by id
+   * @param {number} subscriberId
+   * @returns {Promise<object | null>} containing id and email
+   */
+  static async getSubscriberById(subscriberId) {
+
+    try {
+      const subscriber = await db(TABLES.SUBSCRIBERS)
+        .where({ id: subscriberId }).first();
+
+      if (!subscriber) {
+        return null
+      }
+      return Object.assign({}, subscriber);
+    } catch (error) {
+      throw new Error('Could not get subscriber');
+    }
+  }
+
+  /**
    * retrieves all subscribers by page
    * @param {number} pageNum 
    * @returns {Promise<object>} contains subscribers data by page and
@@ -91,10 +112,27 @@ class Subscriber {
    * @param {string} subscriberEmail 
    * @returns {Promise<boolean>}
    */
-  static async deleteSubscriber(subscriberEmail) {
+  static async deleteByEmail(subscriberEmail) {
     try {
       await db(TABLES.SUBSCRIBERS)
         .where({ email: subscriberEmail })
+        .del()
+      return true;
+    } catch (error) {
+      throw new Error('Could not delete subscriber');
+    }
+  }
+
+  /**
+   * @async
+   * deletes a subscriber.
+   * @param {number} subscriberId
+   * @returns {Promise<boolean>}
+   */
+  static async deleteById(subscriberId) {
+    try {
+      await db(TABLES.SUBSCRIBERS)
+        .where({ id: subscriberId })
         .del()
       return true;
     } catch (error) {

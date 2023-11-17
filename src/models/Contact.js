@@ -29,10 +29,10 @@ class Contact {
    */
   static async addContact(contactData) {
     try {
-      const [contactId] = await db(TABLES.CONTACTS)
+      const [id] = await db(TABLES.CONTACTS)
         .insert({ ...contactData })
       return {
-        id: contactId,
+        id: id,
         ...contactData
       }
     } catch (error) {
@@ -50,6 +50,25 @@ class Contact {
     try {
       const contact = await db(TABLES.CONTACTS)
         .where({ email: contactEmail }).first();
+      if (!contact) {
+        return null;
+      }
+      return Object.assign({}, contact);
+    } catch (error) {
+      throw new Error('Could not get contact');
+    }
+  }
+
+  /**
+   * @async
+   * retrieves a contact resource
+   * @param {number} contactId 
+   * @returns {Promise<object>} a contact resource
+   */
+  static async getContactById(contactId) {
+    try {
+      const contact = await db(TABLES.CONTACTS)
+        .where({ id: contactId }).first();
       if (!contact) {
         return null;
       }
@@ -100,14 +119,31 @@ class Contact {
 
   /**
    * @async
-   * deletes a contact.
+   * deletes a contact by email.
    * @param {string} contactEmail 
    * @returns {Promise<boolean>}
    */
-  static async deleteContact(contactEmail) {
+  static async deleteByEmail(contactEmail) {
     try {
       await db(TABLES.CONTACTS)
         .where({ email: contactEmail })
+        .del()
+      return true;
+    } catch (error) {
+      throw new Error('Could not delete contact');
+    }
+  }
+
+  /**
+   * @async
+   * deletes a contact by id.
+   * @param {number} id 
+   * @returns {Promise<boolean>}
+   */
+  static async deleteById(id) {
+    try {
+      await db(TABLES.CONTACTS)
+        .where({ id: id })
         .del()
       return true;
     } catch (error) {

@@ -90,6 +90,7 @@ class Subscriber {
 
       // set new offset and get next page number
       const newOffset = this.pageLimit + offset;
+      console.log(offset, newOffset);
       const nextPageNum = await Util.
         getNextPage(newOffset, this.pageLimit, TABLES.SUBSCRIBERS);
 

@@ -346,6 +346,7 @@ Successful response - status code - `200`
     message: "success",
     id : number
 }
+```
 
 - `DELETE /api/v1/subscribers/emails/:email` - Delete by email
 

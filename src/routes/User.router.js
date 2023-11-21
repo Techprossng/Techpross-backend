@@ -18,6 +18,7 @@ router.post(
   "/auth/users/signUp", validateSignupInput, UserController.register
 );
 
+
 router.post("/auth/users/login",validateLoginInput,UserController.login)
 
 router.post("/auth/users/:userId/logout",validateLogoutParam,UserController.logout)

@@ -1,4 +1,4 @@
-// instructors_table.js
+// subscribers_table.js
 
 /**
  * @param { import("knex").Knex } knex
@@ -6,15 +6,13 @@
  */
 exports.up = function (knex) {
   return knex.schema
-    .createTable('instructors', function (table) {
+    .createTable('subscribers', function (table) {
       table.bigIncrements('id').primary().notNullable();
-      table.string('name', 256).notNullable();
       table.string('email', 128).unique().notNullable();
-      table.bigInteger('courseId').unsigned().unique().notNullable();
 
       // Indexes
-      table.index('courseId', 'courseId_index');
       table.index('id');
+      table.index('email');
     });
 };
 
@@ -23,5 +21,6 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schema.dropTableIfExists('instructors');
+  return knex.schema
+    .dropTableIfExists('subscribers');
 };

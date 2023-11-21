@@ -1,13 +1,31 @@
-const { createAccessToken } = require('../middlewares/token');
+// @ts-check
+const Token = require('../middlewares/token/index');
 const User = require('../models/User');
 const { Util } = require('../utils');
 
+// DEFINED TYPES. Hover on types defined with `typedef` to view.
 /**
- * ### controller for user. Handles login, logout, signup
+ * @typedef {object} IUserUpdate
+ * @property {string?} firstName
+ * @property {string?} lastName
+ * @property {string?} bio 
+ * @property {string?} phoneNumber
+ * 
+ * @callback Handler
+ * @param {import('express').Request} request
+ * @param {import('express').Response} response
+ */
+
+
+/**
+ * @class
+ * @classdesc ### controller for user. Handles login, logout, signup, and
+ * ### users defined actions.
  */
 class UserController {
     /**
      * ### registration function
+     * @type {Handler}
      */
     static async register(request, response) {
         const { email, password, firstName, lastName } = request.body;
@@ -16,7 +34,14 @@ class UserController {
         const userData = {
             email, password, firstName, lastName
         }
+
         try {
+            const emailExists = await User.getUserByEmail(email);
+            console.log(emailExists)
+            if (emailExists) {
+                return response.status(400).json({ error: 'Email already exists' });
+            }
+
             const user = await User.createUser(userData);
 
             const returnData = { message: 'Registration successful', ...user }
@@ -29,6 +54,7 @@ class UserController {
 
     /**
      * ### Login function
+     * @type {Handler}
      */
     static async login(request, response) {
         const { email, password } = request.body;
@@ -44,7 +70,7 @@ class UserController {
                 return response.status(400).json({ error: 'Wrong password' });
             }
             // create token
-            const accessToken = await createAccessToken(email);
+            const accessToken = await Token.createAccessToken(email);
 
             // set access token in cookies; maxAge is 5 days
             // cookie name is `rememberUser`, value is `accessToken`
@@ -58,15 +84,15 @@ class UserController {
         }
     }
 
+    static async loginWithGoogle() { }
+
+    /**
+     * Logout handler
+     * @type {Handler}
+     */
     static async logout(request, response) {
         const { userId } = request.params;
-        if (!userId) {
-            return response.status(400).json({ error: 'Missing userId' });
-        }
-        // check for valid id
-        if (!Util.checkDigit.test(userId)) {
-            return response.status(400).json({ error: 'Invalid userId' });
-        }
+
         try {
             // validate user existence
             const user = await User.getUserById(userId);
@@ -74,7 +100,7 @@ class UserController {
                 return response.status(404).json({ error: 'User not found' });
             }
             // clear cookie in response object
-            response.clearCookie(rememberUserTechPros);
+            response.clearCookie('rememberUserTechPros');
 
             return response.status(200).json({ message: 'Logout successful' });
 
@@ -83,19 +109,30 @@ class UserController {
         }
     }
 
+    /**
+     * Update handler
+     * @type {Handler}
+     */
     static async update(request, response) {
         const { userId } = request.params;
-        const { first_name, last_name, bio } = request.body;
+        const { firstName, lastName, bio, phoneNumber } = request.body;
         if (!userId) {
             return response.status(400).json({ error: 'Missing userId' });
         }
+
+        /** @see Util for implemtation details */
         // check for valid id
-        if (!Util.checkDigit.test(userId)) {
+        if (!Util.checkDigit(userId)) {
             return response.status(400).json({ error: 'Invalid userId' });
         }
 
+        /** @type {IUserUpdate} */
+        const dataToUpdate = {
+            firstName, lastName, bio, phoneNumber
+        }
+
         try {
-            const updatedData = await User.updateUser({ first_name, last_name, bio });
+            const updatedData = await User.updateUser(dataToUpdate, userId);
 
             const returnData = { message: 'Update successful', ...updatedData };
             return response.status(200).json(returnData);

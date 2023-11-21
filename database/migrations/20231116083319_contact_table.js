@@ -1,4 +1,5 @@
-// users_table.js
+// contacts_table.js
+
 
 /**
  * @param { import("knex").Knex } knex
@@ -6,20 +7,19 @@
  */
 exports.up = function (knex) {
   return knex.schema
-    .createTable('users', function (table) {
+    .createTable('contacts', function (table) {
       table.bigIncrements('id').primary().notNullable();
+      table.datetime('createdAt').defaultTo(knex.fn.now());
+      table.datetime('updatedAt').defaultTo(knex.fn.now());
       table.string('firstName', 100).notNullable();
       table.string('lastName', 100).notNullable();
-      table.string('email', 128).unique().notNullable();
-      table.string('password', 256).notNullable();
-      table.string('phoneNumber', 50);
-      table.string('bio', 256);
-      table.boolean('isVerified').defaultTo(false);
-      table.string('country', 50);
+      table.string('email', 50).notNullable().unique();
+      table.string('description', 255).notNullable();
+      table.string('website', 50).nullable();
 
       // Indexes
-      table.index('email');
       table.index('id');
+      table.index('email');
     });
 };
 
@@ -28,6 +28,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schema
-    .dropTableIfExists('users');
+  return knex.schema.dropTableIfExists('contacts');
 };

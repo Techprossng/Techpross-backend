@@ -1,25 +1,35 @@
+// @ts-check
 // entry point of server
 const express = require("express");
 const cors = require("cors");
+const { Buffer } = require('node:buffer');
+
+const userRouter = require("./routes/User.router");
+const subscriberRouter = require("./routes/Subscriber.router");
+const contactRouter = require("./routes/Contact.router");
 
 // initialize express app
 const app = express();
 
 // middleware for serializing and validating content-type
+
 // JSON requests
 app.use(
     express.json({
-        verify: async (req, res, buffer, encoding) => {
+        verify: async (req, res, buffer) => {
+            let data = '';
+            if (Buffer.isBuffer(buffer)) {
+                /** @type {string} */
+                data = buffer.toString();
+            }
             try {
-                await JSON.parse(buffer);
+                JSON.parse(data);
             } catch (error) {
-                return res.status(400).json({ message: "Not a JSON" });
+                return res.status(400).json({ error: "Not a JSON" });
             }
         },
     })
 );
-// query parameters
-app.use(express.urlencoded({ extended: false }));
 
 // CORS
 const corsOptions = {
@@ -28,13 +38,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // SET ROUTE HANDLERS HERE
-const userRouter = require("./routes/User.router");
 
-//MOUNT ROUTERS
+// MOUNT ROUTERS
 app.use("/api/v1", userRouter);
+app.use('/api/v1', subscriberRouter);
+app.use("/api/v1", contactRouter);
 
 // listening port
 const port = 3000;
+
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);

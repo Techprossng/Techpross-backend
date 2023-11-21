@@ -19,4 +19,9 @@ router.post(
 );
 
 
+router.post("/auth/users/login",validateLoginInput,UserController.login)
+
+router.post("/auth/users/:userId/logout",validateLogoutParam,UserController.logout)
+
+
 module.exports = router;

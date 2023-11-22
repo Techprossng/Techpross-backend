@@ -48,7 +48,7 @@ class ContactController {
     try {
       const contact = await Contact.getContactByEmail(email);
       if (!contact) {
-        return response.status(400).json({ error: 'Not found' });
+        return response.status(404).json({ error: 'Not found' });
       }
 
       return response.status(200).json({ mesage: 'success', ...contact });
@@ -70,7 +70,7 @@ class ContactController {
 
       const contact = await Contact.getContactById(contactId);
       if (!contact) {
-        return response.status(400).json({ error: 'Not found' });
+        return response.status(404).json({ error: 'Not found' });
       }
 
       return response.status(200).json({ mesage: 'success', ...contact });

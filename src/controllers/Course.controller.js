@@ -41,7 +41,7 @@ class CourseController{
             //check if course exists
             const course=await Course.getCourseById(courseId)
             if(!course){
-                return response.status(400).json({error:"Course Not Found"})
+                return response.status(404).json({error:"Course Not Found"})
             }
 
             return response.status(200).json({message:"Success",...course})
@@ -62,7 +62,7 @@ class CourseController{
             const courseExists=await Course.getCourseById(courseId)
 
             if(!courseExists){
-                return response(400).json({error:"Course Not Found"})
+                return response(404).json({error:"Course Not Found"})
             }
 
             //delete course

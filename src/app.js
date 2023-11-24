@@ -2,7 +2,7 @@
 // entry point of server
 const express = require("express");
 const cors = require("cors");
-const loggingMiddleware = require("./middleware/logging");
+const loggingMiddleware = require("./middlewares/logging");
 const { Buffer } = require('node:buffer');
 
 const userRouter = require("./routes/User.router");

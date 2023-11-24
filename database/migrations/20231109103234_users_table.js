@@ -15,6 +15,7 @@ exports.up = function (knex) {
       table.string('phoneNumber', 50);
       table.string('bio', 256);
       table.boolean('isVerified').defaultTo(false);
+      table.boolean('isAdmin').defaultTo(false);
       table.string('country', 50);
 
       // Indexes

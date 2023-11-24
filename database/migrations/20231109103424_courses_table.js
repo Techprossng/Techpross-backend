@@ -12,7 +12,7 @@ exports.up = function (knex) {
       table.string('name', 100).notNullable();
       table.string('description', 256).notNullable();
       table.integer('price').notNullable();
-      table.bigInteger('instructorId').unsigned().unique().notNullable();
+      table.bigInteger('instructorId').unsigned().unique().nullable();
 
       // Indexes
       table.index('id');

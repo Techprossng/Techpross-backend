@@ -5,16 +5,28 @@ require('dotenv').config();
  */
 
 // define database config
+const ENV = process.env.NODE_ENV;
+
 const dbConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
-  database: process.env.DB_NAME
+  database: ENV === 'test' ? process.env.TEST_DB : process.env.DB_NAME
 }
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 module.exports = {
+
+  test: {
+    client: 'mysql',
+    connection: {
+      host: '127.0.0.1',
+      port: 3306,
+      ...dbConfig
+    },
+    migrations: { directory: './database/migrations' }
+  },
 
   development: {
     client: 'mysql',

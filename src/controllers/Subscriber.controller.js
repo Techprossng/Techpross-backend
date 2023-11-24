@@ -45,7 +45,7 @@ class SubscriberController {
     try {
       const subscriber = await Subscriber.getSubscriberByEmail(email);
       if (!subscriber) {
-        return response.status(400).json({ error: 'Not found' });
+        return response.status(404).json({ error: 'Not found' });
       }
       const { id } = subscriber;
 
@@ -67,11 +67,11 @@ class SubscriberController {
     try {
       const subscriber = await Subscriber.getSubscriberById(subscriberId);
       if (!subscriber) {
-        return response.status(400).json({ error: 'Not found' });
+        return response.status(404).json({ error: 'Not found' });
       }
       const { email } = subscriber;
 
-      return response.status(200).json({ mesage: 'success', id, email })
+      return response.status(200).json({ mesage: 'success', id: subscriberId, email })
     } catch (error) {
       return response.status(500).json({ error: 'Internal server error' });
     }

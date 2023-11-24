@@ -4,3 +4,5 @@ package-lock.json
 .env.local
 main.js
 logs/
+database/tests/
+

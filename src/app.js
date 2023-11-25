@@ -2,6 +2,7 @@
 // entry point of server
 const express = require("express");
 const cors = require("cors");
+const loggingMiddleware = require("./middlewares/logging");
 const { Buffer } = require('node:buffer');
 
 const userRouter = require("./routes/User.router");
@@ -30,6 +31,9 @@ app.use(
         },
     })
 );
+
+// Use the logging middleware
+app.use(loggingMiddleware);
 
 // CORS
 const corsOptions = {

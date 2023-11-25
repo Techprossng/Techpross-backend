@@ -69,13 +69,14 @@ async function validateEmailParam(request, response, next) {
  */
 async function validateIdParam(request, response, next) {
     const { id } = request.params;
-
+    // request method
+    const requestMethod = request.method;
 
     if (!id) {
         return response.status(400).json({ error: 'Missing id' });
     }
 
-    // parse
+    // parse id
     const subscriberId = parseInt(id, 10);
 
     if (!Util.checkDigit(id) || typeof subscriberId !== 'number' || isNaN(subscriberId)) {
@@ -86,12 +87,18 @@ async function validateIdParam(request, response, next) {
     const subscriber = await Subscriber.getSubscriberById(subscriberId);
 
     // check HTTP method for DELETE
-    if (request.method === 'DELETE') {
+    if (requestMethod === 'DELETE') {
         // enforce idempotency
         if (!subscriber) {
             return response.status(404).json({});
         }
         return next();
+    }
+    // handle GET AND PUT requests
+    if (requestMethod === 'GET' || requestMethod === 'PUT') {
+        if (!subscriber) {
+            return response.status(404).json({ error: 'Not found' });
+        }
     }
     next();
 }

@@ -11,7 +11,6 @@ const { Util } = require('../utils');
  */
 
 class ContactController {
-
   /**
    * add a contact
    * @type {Handler}

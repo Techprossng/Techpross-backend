@@ -1,83 +1,150 @@
-const Course=require('../models/Course')
+// @ts-check
+const Course = require('../models/Course');
+const { Util } = require('../utils/index');
 
 /**
+ * @callback Handler
  * @param {import('express').Request} request
  * @param {import('express').Response} response
  */
 
-class CourseController{
+class CourseController {
 
     /**
      * create a new course
+     * @type {Handler}
      */
+    static async createCourse(request, response) {
+        const { name, description, price, instructorId } = request.body;
 
-    static async createCourse(request,response){
-        const {name,description,price,instructorId}=request.body;
-
-        //save course to database
-        const courseData={name,description,price,instructorId}
+        const courseData = { name, description, price, instructorId }
 
         try {
-            //create a new course
-            const course=await Course.createNewCourse(courseData)
+            // create a new course
+            const course = await Course.createNewCourse(courseData)
 
-            const returnData={message:"Course Created Successfully",...course}
-            return response.status(201).json(returnData)
+            const returnData = { message: "success", ...course };
+
+            return response.status(201).json(returnData);
 
         } catch (error) {
-            return response.status(500).json({error:"Internal Server Error"})
+            return response.status(500).json({ error: "Internal Server Error" })
         }
     }
 
     /**
      * retrieves a course by the id
+     * @type {Handler}
      */
-    static async getCourseById(request,response){
-        const {id}=request.params;
+    static async getCourseById(request, response) {
+        const { id } = request.params;
 
-        const courseId=parseInt(id,10);
+        const courseId = parseInt(id, 10);
 
         try {
-            //check if course exists
-            const course=await Course.getCourseById(courseId)
-            if(!course){
-                return response.status(404).json({error:"Course Not Found"})
+            // check if course exists
+            const course = await Course.getCourseById(courseId)
+            if (!course) {
+                return response.status(404).json({ error: "Course Not Found" })
             }
 
-            return response.status(200).json({message:"Success",...course})
+            return response.status(200).json({ message: "success", ...course })
         } catch (error) {
-            return response.status(500).json({error:"Internal Server Error"})
+            return response.status(500).json({ error: "Internal Server Error" })
         }
     }
 
     /**
      * removes a course from the database by it's id
+     * @type {Handler}
      */
-    static async deleteCourse(request,response){
-        const {id}=request.params;
+    static async deleteCourse(request, response) {
+        const { id } = request.params;
 
-        const courseId=parseInt(id,10)
+        const courseId = parseInt(id, 10)
         try {
-            //check if the course exists
-            const courseExists=await Course.getCourseById(courseId)
+            // check if the course exists
+            const courseExists = await Course.getCourseById(courseId);
 
-            if(!courseExists){
-                return response(404).json({error:"Course Not Found"})
+            if (!courseExists) {
+                return response.status(404).json({ error: "Course Not Found" });
             }
+            // delete course
+            const courseIsDeleted = await Course.deleteCourse(courseId);
 
-            //delete course
-            const courseIsDeleted=await Course.deleteCourse(courseId)
-            if(!courseIsDeleted){
-                throw new Error("Could Not Delete Course")
+            if (!courseIsDeleted) {
+                throw new Error("Could Not Delete Course");
             }
-            const toReturn={message:"success",id}
-            return response.status(200).json(toReturn)
-            
+            const toReturn = { message: "success", id: courseId };
+
+            return response.status(204).json(toReturn);
+
         } catch (error) {
-            return response.status(500).json({error:"Internal Server Error"})
+            return response.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+
+    /**
+     * Update course
+     * @type {Handler}
+     */
+    static async updateCourse(request, response) {
+        const { id } = request.params;
+        const { name, price, description, instructorId } = request.body;
+
+        if (!id) {
+            return response.status(400).json({ error: 'Missing id' });
+        }
+
+        // define update parameters
+        const dataToUpdate = {
+            name, price, description, instructorId
+        }
+        const courseId = parseInt(id, 10);
+
+        try {
+            const updatedData = await Course.updateCourse(courseId, dataToUpdate);
+
+            const returnData = { message: 'success', ...updatedData };
+
+            return response.status(200).json(returnData);
+
+        } catch (error) {
+            return response.status(500).json({ error: 'Internal server error' });
+        }
+    }
+
+    /**
+   * retrieves subscribers by page
+   * @type {Handler}
+   */
+    static async getAllCourses(request, response) {
+        let pageNum;
+
+        // get page number
+        const { page } = request.query;
+
+        // parse page number
+        if (!page || !Util.checkDigit(page)) {
+            pageNum = 1;
+        } else {
+            // page number must be greater than 0
+            pageNum = parseInt(page, 10) <= 0 ? 1 : parseInt(page, 10);
+        }
+
+        try {
+            // get courses by page
+            const { courses, nextPageNum } = await Course.getAllCourses(pageNum);
+
+            const toReturn = { courses, current: pageNum, next: nextPageNum }
+
+            return response.status(200).json({ message: 'success', ...toReturn });
+
+        } catch (error) {
+            return response.status(500).json({ error: 'Internal Server Error' });
         }
     }
 }
 
 
-module.exports=CourseController
+module.exports = CourseController

@@ -38,7 +38,7 @@ const checkDigit = (digit) => /^[0-9]+$/.test(digit);
  * @param {string} strValue 
  * @returns {boolean}
  */
-const checkString = (strValue) => /^[A-Za-z]+$/.test(strValue);
+const checkString = (strValue) => /^[A-Za-z\s-]+$/.test(strValue);
 
 
 

@@ -18,7 +18,7 @@ const { Util } = require('../utils');
 async function validateContactBody(request, response, next) {
     const {
         email, firstName, lastName,
-        website, description
+        website, description, course
     } = request.body;
 
     // email validation
@@ -57,6 +57,9 @@ async function validateContactBody(request, response, next) {
     }
     if (typeof description !== 'string') {
         return response.status(400).json({ error: 'Invalid description' });
+    }
+    if (!course) {
+        return response.status(400).json({ error: 'Missing course' });
     }
 
     return next();

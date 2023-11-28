@@ -95,12 +95,12 @@ class Subscriber {
         getNextPage(newOffset, this.pageLimit, TABLES.SUBSCRIBERS);
 
       // cleanup object. knex returns RowData {}, set to pure object
-      const data = allSubscribers.map(subscriber => {
+      const subscribers = allSubscribers.map(subscriber => {
         const subscriberObj = Object.assign({}, subscriber);
         return subscriberObj;
       });
 
-      return { data, nextPageNum };
+      return { subscribers, nextPageNum };
 
     } catch (error) {
       throw new Error(`Could not get subscribers for ${pageNum}`);

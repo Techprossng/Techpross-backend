@@ -75,7 +75,7 @@ On successful user registration - status code: `201`
 
 ## Subscriber
 
-### Add a subscriber
+### Create a subscriber
 - `POST /api/v1/subscribers`
 
 Required `body` properties in `application/json` format:
@@ -221,7 +221,7 @@ Successful response - status code - `200`
 
 ## Contact
 
-### Add a contact
+### Create a contact
 - `POST /api/v1/contacts`
 
 Required `body` properties in `application/json` format:

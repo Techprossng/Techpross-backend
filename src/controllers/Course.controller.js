@@ -75,9 +75,8 @@ class CourseController {
             if (!courseIsDeleted) {
                 throw new Error("Could Not Delete Course");
             }
-            const toReturn = { message: "success", id: courseId };
 
-            return response.status(204).json(toReturn);
+            return response.status(204).json({});
 
         } catch (error) {
             return response.status(500).json({ error: "Internal Server Error" });

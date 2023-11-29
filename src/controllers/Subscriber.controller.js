@@ -98,11 +98,8 @@ class SubscriberController {
       if (!isDeleted) {
         throw new Error('Could not delete');
       }
-      const toReturn = {
-        message: 'success',
-        email
-      }
-      return response.status(200).json(toReturn);
+
+      return response.status(204).json({});
 
     } catch (error) {
       return response.status(500).json({ error: 'Internal server error' });
@@ -131,11 +128,8 @@ class SubscriberController {
       if (!isDeleted) {
         throw new Error('Could not delete');
       }
-      const toReturn = {
-        message: 'success',
-        id
-      }
-      return response.status(200).json(toReturn);
+
+      return response.status(204).json({});
 
     } catch (error) {
       return response.status(500).json({ error: 'Internal server error' });

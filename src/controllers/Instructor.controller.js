@@ -29,11 +29,10 @@ class InstructorController {
       //create a new instructor
       const instructor = await Instructor.createNewInstructor(instructorData);
 
-      const returnData = { message: "success", ...instructor };
-
-      return response.status(201).json(returnData);
+      const returnInstructorData = { message: "success", ...instructor };
+      return response.status(201).json(returnInstructorData);
     } catch (error) {
-      return response.status(500).json({ error: "Internal Server Error" });
+      return response.status(500).json({ error: error.message });
     }
   }
 
@@ -86,9 +85,6 @@ class InstructorController {
     //get the page number
     const { page } = request.query;
 
-    //Exit if 'page is anything other than a string
-    if (typeof page !== "string") return;
-
     //parse page number
     if (!page || !Util.checkDigit(page)) {
       pageNum = 1;
@@ -99,9 +95,11 @@ class InstructorController {
 
     try {
       //get instructors by page
-      const { data, nextPageNum } = await Instructor.getAllInstructors(pageNum);
+      const { instructors, nextPageNum } = await Instructor.getAllInstructors(
+        pageNum
+      );
 
-      const toReturn = { data, current: pageNum, next: nextPageNum };
+      const toReturn = { instructors, current: pageNum, next: nextPageNum };
 
       return response.status(200).json({ message: "success", ...toReturn });
     } catch (error) {
@@ -114,29 +112,34 @@ class InstructorController {
    * @type {Handler}
    */
   static async updateInstructor(request, response) {
-    const { instructorId } = request.params;
+    const { id } = request.params;
+
+    const instructorId = parseInt(id, 10);
     const { name, email, courseId } = request.body;
     if (!instructorId) {
       return response.status(404).json({ error: "Missing instructorId" });
     }
     /** @see Util for implentation details */
     // check for valid id
-    if (!Util.checkDigit(instructorId)) {
-      return response.status(400).json({ error: "Invalid instructorId" });
-    }
+    // if (!Util.checkDigit(instructorId)) {
+    //   return response.status(400).json({ error: "Invalid instructorId" });
+    // }
 
     /** @type {UInstructorUpdate} */
-    const dataToUpdate = { name, email, courseId };
+    const instructorDataToUpdate = { name, email, courseId };
 
     try {
-      const updatedData = await Instructor.updateInstructor(
-        dataToUpdate,
+      const updatedInstructorData = await Instructor.updateInstructor(
+        instructorDataToUpdate,
         instructorId
       );
 
-      const returnData = { message: "Update successful", ...updatedData };
+      const instructor = {
+        message: "Update successful",
+        ...updatedInstructorData,
+      };
 
-      return response.status(200).json(returnData);
+      return response.status(200).json(instructor);
     } catch (error) {
       return response.status(500).json({ error: "Internal server error" });
     }
@@ -157,7 +160,7 @@ class InstructorController {
         throw new Error("Could not delete");
       }
       const toReturn = { message: "success", id };
-      return response.status(200).json(toReturn);
+      return response.status(204).json(toReturn);
     } catch (error) {
       return response.status(500).json({ error: "Internal server error" });
     }

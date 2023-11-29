@@ -112,12 +112,12 @@ class Instructor {
       );
 
       //cleanup object. Knex returns RowData {}, set to pure object
-      const data = allInstructors.map((instructor) => {
+      const instructors = allInstructors.map((instructor) => {
         const instructorObj = Object.assign({}, instructor);
         return instructorObj;
       });
 
-      return { data, nextPageNum };
+      return { instructors, nextPageNum };
     } catch (error) {
       throw new Error("Unable to get instructors");
     }
@@ -126,7 +126,7 @@ class Instructor {
   /**
    * updates an instructors info on the database
    * @param {UInstructorUpdate} instructorData
-   * @param {string} instructorId
+   * @param {number} instructorId
    */
   static async updateInstructor(instructorData, instructorId) {
     //define the expected keys
@@ -138,19 +138,21 @@ class Instructor {
     );
 
     //create object for update
-    const dataToUpdate = {};
+    const InstructorDataToUpdate = {};
     for (const [key, value] of Object.entries(instructorData)) {
       if (keysToUpdate.indexOf(key) !== -1) {
-        dataToUpdate[key] = value;
+        InstructorDataToUpdate[key] = value;
       }
     }
 
     try {
-      const id = await db(TABLES.INSTRUCTORS)
+      //the .update() method returns the number of records changed. This number is saved in a variable (numberOfChanges)
+      //so we can confirm how many records were changed to the client.
+      const numberOfChanges = await db(TABLES.INSTRUCTORS)
         .where({ id: instructorId })
-        .update({ ...dataToUpdate });
+        .update({ ...InstructorDataToUpdate });
 
-      return { instructorId: id, ...dataToUpdate };
+      return { instructorId, numberOfChanges, ...InstructorDataToUpdate };
     } catch (error) {
       throw new Error("Unable to update");
     }
@@ -159,7 +161,6 @@ class Instructor {
   /**
    * deletes an instructor from the database
    * @param {number} instructorId
-   * @returns {Promise<boolean>}
    */
   static async deleteInstructorById(instructorId) {
     //get instructor

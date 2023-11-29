@@ -32,7 +32,7 @@ class InstructorController {
       const returnInstructorData = { message: "success", ...instructor };
       return response.status(201).json(returnInstructorData);
     } catch (error) {
-      return response.status(500).json({ error: error.message });
+      return response.status(500).json({ error: "Internal Server Error" });
     }
   }
 

@@ -9,6 +9,7 @@ const userRouter = require("./routes/User.router");
 const subscriberRouter = require("./routes/Subscriber.router");
 const contactRouter = require("./routes/Contact.router");
 const courseRouter = require("./routes/Course.router");
+const path = require('path');
 
 // initialize express app
 const app = express();
@@ -49,6 +50,12 @@ app.use("/api/v1", userRouter);
 app.use('/api/v1', subscriberRouter);
 app.use("/api/v1", contactRouter);
 app.use("/api/v1", courseRouter);
+app.use(express.static(path.join(__dirname, '../../Techprossng-website/build')));
+
+// Catch-all route for React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../Techprossng-website/build', 'index.html'));
+});
 
 // listening port
 const port = 3000;

@@ -9,6 +9,7 @@ exports.up = function (knex) {
     table.bigIncrements("id").primary().notNullable();
     table.string("name", 256).notNullable();
     table.string("email", 128).unique().notNullable();
+    table.string("phone", 12).unique().nullable();
     table.bigInteger("courseId").unsigned().unique().nullable();
 
     // Indexes

@@ -11,8 +11,8 @@ const { Util } = require("../utils");
  * @property {number?} courseId
  *
  * @typedef {object} UInstructorUpdate
- * @property {string} name
- * @property {string} email
+ * @property {string?} name
+ * @property {string?} phone
  * @property {number?} courseId
  */
 
@@ -94,14 +94,20 @@ class Instructor {
    */
 
   static async getAllInstructors(pageNum = 1) {
-    //compute pagination
+    // compute pagination
     const offset = Util.getOffset(pageNum, this.pageLimit);
 
     try {
-      const allInstructors = await db(TABLES.INSTRUCTORS)
-        .select(...this.selectFields)
-        .limit(this.pageLimit) // No prepared value
-        .offset(offset);
+      const [allInstructors] = await db.raw(
+        `SELECT ins.id, ins.name, ins.email, ins.phone,
+        c.name as courseName, c.id as courseId,
+        c.description AS courseDescription
+        FROM instructors ins
+        LEFT JOIN courses c
+        ON ins.courseId = c.id
+        LIMIT ?, ?
+        `, [offset, this.pageLimit]
+      );
 
       //set new offset and get next page number
       const newOffset = this.pageLimit + offset;
@@ -130,7 +136,7 @@ class Instructor {
    */
   static async updateInstructor(instructorData, instructorId) {
     //define the expected keys
-    const expectedKeys = ["name", "email", "courseId"];
+    const expectedKeys = ["name", "courseId", "phone"];
 
     //get columns/keys to update
     const keysToUpdate = expectedKeys.filter(
@@ -138,22 +144,22 @@ class Instructor {
     );
 
     //create object for update
-    const InstructorDataToUpdate = {};
+    const instructorDataToUpdate = {};
     for (const [key, value] of Object.entries(instructorData)) {
       if (keysToUpdate.indexOf(key) !== -1) {
-        InstructorDataToUpdate[key] = value;
+        instructorDataToUpdate[key] = value;
       }
     }
 
     try {
-      //the .update() method returns the number of records changed. This number is saved in a variable (numberOfChanges)
-      //so we can confirm how many records were changed to the client.
-      const numberOfChanges = await db(TABLES.INSTRUCTORS)
+      // the update() method returns the id of the updated column.
+      const idOfCoulumn = await db(TABLES.INSTRUCTORS)
         .where({ id: instructorId })
-        .update({ ...InstructorDataToUpdate });
+        .update({ ...instructorDataToUpdate });
 
-      return { instructorId, numberOfChanges, ...InstructorDataToUpdate };
+      return { id: idOfCoulumn, ...instructorDataToUpdate };
     } catch (error) {
+      console.error(error);
       throw new Error("Unable to update");
     }
   }

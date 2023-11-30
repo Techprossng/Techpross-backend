@@ -1,6 +1,10 @@
 {
   "name": "techpross-backend",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Techprossng/Techpross-backend.git"
+  },
   "description": "To set up your node enviroment - Install node.js ### For windows It's pretty straightforward. Please follow this [link](https://nodejs.org/en) ### For linux Please follow this [link](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04)",
   "main": "index.js",
   "scripts": {
@@ -20,22 +24,30 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^20.9.0",
+    "@swc/wasm": "^1.3.99",
+    "@types/node": "^20.10.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
     "axios": "^1.6.2",
     "chai": "^4.3.10",
     "chai-http": "^4.4.0",
-    "eslint": "^8.53.0",
+    "eslint": "^8.54.0",
+    "flowbite-react": "^0.6.4",
     "mocha": "^10.2.0",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "tailwindcss": "^3.3.5",
+    "vite": "^3.2.7"
   },
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcrypt": "^4.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "esbuild-linux-64": "^0.9.7",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
-    "knex": "^3.0.1",
+    "knex": "^0.95.0",
     "mysql": "^2.18.1",
-    "mysql2": "^3.6.3"
+    "mysql2": "^3.6.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

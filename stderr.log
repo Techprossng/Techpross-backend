@@ -1,0 +1,1036 @@
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'express'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:3:17)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'express'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:3:17)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'node:buffer'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:5:20)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'node:buffer'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:5:20)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'node:buffer'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:5:20)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'node:buffer'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:5:20)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'node:buffer'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:5:20)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'node:buffer'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:5:20)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'node:buffer'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:5:20)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'node:buffer'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:5:20)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'node:buffer'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:5:20)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'node:buffer'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:5:20)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:818
+  throw err;
+  ^
+
+Error: Cannot find module 'node:buffer'
+Require stack:
+- /home/techpptf/Techpross-backend/src/app.js
+- /usr/local/lsws/fcgi-bin/lsnode.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:815:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:667:27)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at Object.<anonymous> (/home/techpptf/Techpross-backend/src/app.js:5:20)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/techpptf/Techpross-backend/src/app.js',
+    '/usr/local/lsws/fcgi-bin/lsnode.js'
+  ]
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+internal/modules/cjs/loader.js:1144
+  return process.dlopen(module, path.toNamespacedPath(filename));
+                 ^
+
+Error: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by /home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node)
+    at Object.Module._extensions..node (internal/modules/cjs/loader.js:1144:18)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/techpptf/nodevenv/Techpross-backend/14/lib/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (internal/modules/cjs/loader.js:1085:14)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+    at Module.load (internal/modules/cjs/loader.js:950:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:790:12) {
+  code: 'ERR_DLOPEN_FAILED'
+}
+(node:2315129) UnhandledPromiseRejectionWarning: Error: Could not get subscriber
+    at Function.getSubscriberById (/home/techpptf/Techpross-backend/src/models/Subscriber.js:67:13)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+    at async validateIdParam (/home/techpptf/Techpross-backend/src/middlewares/validateSubscriber.js:86:24)
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2315129) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 6)
+(node:2315129) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+Error: ENOENT: no such file or directory, stat '/home/techpptf/Techprossng-website/dist/index.html'
+Error: ENOENT: no such file or directory, stat '/home/techpptf/Techprossng-website/dist/index.html'
+Error: ENOENT: no such file or directory, stat '/home/techpptf/Techprossng-website/dist/index.html'

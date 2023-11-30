@@ -64,7 +64,7 @@ class Subscriber {
       }
       return Object.assign({}, subscriber);
     } catch (error) {
-      throw new Error('Could not get subscriber');
+      throw new Error('Could not get subscriber ${error.message}');
     }
   }
 
@@ -83,7 +83,6 @@ class Subscriber {
         .limit(this.pageLimit)
         .offset(offset)
         .orderBy('id')
-
       if (!allSubscribers) {
         return { data: [], nextPageNum: null };
       }
@@ -103,7 +102,7 @@ class Subscriber {
       return { data, nextPageNum };
 
     } catch (error) {
-      throw new Error(`Could not get subscribers for ${pageNum}`);
+      throw new Error(`Could not get subscribers for ${pageNum}, ${error.message}`);
     }
   }
 

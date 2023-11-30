@@ -5,8 +5,8 @@ const { Util } = require("../utils");
 
 /**
  * @typedef {object} UInstructorUpdate
- * @property {string} name
- * @property {string} email
+ * @property {string?} name
+ * @property {string?} phone
  * @property {number?} courseId
  *
  *
@@ -26,11 +26,11 @@ class InstructorController {
     const instructorData = { name, email, courseId };
 
     try {
-      //create a new instructor
       const instructor = await Instructor.createNewInstructor(instructorData);
 
       const returnInstructorData = { message: "success", ...instructor };
       return response.status(201).json(returnInstructorData);
+
     } catch (error) {
       return response.status(500).json({ error: "Internal Server Error" });
     }
@@ -45,10 +45,12 @@ class InstructorController {
 
     try {
       const instructor = await Instructor.getInstructorByEmail(email);
+
       if (!instructor) {
         return response.status(404).json({ error: "Instructor not found" });
       }
       return response.status(200).json({ message: "success", ...instructor });
+
     } catch (error) {
       return response.status(500).json({ error: "Internal Server Error" });
     }
@@ -68,6 +70,7 @@ class InstructorController {
       if (!instructor) {
         return response.status(404).json({ error: "Instructor not found" });
       }
+
       return response.status(500).json({ message: "success", ...instructor });
     } catch (error) {
       return response.status(500).json({ error: "Internal Server Error" });
@@ -82,23 +85,22 @@ class InstructorController {
   static async getAllInstructors(request, response) {
     let pageNum;
 
-    //get the page number
+    // get the page number
     const { page } = request.query;
 
-    //parse page number
+    // parse page number
     if (!page || !Util.checkDigit(page)) {
       pageNum = 1;
     } else {
-      //page number must be greater than 0
+      // page number must be greater than 0
       pageNum = parseInt(page, 10) <= 0 ? 1 : parseInt(page, 10);
     }
 
     try {
-      //get instructors by page
+      // get instructors by page
       const { instructors, nextPageNum } = await Instructor.getAllInstructors(
         pageNum
       );
-
       const toReturn = { instructors, current: pageNum, next: nextPageNum };
 
       return response.status(200).json({ message: "success", ...toReturn });
@@ -113,20 +115,17 @@ class InstructorController {
    */
   static async updateInstructor(request, response) {
     const { id } = request.params;
+    const { name, courseId, phone } = request.body;
 
     const instructorId = parseInt(id, 10);
-    const { name, email, courseId } = request.body;
+
+
     if (!instructorId) {
       return response.status(404).json({ error: "Missing instructorId" });
     }
-    /** @see Util for implentation details */
-    // check for valid id
-    // if (!Util.checkDigit(instructorId)) {
-    //   return response.status(400).json({ error: "Invalid instructorId" });
-    // }
 
     /** @type {UInstructorUpdate} */
-    const instructorDataToUpdate = { name, email, courseId };
+    const instructorDataToUpdate = { name, courseId, phone };
 
     try {
       const updatedInstructorData = await Instructor.updateInstructor(
@@ -135,7 +134,7 @@ class InstructorController {
       );
 
       const instructor = {
-        message: "Update successful",
+        message: "success",
         ...updatedInstructorData,
       };
 

@@ -11,13 +11,14 @@ const { Util } = require('../utils/index');
  * @property {string} email
  * @property {string} description
  * @property {string?} website
+ * @property {string} course
  */
 
 class Contact {
   /**@private @readonly */
   static selectFields = [
     'id', 'firstName', 'lastName',
-    'description', 'website', 'email'
+    'description', 'website', 'email', 'course'
   ]
   /**@private @readonly */
   static pageLimit = 20;
@@ -95,7 +96,7 @@ class Contact {
         .orderBy('id')
 
       if (!allContacts) {
-        return { data: [], nextPageNum: null };
+        return { contacts: [], nextPageNum: null };
       }
 
       // set new offset and get next page number
@@ -103,13 +104,13 @@ class Contact {
       const nextPageNum = await Util.
         getNextPage(newOffset, this.pageLimit, TABLES.CONTACTS);
 
-      const data = allContacts.map(contact => {
+      const contacts = allContacts.map(contact => {
         // cleanup object. knex returns RowData {}, set to pure object
         const contactObj = Object.assign({}, contact);
         return contactObj;
       });
 
-      return { data, nextPageNum };
+      return { contacts, nextPageNum };
 
     } catch (error) {
       throw new Error(`Could not get subscribers for ${pageNum}`);

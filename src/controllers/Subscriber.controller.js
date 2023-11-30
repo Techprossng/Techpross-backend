@@ -162,9 +162,9 @@ class SubscriberController {
 
     try {
       // get subscribers by page
-      const { data, nextPageNum } = await Subscriber.getAllSubscribers(pageNum);
+      const { subscribers, nextPageNum } = await Subscriber.getAllSubscribers(pageNum);
 
-      const toReturn = { data, current: pageNum, next: nextPageNum }
+      const toReturn = { subscribers, current: pageNum, next: nextPageNum }
 
       return response.status(200).json({ message: 'success', ...toReturn });
 

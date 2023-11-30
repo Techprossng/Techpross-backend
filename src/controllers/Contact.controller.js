@@ -18,14 +18,14 @@ class ContactController {
   static async addContact(request, response) {
     const {
       email, firstName, lastName,
-      website, description
+      website, description, course
     } = request.body;
 
     try {
       // save contact
       const contactData = {
         email, firstName, lastName,
-        website, description
+        website, description, course
       }
       const savedContact = await Contact.addContact(contactData);
       const toReturn = { message: 'success', ...savedContact };
@@ -99,9 +99,9 @@ class ContactController {
 
     try {
       // get subscribers by page
-      const { data, nextPageNum } = await Contact.getAllContacts(pageNum);
+      const { contacts, nextPageNum } = await Contact.getAllContacts(pageNum);
 
-      const toReturn = { data, current: pageNum, next: nextPageNum }
+      const toReturn = { contacts, current: pageNum, next: nextPageNum }
 
       return response.status(200).json({ message: 'success', ...toReturn });
 

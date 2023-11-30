@@ -17,7 +17,7 @@ const { Util } = require("../utils");
  */
 
 async function validateInstructorBody(request, response, next) {
-  const { name, email } = request.body;
+  const { name, email, phone } = request.body;
 
   //email validation
   if (!email) {
@@ -32,6 +32,13 @@ async function validateInstructorBody(request, response, next) {
   }
   if (typeof name !== "string" || !Util.checkString(name)) {
     return response.status(400).json({ error: "Missing name" });
+  }
+
+  // phone validation
+  if (phone) {
+    if (typeof phone !== 'string' || !Util.checkPhone(phone)) {
+      return response.status(400).json({ error: "Invalid phone" });
+    }
   }
 
   return next();
@@ -87,6 +94,7 @@ async function validateInstructorIdParam(request, response, next) {
 
   const instructorId = parseInt(id, 10);
 
+  /** @see Util for implentation details */
   if (
     !Util.checkDigit(id) ||
     typeof instructorId !== "number" ||

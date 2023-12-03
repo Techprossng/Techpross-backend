@@ -40,7 +40,14 @@ const checkDigit = (digit) => /^[0-9]+$/.test(digit);
  */
 const checkString = (strValue) => /^[A-Za-z\s-]+$/.test(strValue);
 
-
+/**
+ * tests for a valid phone number
+ * @param {string} phoneNum 
+ * @returns {boolean}
+ */
+const checkPhone = (phoneNum) => {
+    return /^\+[0-9]{2,3}[0-9]+$|^[0-9][0-9]+$/.test(phoneNum)
+};
 
 
 /**
@@ -53,5 +60,6 @@ exports.Util = {
     checkString,
     checkIsEmail,
     getOffset,
-    getNextPage
+    getNextPage,
+    checkPhone
 }

@@ -55,7 +55,7 @@ describe('Subscriber model', function () {
         .send({})
         .end((error, res) => {
             expect(res).to.have.status(400);
-            respJson = JSON.parse(res.text)
+         const   respJson = JSON.parse(res.text)
             expect(respJson).to.deep.equal({error: 'Missing email'});
             done();
         });
@@ -66,7 +66,7 @@ describe('Subscriber model', function () {
         .get('/subscribers/emails/unknown@email.com')
         .end((error, res) => {
             expect(res).to.have.status(404);
-            respJson = JSON.parse(res.text)
+          const  respJson = JSON.parse(res.text)
             expect(respJson).to.deep.equal({error: 'Not found'});
             done();
         })
@@ -78,7 +78,7 @@ describe('Subscriber model', function () {
         .get('/subscribers/notanumber')
         .end((error, res) => {
             expect(res).to.have.status(400);
-            respJson = JSON.parse(res.text)
+          const  respJson = JSON.parse(res.text)
             expect(respJson).to.deep.equal({error: 'Invalid id'});
             done();
         });
@@ -90,7 +90,7 @@ describe('Subscriber model', function () {
         .get('/subscribers')
         .end((error, res) => {
             expect(res).to.have.status(200);
-            respJson = JSON.parse(res.text)
+          const  respJson = JSON.parse(res.text)
             expect(respJson.data).to.be.an('Array');
             expect(respJson.current).to.be.a('number');
             expect(respJson.next).to.satisfy((value) => {
@@ -106,7 +106,7 @@ describe('Subscriber model', function () {
         .delete(`/subscribers/emails/${subs.email}`)
         .end((error, res) => {
             expect(res).to.have.status(200);
-            respJson = JSON.parse(res.text)
+         const   respJson = JSON.parse(res.text)
             expect(respJson).to.deep.equal({message: 'success', email: subs.email});
             done();
         });

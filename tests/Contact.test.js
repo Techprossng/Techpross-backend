@@ -21,7 +21,7 @@ describe('Contact model', function () {
         .send({...contact})
         .end((error, res) => {
             expect(res).to.have.status(201);
-            respJson = JSON.parse(res.text)
+          const  respJson = JSON.parse(res.text)
             expect(respJson).to.have.property('message');
             expect(respJson).to.have.property('email');
             expect(respJson).to.have.property('lastName');
@@ -62,7 +62,7 @@ describe('Contact model', function () {
         .send({...rest})
         .end((error, res) => {
             expect(res).to.have.status(400);
-            respJson = JSON.parse(res.text)
+           const respJson = JSON.parse(res.text)
             expect(respJson).to.deep.equal({error: 'Missing email'});
             done();
         });
@@ -73,7 +73,7 @@ describe('Contact model', function () {
         .get('/contacts/emails/unknown@email.com')
         .end((error, res) => {
             expect(res).to.have.status(404);
-            respJson = JSON.parse(res.text)
+          const  respJson = JSON.parse(res.text)
             expect(respJson).to.deep.equal({error: 'Not found'});
             done();
         })
@@ -85,7 +85,7 @@ describe('Contact model', function () {
         .get('/contacts/4ty5')
         .end((error, res) => {
             expect(res).to.have.status(400);
-            respJson = JSON.parse(res.text)
+          const  respJson = JSON.parse(res.text)
             expect(respJson).to.deep.equal({error: 'Invalid id'});
             done();
         });
@@ -96,7 +96,7 @@ describe('Contact model', function () {
         .get('/contacts')
         .end((error, res) => {
             expect(res).to.have.status(200);
-            respJson = JSON.parse(res.text)
+           const respJson = JSON.parse(res.text)
             expect(respJson.data).to.be.an('Array');
             expect(respJson.current).to.be.a('number');
             expect(respJson.next).to.satisfy((value) => {
@@ -111,7 +111,7 @@ describe('Contact model', function () {
         .delete(`/contacts/emails/${contact.email}`)
         .end((error, res) => {
             expect(res).to.have.status(200);
-            respJson = JSON.parse(res.text)
+        const    respJson = JSON.parse(res.text)
             expect(respJson).to.have.property('message');
             expect(respJson).to.have.property('email');
             expect(respJson).to.deep.equal({message: 'success', email: contact.email})
@@ -124,7 +124,7 @@ describe('Contact model', function () {
         .delete(`/contacts/emails/${contact.email}`)
         .end((error, res) => {
             expect(res).to.have.status(404);
-            respJson = JSON.parse(res.text)
+         const   respJson = JSON.parse(res.text)
             expect(respJson).not.to.have.property('message');
             expect(respJson).not.to.have.property('email');
             expect(respJson).to.deep.equal({});

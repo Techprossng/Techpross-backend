@@ -1,4 +1,4 @@
-//@ts-check
+// @ts-check
 const { db, TABLES } = require("../db");
 const { Util } = require("../utils");
 
@@ -8,6 +8,7 @@ const { Util } = require("../utils");
  * @typedef {object} UInstructor
  * @property {string} name
  * @property {string} email
+ * @property {string?} phone
  * @property {number?} courseId
  *
  * @typedef {object} UInstructorUpdate

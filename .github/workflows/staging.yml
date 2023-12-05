@@ -1,0 +1,72 @@
+name: Node.js CI with MySQL
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_password
+        ports:
+          - 3306:3306
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.3.2
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Start MySQL Service
+        run: |
+          sudo service mysql start
+          sleep 5 # Give some time for MySQL to start
+
+      - name: Wait for MySQL
+        run: |
+          until nc -zv localhost 3306; do sleep 1; done
+
+      - name: Create Database Schema
+        run: |
+          # Replace with commands to set up your MySQL database schema
+          # For example:
+          # mysql -u test_user -p test_db < schema.sql
+
+      - name: Run Database Tests
+        run: |
+          # Run your database tests using Jest or your preferred testing framework for MySQL
+          # For example:
+          # npm run test:db
+
+      - name: npm install, build, and test
+        run: |
+          npm install
+          npm run build --if-present
+          npm test
+
+      - name: Deployment - Sync Files to FTP
+        if: success() # Only deploy if previous steps (tests) were successful
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: techprosnaija.com
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /public_html/staging.watch-learn.com/

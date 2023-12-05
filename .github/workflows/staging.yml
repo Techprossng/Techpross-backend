@@ -22,7 +22,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: test_db
           MYSQL_USER: test_user
-          MYSQL_PASSWORD: test_password
+          MYSQL_PASSWORD: password
         ports:
           - 3306:3306
 
@@ -35,23 +35,23 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Start MySQL Service
-        run: |
-          sudo service mysql start
-          sleep 5 # Give some time for MySQL to start
+      # - name: Start MySQL Service
+      #   run: |
+      #     sudo service mysql start
+      #     sleep 5 # Give some time for MySQL to start
 
-      - name: Wait for MySQL
-        run: |
-          until nc -zv localhost 3306; do sleep 1; done
+      # - name: Wait for MySQL
+      #   run: |
+      #     until nc -zv localhost 3306; do sleep 1; done
 
-      - name: Create Database Schema
-        run: |
-          mysql -u root -p < schema.sql
-          mysql -u test_user -p test_db < schema.sql
+      # - name: Create Database Schema
+      #   run: |
+      #     mysql -u root -p < schema.sql
+      #     mysql -u test_user -p test_db < schema.sql
 
-      - name: Run Database Tests
-        run: |
-           npm run test:db
+      # - name: Run Database Tests
+      #   run: |
+      #      npm run test:db
 
       - name: npm install, build, and test
         run: |

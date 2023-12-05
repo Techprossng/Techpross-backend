@@ -92,3 +92,6 @@ CREATE INDEX user_id_index ON users_courses(user_id);
 
 CREATE INDEX contact_id_index ON contacts(id);
 CREATE INDEX contact_email_index ON contacts(email);
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
+

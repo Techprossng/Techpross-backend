@@ -1,5 +1,6 @@
 // @ts-check
 const Course = require('../models/Course');
+const Instructor = require('../models/Instructor');
 const { Util } = require('../utils');
 
 /**
@@ -15,7 +16,6 @@ const { Util } = require('../utils');
  */
 async function validateBody(request, response, next) {
     const { name, description, price, instructorId } = request.body;
-
     // validate name
     if (!name) {
         return response.status(400).json({ error: 'Missing course name' });
@@ -50,9 +50,16 @@ async function validateBody(request, response, next) {
             return response.status(400).json({ error: 'Invalid instructorId' });
         }
         // check if instructor exists
+        const instructor = await Instructor.getInstructorById(instructorIdNum);
         // if instructor does not exists, return a 400 error
-        // if instructor exists, check if ac courseId is attached to it
-        // if so, return a 400 error with message: 'instructor already assigned'
+        if (!instructor) {
+            return response.status(400).json({ error: 'Instructor Not Found' });
+        }
+        // check course assignement to instructor
+        // Handle 'instructor already assigned' error
+        if (instructor.courseId) {
+            return response.status(400).json({ error: 'Instructor already assigned' });
+        }
     }
     next();
 }
@@ -64,16 +71,32 @@ async function validateBody(request, response, next) {
  */
 async function validateIdParam(request, response, next) {
     const { id } = request.params;
+    const { name, price, description, instructorId } = request.body;
+
     // request method
     const requestMethod = request.method;
 
+    // parse ids
     const courseId = parseInt(id, 10);
+    const instructorIdNum = parseInt(instructorId, 10);
 
     /** @see Util for implemtation details */
     if (!Util.checkDigit(id) || isNaN(courseId) || typeof courseId !== 'number') {
         return response.status(400).json({ error: 'Invalid id' });
     }
-    const course = await Course.getCourseById(courseId);
+    // validate instructor id
+    if (
+        !Util.checkDigit(instructorId) ||
+        typeof instructorIdNum !== 'number' ||
+        isNaN(instructorIdNum)
+    ) {
+        return response.status(400).json({ error: 'Invalid instructorId' });
+    }
+    // get data
+    const [instructor, course] = await Promise.all([
+        Instructor.getInstructorById(instructorIdNum),
+        Course.getCourseById(courseId)
+    ]);
 
     // handle DELETE request
     if (requestMethod === 'DELETE') {
@@ -87,6 +110,27 @@ async function validateIdParam(request, response, next) {
     // check course existence for GET and PUT requests
     if (!course) {
         return response.status(404).json({ error: 'Not found' });
+    }
+
+    // get defined body values in PUT requests
+    const updateBodyValues = Object.values(
+        { name, price, description, instructorIdNum }).filter((value) => {
+            if (value) {
+                return value;
+            }
+        });
+
+    // handle PUT request
+    if (requestMethod === 'PUT') {
+        // check empty array of body values 
+        if (updateBodyValues.length === 0) {
+            return response.status(204).json({})
+        }
+        // assigned instructor cannot be used for update
+        if (instructor.courseId) {
+            return response.status(400).json({ error: 'Instructor already assigned' });
+        }
+
     }
     // pass to next handler
     next();

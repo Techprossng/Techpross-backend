@@ -1,12 +1,12 @@
-name: Node.js CI
+name: Node.js CI with MySQL
 
 on:
   push:
     branches: 
-      - development
+      - master
   pull_request:
     branches: 
-      - development
+      - master
 
 jobs:
   build:
@@ -14,6 +14,17 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
+
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_password
+        ports:
+          - 3306:3306
 
     steps:
       - name: Checkout code
@@ -23,6 +34,23 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: Start MySQL Service
+        run: |
+          sudo service mysql start
+          sleep 5 # Give some time for MySQL to start
+
+      - name: Wait for MySQL
+        run: |
+          until nc -zv localhost 3306; do sleep 1; done
+
+      - name: Create Database Schema
+        run: |
+          # Replace with commands to set up your MySQL database schema
+
+      - name: Run Database Tests
+        run: |
+          # Run your database tests using Jest or your preferred testing framework for MySQL
 
       - name: npm install, build, and test
         run: |

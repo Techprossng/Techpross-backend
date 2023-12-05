@@ -46,15 +46,12 @@ jobs:
 
       - name: Create Database Schema
         run: |
-          # Replace with commands to set up your MySQL database schema
-          # For example:
+          mysql -u root -p < schema.sql
           # mysql -u test_user -p test_db < schema.sql
 
       - name: Run Database Tests
         run: |
-          # Run your database tests using Jest or your preferred testing framework for MySQL
-          # For example:
-          # npm run test:db
+           npm run test:db
 
       - name: npm install, build, and test
         run: |
@@ -67,6 +64,8 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
           server: techprosnaija.com
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /public_html/porduction.watch-learn.com/
+          username: ${{ secrets.ftp_username }}
+          password: ${{ secrets.ftp_password }}
+          server-dir: techprosnaija.com
+
+          

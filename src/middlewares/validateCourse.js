@@ -126,6 +126,9 @@ async function validateIdParam(request, response, next) {
         if (updateBodyValues.length === 0) {
             return response.status(204).json({})
         }
+	if (!instructor) {
+	    return response.status(400).json({ error: 'Instructor Not found' });
+	}
         // assigned instructor cannot be used for update
         if (instructor.courseId) {
             return response.status(400).json({ error: 'Instructor already assigned' });

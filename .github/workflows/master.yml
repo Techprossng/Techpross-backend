@@ -46,8 +46,8 @@ jobs:
 
       - name: Create Database Schema
         run: |
-          mysql -u root -p < schema.sql
-          # mysql -u test_user -p test_db < schema.sql
+          # mysql -u root -p < schema.sql
+          mysql -u test_user -p test_db < schema.sql
 
       - name: Run Database Tests
         run: |

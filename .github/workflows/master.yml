@@ -3,10 +3,10 @@ name: Node.js CI with MySQL
 on:
   push:
     branches:
-      - master
+      - development
   pull_request:
     branches:
-      - master
+      - development
 
 jobs:
   build:
@@ -67,5 +67,4 @@ jobs:
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           server-dir: techprosnaija.com
-
           

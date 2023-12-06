@@ -1,11 +1,11 @@
 //@ts-check
-
-const Instructor = require("../models/Instructor");
+const Course = require("../models/Course");
+const Instructor = require('../models/Instructor');
 const { Util } = require("../utils");
 
 //DEFINED TYPES
 /**
- * @callback Handler
+ * @callback HandlerMiddleware
  * @param {import('express').Request} request
  * @param {import('express').Response} response
  * @param {import('express').NextFunction} next
@@ -13,7 +13,7 @@ const { Util } = require("../utils");
 
 /**
  * validate body of request
- * @type {Handler}
+ * @type {HandlerMiddleware}
  */
 
 async function validateInstructorBody(request, response, next) {
@@ -46,7 +46,7 @@ async function validateInstructorBody(request, response, next) {
 
 /**
  * validate emails from instructor for GET request
- * @type {Handler}
+ * @type {HandlerMiddleware}
  */
 async function validateInstructorEmailParam(request, response, next) {
   const { email } = request.params;
@@ -83,7 +83,7 @@ async function validateInstructorEmailParam(request, response, next) {
 
 /**
  * validates id for GET, PUT and DELETE requests
- * @type {Handler}
+ * @type {HandlerMiddleware}
  */
 async function validateInstructorIdParam(request, response, next) {
   const { id } = request.params;
@@ -108,7 +108,7 @@ async function validateInstructorIdParam(request, response, next) {
 
   //check HTTP method for DELETE
   if (request.method === "DELETE") {
-    //enforce idempotency
+    // enforce idempotency
     if (!instructor) {
       return response.status(404).json({});
     }
@@ -123,8 +123,79 @@ async function validateInstructorIdParam(request, response, next) {
   next();
 }
 
+/**
+ * ### validates the body properties for `PUT` request
+ * @type {HandlerMiddleware} 
+ */
+async function validateUpdateBody(request, response, next) {
+  const { name, courseId, phone } = request.body;
+  /** @type {number} */
+  let courseIdNum;
+
+  // update object
+  const updateBody = {
+    name, phone,
+    courseIdNum: courseId ? parseInt(courseId, 10) : 0
+  }
+
+  // get defined body values in PUT requests
+  const updateBodyValues = Object.values(updateBody).filter((value) => {
+    if (value) {
+      return value;
+    }
+  });
+
+  // check empty body
+  if (updateBodyValues.length === 0) {
+    return response.status(204).json({})
+  }
+
+  // name
+  if (
+    name &&
+    (typeof name !== 'string' || !/^[A-Za-z].+$/.test(name))
+  ) {
+    return response.status(400).json({ error: 'Invalid name' });
+  }
+
+  if (
+    phone &&
+    (typeof phone !== 'string' || !Util.checkPhone(phone))
+  ) {
+    return response.status(400).json({ error: 'Invalid phone' });
+  }
+
+  // courseId
+  if (courseId) {
+    courseIdNum = parseInt(courseId, 10);
+    if (
+      !Util.checkDigit(courseId) ||
+      typeof courseId !== 'number' ||
+      isNaN(courseIdNum)
+    ) {
+      return response.status(400).json({ error: 'Invalid courseId' });
+    }
+    // get instructor
+    const course = await Course.getCourseById(courseIdNum);
+
+    // Non-existing course cannot be updated with instructor
+    if (!course) {
+      return response.status(400).json({ error: 'Course Not Found' });
+    }
+
+    // assigned course cannot be used for update
+    if (course.instructorId) {
+      return response.status(400).json({ error: 'Course already assigned' });
+    }
+  }
+
+  return next();
+}
+
+
 module.exports = {
   validateInstructorBody,
   validateInstructorEmailParam,
   validateInstructorIdParam,
+  validateUpdateBody
 };

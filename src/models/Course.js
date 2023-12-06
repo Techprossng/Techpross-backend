@@ -142,18 +142,25 @@ class Course {
         // create object for update
         const dataToUpdate = {};
         for (const [key, value] of Object.entries(courseData)) {
+            // check courseId
+            if (key === 'instructorId' && !value) {
+                dataToUpdate[key] = null;
+                continue;
+            }
             if (keysToUpdate.indexOf(key) !== -1) {
                 dataToUpdate[key] = value;
             }
         }
 
+
         try {
             const id = await db(TABLES.COURSES)
                 .where({ id: courseId })
-                .update({ ...dataToUpdate })
+                .update({ ...dataToUpdate });
 
             return { id, ...dataToUpdate }
         } catch (error) {
+            console.log(error);
             throw new Error(`Error in update query: ${error.message}`);
         }
     }

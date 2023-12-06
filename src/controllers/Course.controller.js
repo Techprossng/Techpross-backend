@@ -1,5 +1,6 @@
 // @ts-check
 const Course = require('../models/Course');
+const Instructor = require('../models/Instructor');
 const { Util } = require('../utils/index');
 
 /**
@@ -103,6 +104,18 @@ class CourseController {
         const courseId = parseInt(id, 10);
 
         try {
+            // get instructor assigned to course, if any and update
+            const course = await Course.getCourseById(courseId);
+
+            // update instructor for reassignment to no course
+            // This is to ensure consistency between data in tables
+            if (course.instructorId && (instructorId === 0 || !instructorId)) {
+                await Instructor.updateInstructor({ courseId: null }, course.instructorId)
+            }
+            // update instructor id of course, if present
+            if (instructorId) {
+                await Instructor.updateInstructor({ courseId }, instructorId)
+            }
             const updatedData = await Course.updateCourse(courseId, dataToUpdate);
 
             const returnData = { message: 'success', ...updatedData };

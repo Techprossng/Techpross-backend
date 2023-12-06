@@ -136,14 +136,20 @@ async function validateUpdateBody(request, response, next) {
   const updateBody = {
     name, phone,
     courseIdNum: courseId ? parseInt(courseId, 10) : 0
-  }
+  };
+  const updateBodyValues = [];
 
   // get defined body values in PUT requests
-  const updateBodyValues = Object.values(updateBody).filter((value) => {
+  for (const [key, value] of Object.entries(updateBody)) {
+    // courseId null value: assign instructor to no course
+    if (key === 'courseIdNum') {
+      updateBodyValues.push(value);
+      continue;
+    }
     if (value) {
       return value;
     }
-  });
+  }
 
   // check empty body
   if (updateBodyValues.length === 0) {
@@ -166,6 +172,10 @@ async function validateUpdateBody(request, response, next) {
   }
 
   // courseId
+  // reassign instructor to no-course
+  if (courseId === 0) {
+    return next();
+  }
   if (courseId) {
     courseIdNum = parseInt(courseId, 10);
     if (

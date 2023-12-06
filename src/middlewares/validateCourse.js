@@ -119,13 +119,19 @@ async function validateUpdateBody(request, response, next) {
         name, price, description,
         instructorIdNum: instructorId ? parseInt(instructorId, 10) : 0
     }
+    const updateBodyValues = [];
 
     // get defined body values in PUT requests
-    const updateBodyValues = Object.values(updateBody).filter((value) => {
+    for (const [key, value] of Object.entries(updateBody)) {
+        // courseId null value: assign instructor to no course
+        if (key === 'instructorIdNum') {
+            updateBodyValues.push(value);
+            continue;
+        }
         if (value) {
             return value;
         }
-    });
+    }
 
     // check empty body
     if (updateBodyValues.length === 0) {
@@ -151,12 +157,16 @@ async function validateUpdateBody(request, response, next) {
     // description
     if (
         description &&
-        (typeof description !== 'string') || description.length === 0
+        (typeof description !== 'string' || description.length === 0)
     ) {
         return response.status(400).json({ error: 'Invalid description' });
     }
 
     // instructorId
+    // reassign course to no-instructor
+    if (instructorId === 0) {
+        return next();
+    }
     if (instructorId) {
         instructorIdNum = parseInt(instructorId, 10);
         if (
@@ -173,7 +183,6 @@ async function validateUpdateBody(request, response, next) {
         if (!instructor) {
             return response.status(400).json({ error: 'Instructor Not Found' });
         }
-
         // assigned instructor cannot be used for update
         if (instructor.courseId) {
             return response.status(400).json({ error: 'Instructor already assigned' });

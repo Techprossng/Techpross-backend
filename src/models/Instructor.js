@@ -23,7 +23,7 @@ const { Util } = require("../utils");
  */
 
 class Instructor {
-  static selectFields = ["id", "name", "email", "courseId"];
+  static selectFields = ["id", "name", "email", "courseId", "phone"];
 
   /** @private */
   static pageLimit = 20;
@@ -140,13 +140,22 @@ class Instructor {
     const expectedKeys = ["name", "courseId", "phone"];
 
     //get columns/keys to update
-    const keysToUpdate = expectedKeys.filter(
-      (key) => instructorData[key] !== undefined
+    const keysToUpdate = expectedKeys.filter((key) => {
+      if (key === 'courseId') {
+        return 'courseId'
+      }
+      return instructorData[key] !== undefined
+    }
     );
 
     //create object for update
     const instructorDataToUpdate = {};
     for (const [key, value] of Object.entries(instructorData)) {
+      // check courseId
+      if (key === 'courseId' && !value) {
+        instructorDataToUpdate[key] = null;
+        continue;
+      }
       if (keysToUpdate.indexOf(key) !== -1) {
         instructorDataToUpdate[key] = value;
       }

@@ -1,5 +1,6 @@
 //@ts-check
 
+const Course = require("../models/Course");
 const Instructor = require("../models/Instructor");
 const { Util } = require("../utils");
 
@@ -128,17 +129,33 @@ class InstructorController {
     const instructorDataToUpdate = { name, courseId, phone };
 
     try {
+      // get courseId assigned to instructor, if any and update
+      const instructor = await Instructor.getInstructorById(instructorId);
+
+      // update instructorId of course for reassignment to no-instructor
+      // This is to ensure consistency between data in tables
+      if (
+        instructor.courseId &&
+        (courseId === 0 || !courseId)
+      ) {
+        await Course.updateCourse(instructor.courseId, { instructorId });
+      }
+      // update instructor id of course, if present
+      if (courseId) {
+        await Course.updateCourse(courseId, { instructorId })
+      }
+
       const updatedInstructorData = await Instructor.updateInstructor(
         instructorDataToUpdate,
         instructorId
       );
 
-      const instructor = {
+      const updatedInstructor = {
         message: "success",
         ...updatedInstructorData,
       };
 
-      return response.status(200).json(instructor);
+      return response.status(200).json(updatedInstructor);
     } catch (error) {
       return response.status(500).json({ error: "Internal server error" });
     }

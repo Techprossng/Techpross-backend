@@ -21,9 +21,9 @@ class InstructorController {
    * @type {Handler}
    */
   static async createInstructor(request, response) {
-    const { name, email, courseId } = request.body;
+    const { name, email, courseId, phone } = request.body;
 
-    const instructorData = { name, email, courseId };
+    const instructorData = { name, email, courseId, phone };
 
     try {
       const instructor = await Instructor.createNewInstructor(instructorData);

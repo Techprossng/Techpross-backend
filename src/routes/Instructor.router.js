@@ -19,7 +19,7 @@ router.post(
   Instructor.createInstructor
 );
 
-//GET /instructors/:id
+// GET /instructors/:id
 router.get(
   "/instructors/:id",
   validateInstructorIdParam,

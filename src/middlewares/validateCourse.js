@@ -72,31 +72,24 @@ async function validateBody(request, response, next) {
 async function validateIdParam(request, response, next) {
     const { id } = request.params;
     const { name, price, description, instructorId } = request.body;
+    /**@type {number} */
+    let instructorIdNum;
+    let instructor;
 
     // request method
     const requestMethod = request.method;
 
-    // parse ids
+    // parse id
     const courseId = parseInt(id, 10);
-    const instructorIdNum = parseInt(instructorId, 10);
 
+    // validate id for course
     /** @see Util for implemtation details */
     if (!Util.checkDigit(id) || isNaN(courseId) || typeof courseId !== 'number') {
         return response.status(400).json({ error: 'Invalid id' });
     }
-    // validate instructor id
-    if (
-        !Util.checkDigit(instructorId) ||
-        typeof instructorIdNum !== 'number' ||
-        isNaN(instructorIdNum)
-    ) {
-        return response.status(400).json({ error: 'Invalid instructorId' });
-    }
-    // get data
-    const [instructor, course] = await Promise.all([
-        Instructor.getInstructorById(instructorIdNum),
-        Course.getCourseById(courseId)
-    ]);
+
+    // get course data
+    const course = await Course.getCourseById(courseId);
 
     // handle DELETE request
     if (requestMethod === 'DELETE') {
@@ -108,33 +101,52 @@ async function validateIdParam(request, response, next) {
     }
 
     // check course existence for GET and PUT requests
-    if (!course) {
+    if ((requestMethod === 'GET' || requestMethod === 'PUT') && !course) {
         return response.status(404).json({ error: 'Not found' });
     }
 
-    // get defined body values in PUT requests
-    const updateBodyValues = Object.values(
-        { name, price, description, instructorIdNum }).filter((value) => {
-            if (value) {
-                return value;
-            }
-        });
-
-    // handle PUT request
-    if (requestMethod === 'PUT') {
-        // check empty array of body values 
-        if (updateBodyValues.length === 0) {
-            return response.status(204).json({})
+    // validate instructor id for PUT requests, if passed
+    if (instructorId) {
+        instructorIdNum = parseInt(instructorId, 10);
+        if (
+            !Util.checkDigit(instructorId) ||
+            typeof instructorIdNum !== 'number' ||
+            isNaN(instructorIdNum)
+        ) {
+            return response.status(400).json({ error: 'Invalid instructorId' });
         }
-	if (!instructor) {
-	    return response.status(400).json({ error: 'Instructor Not found' });
-	}
+        // get instructor
+        instructor = await Instructor.getInstructorById(instructorIdNum);
+
+        // Non-existing instructor cannot be updated with course
+        if (requestMethod === 'PUT' && !instructor) {
+            return response.status(400).json({ error: 'Instructor Not Found' });
+        }
+
         // assigned instructor cannot be used for update
         if (instructor.courseId) {
             return response.status(400).json({ error: 'Instructor already assigned' });
         }
-
     }
+
+    // update object
+    const updateBody = {
+        name, price, description,
+        instructorIdNum: instructorId ? parseInt(instructorId, 10) : 0
+    }
+
+    // get defined body values in PUT requests
+    const updateBodyValues = Object.values(updateBody).filter((value) => {
+        if (value) {
+            return value;
+        }
+    });
+
+    // empty update body returns an empty response
+    if (requestMethod === 'PUT' && updateBodyValues.length === 0) {
+        return response.status(204).json({})
+    }
+
     // pass to next handler
     next();
 }

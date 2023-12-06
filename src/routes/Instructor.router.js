@@ -4,9 +4,8 @@ const router = Router();
 
 //middlewares
 const {
-  validateInstructorBody,
-  validateInstructorEmailParam,
-  validateInstructorIdParam,
+  validateInstructorBody, validateInstructorEmailParam,
+  validateInstructorIdParam, validateUpdateBody
 } = require("../middlewares/validateInstructor");
 
 //controllers
@@ -39,7 +38,7 @@ router.get("/instructors", Instructor.getAllInstructors);
 //PUT /instructors/:id
 router.put(
   "/instructors/:id",
-  validateInstructorIdParam,
+  validateInstructorIdParam, validateUpdateBody,
   Instructor.updateInstructor
 );
 

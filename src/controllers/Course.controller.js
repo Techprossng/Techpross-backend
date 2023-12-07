@@ -91,7 +91,7 @@ class CourseController {
      */
     static async updateCourse(request, response) {
         const { id } = request.params;
-        const { name, price, description, instructorId } = request.body;
+        const { name, price, description } = request.body;
 
         if (!id) {
             return response.status(400).json({ error: 'Missing id' });
@@ -99,28 +99,86 @@ class CourseController {
 
         // define update parameters
         const dataToUpdate = {
-            name, price, description, instructorId
+            name, price, description
         }
         const courseId = parseInt(id, 10);
 
         try {
-            // get instructor assigned to course, if any and update
-            const course = await Course.getCourseById(courseId);
 
-            // update instructor for reassignment to no course
-            // This is to ensure consistency between data in tables
-            if (course.instructorId && (instructorId === 0 || !instructorId)) {
-                await Instructor.updateInstructor({ courseId: null }, course.instructorId)
-            }
-            // update instructor id of course, if present
-            if (instructorId) {
-                await Instructor.updateInstructor({ courseId }, instructorId)
-            }
             const updatedData = await Course.updateCourse(courseId, dataToUpdate);
 
             const returnData = { message: 'success', ...updatedData };
 
             return response.status(200).json(returnData);
+
+        } catch (error) {
+            return response.status(500).json({ error: 'Internal server error' });
+        }
+    }
+
+    /**
+     * updates a course's instructorId: reassign course to new instructor
+     * or no instructor
+     * @type {Handler}
+     */
+    static async updateCourseInstructor(request, response) {
+        const { id, instructorId } = request.params;
+        // objects from middleware
+        const { course, instructor } = response.locals.updateObject;
+
+        /** @type {number} */
+        let instructorIdNum;
+        /** @type {number} */
+        let courseId;
+
+        courseId = parseInt(id, 10);
+        instructorIdNum = parseInt(instructorId, 10);
+
+        try {
+            // check instructor, and update only for ids > 0
+            if (instructor && instructorIdNum) {
+                // update instructor with new course
+                await Instructor.updateInstructor({ courseId }, instructorIdNum);
+                // update course with new instructor Id
+                await Course.updateCourse(courseId, { instructorId: instructorIdNum });
+
+                return response.status(200).json({
+                    message: 'success', courseId,
+                    instructorId: instructorIdNum
+                });
+            }
+
+            // assign instructor to unassigned course
+            if (!course.instructorId && instructorIdNum) {
+                await Promise.all([
+                    Instructor.updateInstructor({ courseId }, instructorIdNum),
+                    Course.updateCourse(courseId, { instructorId: instructorIdNum })
+                ]);
+                return response.status(200).json({
+                    message: 'success', courseId,
+                    instructorId: instructorIdNum
+                })
+            }
+
+            // update instructor for reassignment to no course
+            // This is to ensure consistency between data in tables
+            if (course.instructorId && instructorIdNum === 0) {
+                await Promise.all([
+                    Instructor.updateInstructor({ courseId: null }, course.instructorId),
+                    Course.updateCourse(courseId, { instructorId: null })
+                ]);
+                return response.status(200).json({
+                    message: 'success', courseId,
+                    instructorId: null
+                });
+            }
+
+            // no assignment to course or instructor
+            if (!course.instructorId && instructorIdNum === 0) {
+                return response.status(204).json({});
+            }
+
+
 
         } catch (error) {
             return response.status(500).json({ error: 'Internal server error' });

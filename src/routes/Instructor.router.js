@@ -5,7 +5,7 @@ const router = Router();
 //middlewares
 const {
   validateInstructorBody, validateInstructorEmailParam,
-  validateInstructorIdParam, validateUpdateBody
+  validateInstructorIdParam, validateUpdateBody, validateUpdateIds
 } = require("../middlewares/validateInstructor");
 
 //controllers
@@ -40,6 +40,13 @@ router.put(
   "/instructors/:id",
   validateInstructorIdParam, validateUpdateBody,
   Instructor.updateInstructor
+);
+
+// PUT /instructors/:id/courses/:id
+router.put(
+  "/instructors/:id/courses/:courseId",
+  validateUpdateIds,
+  Instructor.updateInstructorCourse
 );
 
 //DELETE /instructors/:id

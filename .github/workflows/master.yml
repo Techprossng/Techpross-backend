@@ -53,10 +53,8 @@ jobs:
       #   run: |
       #      npm run test:db
 
-      - name: npm install and test
+      - name: npm test
         run: |
-          npm install
-          npm ci
           npm test:unit
           env:
             CI: true

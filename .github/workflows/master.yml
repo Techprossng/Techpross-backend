@@ -53,11 +53,11 @@ jobs:
       #   run: |
       #      npm run test:db
 
-      - name: npm test
+      - name: npm install, build, and test
         run: |
-          npm run test
-          env:
-            CI: true
+            npm install
+            npm run build --if-present
+            npm run test --if-present
 
       - name: Deployment - Sync Files to FTP
         if: success() # Only deploy if previous steps (tests) were successful

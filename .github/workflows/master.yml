@@ -53,9 +53,9 @@ jobs:
       #   run: |
       #      npm run test:db
 
-      - name: npm test
+      - name: npm run start-test-server
         run: |
-          npm test
+          npm run start-test-server
           env:
             CI: true
 

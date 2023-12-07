@@ -93,4 +93,8 @@ CREATE INDEX user_id_index ON users_courses(user_id);
 CREATE INDEX contact_id_index ON contacts(id);
 CREATE INDEX contact_email_index ON contacts(email);
 
-ALTER USER 'username'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'Da@09058602857';
+FLUSH PRIVILEGES;
+
+USE database_db;
+```

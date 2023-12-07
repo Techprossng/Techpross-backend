@@ -110,28 +110,15 @@ async function validateIdParam(request, response, next) {
  * @type {HandlerMiddleware} 
  */
 async function validateUpdateBody(request, response, next) {
-    const { name, price, description, instructorId } = request.body;
-    /** @type {number} */
-    let instructorIdNum;
+    const { name, price, description } = request.body;
 
     // update object
     const updateBody = {
         name, price, description,
-        instructorIdNum: instructorId ? parseInt(instructorId, 10) : 0
     }
-    const updateBodyValues = [];
-
-    // get defined body values in PUT requests
-    for (const [key, value] of Object.entries(updateBody)) {
-        // courseId null value: assign instructor to no course
-        if (key === 'instructorIdNum') {
-            updateBodyValues.push(value);
-            continue;
-        }
-        if (value) {
-            return value;
-        }
-    }
+    const updateBodyValues = Object.values(updateBody).filter(
+        (value) => value !== null || value !== undefined
+    );
 
     // check empty body
     if (updateBodyValues.length === 0) {
@@ -162,37 +149,54 @@ async function validateUpdateBody(request, response, next) {
         return response.status(400).json({ error: 'Invalid description' });
     }
 
-    // instructorId
-    // reassign course to no-instructor
-    if (instructorId === 0) {
-        return next();
-    }
-    if (instructorId) {
-        instructorIdNum = parseInt(instructorId, 10);
-        if (
-            !Util.checkDigit(instructorId) ||
-            typeof instructorIdNum !== 'number' ||
-            isNaN(instructorIdNum)
-        ) {
-            return response.status(400).json({ error: 'Invalid instructorId' });
-        }
-        // get instructor
-        const instructor = await Instructor.getInstructorById(instructorIdNum);
+    return next();
+}
 
-        // Non-existing instructor cannot be updated with course
+/**
+ * validate the course id and instructor's id for PUT requests (update)
+ * @type {HandlerMiddleware}
+ */
+async function validateUpdateIds(request, response, next) {
+    const { id, instructorId } = request.params;
+
+    let instructor;
+    /** @type {number} */
+    let instructorIdNum;
+    /** @type {number} */
+    let courseId;
+
+    if (!Util.checkDigit(id)) {
+        return response.status(400).json({ error: 'Invalid course id' });
+    }
+    // instructorId can have zero value
+    if (!Util.checkDigit(instructorId)) {
+        return response.status(400).json({ error: 'Invalid instructorId' });
+    }
+
+    courseId = parseInt(id, 10);
+    instructorIdNum = parseInt(instructorId, 10);
+
+    // check course existence
+    const course = await Course.getCourseById(courseId);
+    if (!course) {
+        return response.status(400).json({ error: 'Course Not Found' });
+    }
+
+    // instructorId can have a zero value
+    // check instructor existence for ids > 0
+    if (instructorIdNum) {
+        instructor = await Instructor.getInstructorById(instructorIdNum);
         if (!instructor) {
             return response.status(400).json({ error: 'Instructor Not Found' });
         }
-        // assigned instructor cannot be used for update
-        if (instructor.courseId) {
-            return response.status(400).json({ error: 'Instructor already assigned' });
-        }
     }
-
+    // pass objects to next middleware of handler
+    response.locals.updateObject = { course, instructor }
     return next();
+
 }
 
 module.exports = {
     validateIdParam, validateBody,
-    validateUpdateBody
+    validateUpdateBody, validateUpdateIds
 }

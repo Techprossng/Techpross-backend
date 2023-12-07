@@ -128,28 +128,14 @@ async function validateInstructorIdParam(request, response, next) {
  * @type {HandlerMiddleware} 
  */
 async function validateUpdateBody(request, response, next) {
-  const { name, courseId, phone } = request.body;
-  /** @type {number} */
-  let courseIdNum;
+  const { name, phone } = request.body;
 
   // update object
-  const updateBody = {
-    name, phone,
-    courseIdNum: courseId ? parseInt(courseId, 10) : 0
-  };
-  const updateBodyValues = [];
+  const updateBody = { name, phone };
 
-  // get defined body values in PUT requests
-  for (const [key, value] of Object.entries(updateBody)) {
-    // courseId null value: assign instructor to no course
-    if (key === 'courseIdNum') {
-      updateBodyValues.push(value);
-      continue;
-    }
-    if (value) {
-      return value;
-    }
-  }
+  const updateBodyValues = Object.values(updateBody).filter(
+    (value) => value !== null || value !== undefined
+  );
 
   // check empty body
   if (updateBodyValues.length === 0) {
@@ -171,41 +157,56 @@ async function validateUpdateBody(request, response, next) {
     return response.status(400).json({ error: 'Invalid phone' });
   }
 
-  // courseId
-  // reassign instructor to no-course
-  if (courseId === 0) {
-    return next();
-  }
-  if (courseId) {
-    courseIdNum = parseInt(courseId, 10);
-    if (
-      !Util.checkDigit(courseId) ||
-      typeof courseId !== 'number' ||
-      isNaN(courseIdNum)
-    ) {
-      return response.status(400).json({ error: 'Invalid courseId' });
-    }
-    // get instructor
-    const course = await Course.getCourseById(courseIdNum);
+  return next();
+}
 
-    // Non-existing course cannot be updated with instructor
+/**
+ * validate the course id and instructor's id for PUT requests (update)
+ * @type {HandlerMiddleware}
+ */
+async function validateUpdateIds(request, response, next) {
+  const { id, courseId } = request.params;
+
+  let course;
+  /** @type {number} */
+  let courseIdNum;
+  /** @type {number} */
+  let instructorId;
+
+  if (!Util.checkDigit(id)) {
+    return response.status(400).json({ error: 'Invalid course id' });
+  }
+  // instructorId can have zero value
+  if (!Util.checkDigit(courseId)) {
+    return response.status(400).json({ error: 'Invalid instructorId' });
+  }
+
+  instructorId = parseInt(id, 10);
+  courseIdNum = parseInt(courseId, 10);
+
+  // check course existence
+  const instructor = await Instructor.getInstructorById(instructorId)
+  if (!instructor) {
+    return response.status(400).json({ error: 'Instructor Not Found' });
+  }
+
+  // courseId can have a zero value
+  // check course existence for ids > 0
+  if (courseIdNum) {
+    course = await Course.getCourseById(courseIdNum)
     if (!course) {
       return response.status(400).json({ error: 'Course Not Found' });
     }
-
-    // assigned course cannot be used for update
-    if (course.instructorId) {
-      return response.status(400).json({ error: 'Course already assigned' });
-    }
   }
-
+  // pass objects to next middleware of handler
+  response.locals.updateObject = { course, instructor }
   return next();
+
 }
 
 
 module.exports = {
-  validateInstructorBody,
-  validateInstructorEmailParam,
-  validateInstructorIdParam,
-  validateUpdateBody
+  validateInstructorBody, validateInstructorEmailParam,
+  validateInstructorIdParam, validateUpdateBody,
+  validateUpdateIds
 };

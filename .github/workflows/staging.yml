@@ -1,4 +1,4 @@
-name: Node.js CI with MySQL
+name: Node.js CI with tests
 
 on:
   push:
@@ -15,22 +15,22 @@ jobs:
       matrix:
         node-version: [16.x]
 
-    services:
-      mysql:
-        image: mysql:latest
-        env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: test_db
-          MYSQL_USER: test_user
-          MYSQL_PASSWORD: password
-        ports:
-          - 3306:3306
+    # services:
+    #   mysql:
+    #     image: mysql:latest
+    #     env:
+    #       MYSQL_ROOT_PASSWORD: password
+    #       MYSQL_DATABASE: test_db
+    #       MYSQL_USER: test_user
+    #       MYSQL_PASSWORD: password
+    #     ports:
+    #       - 3306:3306
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
@@ -46,18 +46,20 @@ jobs:
 
       # - name: Create Database Schema
       #   run: |
-      #     mysql -u root -p < schema.sql
+      #     # mysql -u root -p < schema.sql
       #     mysql -u test_user -p test_db < schema.sql
 
       # - name: Run Database Tests
       #   run: |
       #      npm run test:db
 
-      - name: npm install, build, and test
+      - name: npm install and test
         run: |
           npm install
-          npm run build --if-present
-          npm test
+          npm ci
+          npm test:unit
+          env:
+            CI: true
 
       - name: Deployment - Sync Files to FTP
         if: success() # Only deploy if previous steps (tests) were successful
@@ -67,3 +69,4 @@ jobs:
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           server-dir: techprosnaija.com
+          

@@ -55,7 +55,7 @@ jobs:
 
       - name: npm test
         run: |
-          npm test:unit
+          npm test
           env:
             CI: true
 

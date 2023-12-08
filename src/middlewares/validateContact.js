@@ -63,7 +63,7 @@ async function validateContactBody(request, response, next) {
     if (!courseId) {
         return response.status(400).json({ error: 'Missing courseId' });
     }
-    if (!Util.checkDigit(courseId.toString) || typeof courseId !== 'number') {
+    if (!Util.checkDigit(courseId.toString()) || typeof courseId !== 'number') {
         return response.status(400).json({ error: 'Invalid courseId' });
     }
     const course = await Course.getCourseById(courseId);

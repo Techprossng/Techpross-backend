@@ -11,14 +11,16 @@ const { Util } = require('../utils/index');
  * @property {string} email
  * @property {string} description
  * @property {string?} website
- * @property {string} course
+ * @property {number} courseId
+ * @property {string} courseName
  */
 
 class Contact {
   /**@private @readonly */
   static selectFields = [
     'id', 'firstName', 'lastName',
-    'description', 'website', 'email', 'course'
+    'description', 'website', 'email', 'courseId',
+    'courseName'
   ]
   /**@private @readonly */
   static pageLimit = 20;

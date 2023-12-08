@@ -1,6 +1,7 @@
 // @ts-check
 
 const Contact = require('../models/Contact');
+const Course = require('../models/Course');
 const { Util } = require('../utils');
 
 // DEFINED TYPES
@@ -18,7 +19,7 @@ const { Util } = require('../utils');
 async function validateContactBody(request, response, next) {
     const {
         email, firstName, lastName,
-        website, description, course
+        website, description, courseId, courseName
     } = request.body;
 
     // email validation
@@ -58,8 +59,19 @@ async function validateContactBody(request, response, next) {
     if (typeof description !== 'string') {
         return response.status(400).json({ error: 'Invalid description' });
     }
+    // courseId & courseName
+    if (!courseId) {
+        return response.status(400).json({ error: 'Missing courseId' });
+    }
+    if (!Util.checkDigit(courseId.toString) || typeof courseId !== 'number') {
+        return response.status(400).json({ error: 'Invalid courseId' });
+    }
+    const course = await Course.getCourseById(courseId);
     if (!course) {
-        return response.status(400).json({ error: 'Missing course' });
+        return response.status(400).json({ error: 'Course Not Found' });
+    }
+    if (course.name.toLowerCase() !== courseName.toLowerCase()) {
+        return response.status(400).json({ error: 'Invalid courseName' });
     }
 
     return next();

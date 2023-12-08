@@ -18,14 +18,14 @@ class ContactController {
   static async addContact(request, response) {
     const {
       email, firstName, lastName,
-      website, description, course
+      website, description, courseId, courseName
     } = request.body;
 
     try {
       // save contact
       const contactData = {
-        email, firstName, lastName,
-        website, description, course
+        email, firstName, lastName, website,
+        description, courseId, courseName: courseName.toLowerCase()
       }
       const savedContact = await Contact.addContact(contactData);
       const toReturn = { message: 'success', ...savedContact };

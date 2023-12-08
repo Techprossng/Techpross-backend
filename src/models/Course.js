@@ -105,7 +105,7 @@ class Course {
             // set new offset and get next page number
             const newOffset = this.pageLimit + offset;
             const nextPageNum = await Util.
-                getNextPage(newOffset, this.pageLimit, TABLES.USERS);
+                getNextPage(newOffset, this.pageLimit, TABLES.COURSES);
 
             /**
              * cleanup object. knex returns object of type RowDataPacket {},

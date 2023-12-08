@@ -59,7 +59,7 @@ async function validateContactBody(request, response, next) {
     if (typeof description !== 'string') {
         return response.status(400).json({ error: 'Invalid description' });
     }
-    // courseId & courseName
+    // courseId
     if (!courseId) {
         return response.status(400).json({ error: 'Missing courseId' });
     }
@@ -70,6 +70,14 @@ async function validateContactBody(request, response, next) {
     if (!course) {
         return response.status(400).json({ error: 'Course Not Found' });
     }
+    // courseName
+    if (!courseName) {
+        return response.status(400).json({ error: 'Missing courseName' });
+    }
+    if (typeof courseName !== 'string') {
+        return response.status(400).json({ error: 'Invalid courseName' });
+    }
+    // validate data consistency
     if (course.name.toLowerCase() !== courseName.toLowerCase()) {
         return response.status(400).json({ error: 'Invalid courseName' });
     }

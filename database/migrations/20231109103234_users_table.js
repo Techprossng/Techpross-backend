@@ -8,6 +8,8 @@ exports.up = function (knex) {
   return knex.schema
     .createTable('users', function (table) {
       table.bigIncrements('id').primary().notNullable();
+      table.datetime('createdAt').defaultTo(knex.fn.now());
+      table.datetime('updatedAt').defaultTo(knex.fn.now());
       table.string('firstName', 100).notNullable();
       table.string('lastName', 100).notNullable();
       table.string('email', 128).unique().notNullable();

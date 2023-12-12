@@ -9,6 +9,8 @@ exports.up = function (knex) {
   return knex.schema
     .createTable('courses', function (table) {
       table.bigIncrements('id').primary().notNullable();
+      table.datetime('createdAt').defaultTo(knex.fn.now());
+      table.datetime('updatedAt').defaultTo(knex.fn.now());
       table.string('name', 100).notNullable();
       table.string('description', 256).notNullable();
       table.integer('price').notNullable();

@@ -127,7 +127,8 @@ class SubscriberController {
       if (!isDeleted) {
         throw new Error('Could not delete');
       }
-      return response.status(200).json({});
+
+      return response.status(204).json({});
 
     } catch (error) {
       return response.status(500).json({ error: 'Internal server error' });

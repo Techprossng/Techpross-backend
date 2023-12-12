@@ -2,6 +2,7 @@
 // entry point of server
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
 const loggingMiddleware = require("./middlewares/logging");
 const { Buffer } = require("node:buffer");
 
@@ -34,6 +35,9 @@ app.use(
     },
   })
 );
+
+// Use cookie
+app.use(cookieParser());
 
 // Use the logging middleware
 app.use(loggingMiddleware);

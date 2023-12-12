@@ -11,7 +11,7 @@ async function hashPassword(password) {
     const saltRounds = 10;
     try {
         const salt = await bcrypt.genSalt(saltRounds);
-        // promisify the synchronous hashing function
+
         const hash = await bcrypt.hash(password, salt);
         return hash;
     } catch (error) {

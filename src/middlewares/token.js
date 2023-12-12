@@ -3,18 +3,16 @@ const { promisify } = require('util');
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
-const expiresIn = '1d';
-const refreshExpiresIn = '1d';
 
 const createAccessToken = async (email) => {
   const sign = promisify(jwt.sign);
-  const token = await sign({ email }, accessTokenSecret, { expiresIn });
+  const token = await sign({ email }, secretKey, { expiresIn: '1d' });
   return token;
 };
 
 const createRefreshToken = async (email) => {
   const sign = promisify(jwt.sign);
-  const refreshToken = await sign({ email }, refreshTokenSecret, { expiresIn: refreshExpiresIn });
+  const refreshToken = await sign({ email }, refreshTokenSecret, { expiresIn: '1d' });
   return refreshToken;
 };
 

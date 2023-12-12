@@ -1,11 +1,11 @@
 //@ts-check
-
-const Instructor = require("../models/Instructor");
+const Course = require("../models/Course");
+const Instructor = require('../models/Instructor');
 const { Util } = require("../utils");
 
 //DEFINED TYPES
 /**
- * @callback Handler
+ * @callback HandlerMiddleware
  * @param {import('express').Request} request
  * @param {import('express').Response} response
  * @param {import('express').NextFunction} next
@@ -13,7 +13,7 @@ const { Util } = require("../utils");
 
 /**
  * validate body of request
- * @type {Handler}
+ * @type {HandlerMiddleware}
  */
 
 async function validateInstructorBody(request, response, next) {
@@ -46,7 +46,7 @@ async function validateInstructorBody(request, response, next) {
 
 /**
  * validate emails from instructor for GET request
- * @type {Handler}
+ * @type {HandlerMiddleware}
  */
 async function validateInstructorEmailParam(request, response, next) {
   const { email } = request.params;
@@ -83,7 +83,7 @@ async function validateInstructorEmailParam(request, response, next) {
 
 /**
  * validates id for GET, PUT and DELETE requests
- * @type {Handler}
+ * @type {HandlerMiddleware}
  */
 async function validateInstructorIdParam(request, response, next) {
   const { id } = request.params;
@@ -108,7 +108,7 @@ async function validateInstructorIdParam(request, response, next) {
 
   //check HTTP method for DELETE
   if (request.method === "DELETE") {
-    //enforce idempotency
+    // enforce idempotency
     if (!instructor) {
       return response.status(404).json({});
     }
@@ -123,8 +123,90 @@ async function validateInstructorIdParam(request, response, next) {
   next();
 }
 
+/**
+ * ### validates the body properties for `PUT` request
+ * @type {HandlerMiddleware} 
+ */
+async function validateUpdateBody(request, response, next) {
+  const { name, phone } = request.body;
+
+  // update object
+  const updateBody = { name, phone };
+
+  const updateBodyValues = Object.values(updateBody).filter(
+    (value) => value !== null || value !== undefined
+  );
+
+  // check empty body
+  if (updateBodyValues.length === 0) {
+    return response.status(204).json({})
+  }
+
+  // name
+  if (
+    name &&
+    (typeof name !== 'string' || !/^[A-Za-z].+$/.test(name))
+  ) {
+    return response.status(400).json({ error: 'Invalid name' });
+  }
+
+  if (
+    phone &&
+    (typeof phone !== 'string' || !Util.checkPhone(phone))
+  ) {
+    return response.status(400).json({ error: 'Invalid phone' });
+  }
+
+  return next();
+}
+
+/**
+ * validate the course id and instructor's id for PUT requests (update)
+ * @type {HandlerMiddleware}
+ */
+async function validateUpdateIds(request, response, next) {
+  const { id, courseId } = request.params;
+
+  let course;
+  /** @type {number} */
+  let courseIdNum;
+  /** @type {number} */
+  let instructorId;
+
+  if (!Util.checkDigit(id)) {
+    return response.status(400).json({ error: 'Invalid course id' });
+  }
+  // instructorId can have zero value
+  if (!Util.checkDigit(courseId)) {
+    return response.status(400).json({ error: 'Invalid instructorId' });
+  }
+
+  instructorId = parseInt(id, 10);
+  courseIdNum = parseInt(courseId, 10);
+
+  // check course existence
+  const instructor = await Instructor.getInstructorById(instructorId)
+  if (!instructor) {
+    return response.status(400).json({ error: 'Instructor Not Found' });
+  }
+
+  // courseId can have a zero value
+  // check course existence for ids > 0
+  if (courseIdNum) {
+    course = await Course.getCourseById(courseIdNum)
+    if (!course) {
+      return response.status(400).json({ error: 'Course Not Found' });
+    }
+  }
+  // pass objects to next middleware of handler
+  response.locals.updateObject = { course, instructor }
+  return next();
+
+}
+
+
 module.exports = {
-  validateInstructorBody,
-  validateInstructorEmailParam,
-  validateInstructorIdParam,
+  validateInstructorBody, validateInstructorEmailParam,
+  validateInstructorIdParam, validateUpdateBody,
+  validateUpdateIds
 };

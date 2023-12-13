@@ -1,7 +1,7 @@
 // @ts-check
 const session = require('express-session'); // session handler
 // knex session store
-const KnexSessionStore = require('connect-session-knex').default(session);
+const KnexSessionStore = require('connect-session-knex')(session);
 // knex database config
 const { db } = require('./db');
 const { v4: uuidv4 } = require('uuid');
@@ -56,7 +56,7 @@ class SessionAuth {
             cookie: {
                 httpOnly: true,
                 secure: this.ENV === 'production' ? true : undefined,
-                maxAge: 432000 * 1000 // 5 days
+                maxAge: 300 * 1000 // 5 days
             },
             // generate unique session ids
             genid: (req) => `${uuidv4().toString()}`
@@ -66,12 +66,12 @@ class SessionAuth {
     }
     /**
      * destroys a session or removes a session from the store
-     * @param {string} sessionId
+     * @param {session.Session} session
      * @returns {Promise<boolean>}
      */
-    static async destroySession(sessionId) {
+    static async destroySession(session) {
         return new Promise((resolve, reject) => {
-            SessionAuth.#sessionStore().destroy(sessionId, (error) => {
+            session.destroy((error) => {
                 if (error) {
                     reject(false);
                 }
@@ -92,7 +92,7 @@ class SessionAuth {
                     reject(new Error('Error getting session'));
                 }
                 if (!session) {
-                    return reject(false)
+                    return resolve(false)
                 }
                 return resolve(session);
             })
@@ -111,6 +111,23 @@ class SessionAuth {
             SessionAuth.#sessionStore().set(sessionId, session, (error) => {
                 if (error) {
                     reject(new Error('Error setting session'));
+                }
+                return resolve(true);
+            });
+        });
+    }
+
+    /**
+     * saves a session in the store database 
+     * @param {session.Session} session 
+     * @returns {Promise<boolean>}
+     * @throws {Error} if an error was encountered
+     */
+    static async saveSession(session) {
+        return new Promise((resolve, reject) => {
+            session.save((error) => {
+                if (error) {
+                    reject(new Error('Error saving session'));
                 }
                 return resolve(true);
             });

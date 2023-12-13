@@ -32,5 +32,5 @@ exports.TABLES = {
     COURSES: 'courses',
     INSTRUCTORS: 'instructors',
     SUBSCRIBERS: 'subscribers',
-    CONTACTS: 'contacts'
+    CONTACTS: 'contacts',
 };

@@ -18,7 +18,7 @@ class Token {
     static createAccessToken(userEmail) {
         return new Promise((resolve, reject) => {
             const options = {
-                expiresIn: '10 days',
+                expiresIn: '5 days',
                 audience: userEmail
             }
             jwt.sign({ userEmail }, this.secretKey, options, (error, token) => {
@@ -30,17 +30,19 @@ class Token {
         })
     }
 
-
     /**
     * ### decodes the access token with jwt
     * @param {string} accessToken access token to be decoded
-    * @returns {string | jwt.JwtPayload} a promise with token
+    * @returns {Promise<string | jwt.JwtPayload | undefined>} a promise with token
     * @throws {Error} access token is unable to be verified 
     */
     static decodeToken(accessToken) {
         return new Promise((resolve, reject) => {
             jwt.verify(accessToken, this.secretKey, (error, decodedToken) => {
                 if (error) {
+                    if (error.name === 'TokenExpiredError') {
+                        return resolve('TokenExpired');
+                    }
                     reject(new Error('Unauthorized'));
                 }
                 resolve(decodedToken);

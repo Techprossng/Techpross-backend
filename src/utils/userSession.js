@@ -93,4 +93,5 @@ class UserSession {
     }
 }
 
+
 module.exports = UserSession;

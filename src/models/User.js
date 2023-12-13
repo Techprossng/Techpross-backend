@@ -28,7 +28,7 @@ class User {
 
     static selectFields = [
         'id', 'firstName', 'lastName', 'email', 'bio',
-        'country', 'phoneNumber'
+        'country', 'phoneNumber', "password"
     ];
     /** @private */
     static pageLimit = 20;
@@ -59,7 +59,7 @@ class User {
                 .insert({ ...data })
 
             delete data.password;
-            return { userId, ...data };
+            return { id: userId, ...data };
 
         } catch (error) {
             throw new Error('Unable to get user');
@@ -81,7 +81,6 @@ class User {
             }
             // user object is of type ResultFormat
             // assignment makes it more presentable
-            delete user.password;
             return Object.assign({}, user);
 
         } catch (error) {
@@ -92,7 +91,7 @@ class User {
     /**
      * @async
      * get a user by id
-     * @param {string} userId 
+     * @param {number} userId 
      */
     static async getUserById(userId) {
 
@@ -150,7 +149,7 @@ class User {
     /**
      * updates a user info on the database
      * @param {IUserUpdate} userData 
-     * @param {string} userId 
+     * @param {number} userId 
      * @returns {Promise<object>}
      */
     static async updateUser(userData, userId) {
@@ -183,7 +182,7 @@ class User {
 
     /**
      * deletes a user from the database
-     * @param {string} userId 
+     * @param {number} userId 
      * @returns {Promise<boolean>}
      */
     static async deleteUser(userId) {

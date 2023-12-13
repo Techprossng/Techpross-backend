@@ -1,10 +1,11 @@
 const crypto = require('crypto');
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv/config');
+
 
 // Read the secret keys from the environment variables
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
+console.log(accessTokenSecret, refreshTokenSecret);
 
 // If the secret keys are not defined in the environment variables, generate new ones
 if (!accessTokenSecret || !refreshTokenSecret) {
@@ -19,6 +20,9 @@ if (!accessTokenSecret || !refreshTokenSecret) {
   // Assign the generated keys to the environment variables
   process.env.ACCESS_TOKEN_SECRET = secureAccessTokenSecret;
   process.env.REFRESH_TOKEN_SECRET = secureRefreshTokenSecret;
+  const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+  const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
+  console.log(accessTokenSecret, refreshTokenSecret);
 
 }
 

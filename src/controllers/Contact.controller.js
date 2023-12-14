@@ -18,14 +18,14 @@ class ContactController {
   static async addContact(request, response) {
     const {
       email, firstName, lastName,
-      website, description, course
+      website, description, courseId, courseName
     } = request.body;
 
     try {
       // save contact
       const contactData = {
-        email, firstName, lastName,
-        website, description, course
+        email, firstName, lastName, website,
+        description, courseId, courseName: courseName.toLowerCase()
       }
       const savedContact = await Contact.addContact(contactData);
       const toReturn = { message: 'success', ...savedContact };
@@ -123,11 +123,8 @@ class ContactController {
       if (!isDeleted) {
         throw new Error('Could not delete');
       }
-      const toReturn = {
-        message: 'success',
-        email
-      }
-      return response.status(200).json(toReturn);
+
+      return response.status(204).json({});
 
     } catch (error) {
       return response.status(500).json({ error: 'Internal server error' });
@@ -149,11 +146,8 @@ class ContactController {
       if (!isDeleted) {
         throw new Error('Could not delete');
       }
-      const toReturn = {
-        message: 'success',
-        id
-      }
-      return response.status(200).json(toReturn);
+
+      return response.status(204).json({});
 
     } catch (error) {
       return response.status(500).json({ error: 'Internal server error' });

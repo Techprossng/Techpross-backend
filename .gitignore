@@ -6,3 +6,5 @@ main.js
 logs/
 database/
 .vscode/
+master.yml
+stage.yml

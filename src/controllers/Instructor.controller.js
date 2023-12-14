@@ -1,5 +1,6 @@
 //@ts-check
 
+const Course = require("../models/Course");
 const Instructor = require("../models/Instructor");
 const { Util } = require("../utils");
 
@@ -7,7 +8,7 @@ const { Util } = require("../utils");
  * @typedef {object} UInstructorUpdate
  * @property {string?} name
  * @property {string?} phone
- * @property {number?} courseId
+ * @prop {number?} courseId
  *
  *
  * @callback Handler
@@ -21,9 +22,9 @@ class InstructorController {
    * @type {Handler}
    */
   static async createInstructor(request, response) {
-    const { name, email, courseId } = request.body;
+    const { name, email, courseId, phone } = request.body;
 
-    const instructorData = { name, email, courseId };
+    const instructorData = { name, email, courseId, phone };
 
     try {
       const instructor = await Instructor.createNewInstructor(instructorData);
@@ -115,7 +116,7 @@ class InstructorController {
    */
   static async updateInstructor(request, response) {
     const { id } = request.params;
-    const { name, courseId, phone } = request.body;
+    const { name, phone } = request.body;
 
     const instructorId = parseInt(id, 10);
 
@@ -125,22 +126,90 @@ class InstructorController {
     }
 
     /** @type {UInstructorUpdate} */
-    const instructorDataToUpdate = { name, courseId, phone };
+    const instructorDataToUpdate = { name, phone };
 
     try {
+
       const updatedInstructorData = await Instructor.updateInstructor(
         instructorDataToUpdate,
         instructorId
       );
 
-      const instructor = {
+      const updatedInstructor = {
         message: "success",
         ...updatedInstructorData,
       };
 
-      return response.status(200).json(instructor);
+      return response.status(200).json(updatedInstructor);
     } catch (error) {
       return response.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+  /**
+     * updates a course's instructorId: reassign course to new instructor
+     * or no instructor
+     * @type {Handler}
+     */
+  static async updateInstructorCourse(request, response) {
+    const { id, courseId } = request.params;
+    // objects from middleware
+    const { course, instructor } = response.locals.updateObject;
+
+    /** @type {number} */
+    let courseIdNum;
+    /** @type {number} */
+    let instructorId;
+
+    instructorId = parseInt(id, 10);
+    courseIdNum = parseInt(courseId, 10);
+
+    try {
+      // check course, and update only for ids > 0
+      if (course && courseIdNum) {
+        // update course id with new instructor
+        await Course.updateCourse(courseIdNum, { instructorId });
+        // update instructor id of course, if present
+        await Instructor.updateInstructor({ courseId: courseIdNum }, instructorId);
+
+        return response.status(200).json({
+          message: 'success', instructorId,
+          courseId: courseIdNum
+        });
+      }
+
+      // assign course to unassigned instructor
+      if (!instructor.courseId && courseIdNum) {
+        await Promise.all([
+          Instructor.updateInstructor({ courseIdNum }, instructorId),
+          Course.updateCourse(courseIdNum, { instructorId })
+        ]);
+        return response.status(200).json({
+          message: 'success', instructorId,
+          courseId: courseIdNum
+        })
+      }
+
+      // update instructor for reassignment to no-course
+      // This is to ensure consistency between data in tables
+      if (instructor.courseId && courseIdNum === 0) {
+        await Promise.all([
+          Instructor.updateInstructor({ courseId: null }, instructorId),
+          Course.updateCourse(instructor.courseId, { instructorId: null })
+        ]);
+        return response.status(200).json({
+          message: 'success', instructorId,
+          courseId: null
+        });
+      }
+
+      // no assignment to course or instructor
+      if (!instructor.courseId && courseIdNum === 0) {
+        return response.status(204).json({});
+      }
+
+    } catch (error) {
+      return response.status(500).json({ error: 'Internal server error' });
     }
   }
 

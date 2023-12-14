@@ -79,7 +79,7 @@ class UserSession {
         const sessionId = cookies.session_TP.split(':')[1].split('.')[0];
         try {
             const sessionData = await SessionAuth.getSession(sessionId);
-            console.log(sessionData);
+
             if (!sessionData) {
                 return true;
             }

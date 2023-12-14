@@ -56,7 +56,7 @@ class SessionAuth {
             cookie: {
                 httpOnly: true,
                 secure: this.ENV === 'production' ? true : undefined,
-                maxAge: 300 * 1000 // 5 days
+                maxAge: 600 * 1000 // 10 minutes
             },
             // generate unique session ids
             genid: (req) => `${uuidv4().toString()}`

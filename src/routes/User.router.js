@@ -5,23 +5,25 @@ const router = express.Router();
 
 // MIDDLEWARES
 const {
-  validateLoginInput, validateLogoutParam
-} = require("../middlewares/validateLoginLogout");
-const { validateSignupInput } = require("../middlewares/validateSignUp");
-const { verifyToken } = require("../middlewares/verifyToken");
+  validateUserBody, validateUserSession, validateLoginInput, validateLogoutParam, validateIdParam
+} = require('../middlewares/validateUser');
+
 
 // CONTROLLERS
 const UserController = require("../controllers/User.controller");
 
 // USER AUTH
 router.post(
-  "/auth/users/signUp", validateSignupInput, UserController.register
+  "/auth/users/register", validateUserBody, UserController.register
 );
 
-
-router.post("/auth/users/login",validateLoginInput,UserController.login)
-
-router.post("/auth/users/:userId/logout",validateLogoutParam,UserController.logout)
+router.post("/auth/users/login", validateLoginInput, UserController.login);
+router.post(
+  "/auth/users/:userId/logout", validateLogoutParam,
+  validateUserSession, UserController.logout
+);
+router.get("/users/:userId", validateIdParam, validateUserSession, UserController.getUser)
+router.put("/users/:userId", validateIdParam, validateUserSession, UserController.update);
 
 
 module.exports = router;

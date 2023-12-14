@@ -2,9 +2,16 @@
 const Token = require('../middlewares/token/index');
 const User = require('../models/User');
 const { Util } = require('../utils');
+const UserSession = require('../utils/userSession');
 
 // DEFINED TYPES. Hover on types defined with `typedef` to view.
 /**
+ * @typedef {object} IUser
+ * @property {string} firstName
+ * @property {string} lastName
+ * @property {string} password
+ * @property {string} email
+ * 
  * @typedef {object} IUserUpdate
  * @property {string?} firstName
  * @property {string?} lastName
@@ -19,8 +26,8 @@ const { Util } = require('../utils');
 
 /**
  * @class
- * @classdesc ### controller for user. Handles login, logout, signup, and
- * ### users defined actions.
+ * @classdesc ### controller for user.
+ * - Handles login, logout, signup, and users defined actions.
  */
 class UserController {
     /**
@@ -30,22 +37,22 @@ class UserController {
     static async register(request, response) {
         const { email, password, firstName, lastName } = request.body;
 
-        // save user to database
         const userData = {
             email, password, firstName, lastName
         }
 
         try {
-            const emailExists = await User.getUserByEmail(email);
-            console.log(emailExists)
-            if (emailExists) {
-                return response.status(400).json({ error: 'Email already exists' });
-            }
-
             const user = await User.createUser(userData);
+            // create session for user
+            const isCreated = await UserSession.createSession(request);
 
-            const returnData = { message: 'Registration successful', ...user }
-            return response.status(201).json(returnData);
+            if (isCreated) {
+                delete user.password;
+                const returnData = { message: 'success', ...user }
+                return response.status(201).json(returnData);
+
+            }
+            return response.status(500).json({ error: 'Internal Server Error' });
 
         } catch (error) {
             return response.status(500).json({ error: 'Internal server error' });
@@ -57,33 +64,25 @@ class UserController {
      * @type {Handler}
      */
     static async login(request, response) {
-        const { email, password } = request.body;
-        // verify data
-        const user = await User.getUserByEmail(email);
-        if (!user) {
-            return response.status(400).json({ error: 'User Not found' })
-        }
-        // verify password
+        // get user data from previous middleware
+        /**@type {IUser}} */
+        const user = response.locals.user;
+
         try {
-            const isMatch = await Util.verifyPassword(password, user.password);
-            if (!isMatch) {
-                return response.status(400).json({ error: 'Wrong password' });
+            // create session for user
+            const isCreated = await UserSession.createSession(request);
+
+            if (isCreated) {
+                delete user.password;
+                const returnData = { message: 'success', ...user }
+                return response.status(201).json(returnData);
             }
-            // create token
-            const accessToken = await Token.createAccessToken(email);
-
-            // set access token in cookies; maxAge is 5 days
-            // cookie name is `rememberUser`, value is `accessToken`
-            // rememberUser will be used for verification of access to protected routes
-            const options = { httpOnly: true, maxAge: 432000 * 1000 }
-            response.cookie('rememberUserTechPros', accessToken, options);
-
-            return response.status(200).json({ message: 'Login successful', ...user });
         } catch (error) {
             return response.status(500).json({ error: 'Internal server error' });
         }
     }
 
+    // Google auth
     static async loginWithGoogle() { }
 
     /**
@@ -91,18 +90,32 @@ class UserController {
      * @type {Handler}
      */
     static async logout(request, response) {
-        const { userId } = request.params;
+        try {
+
+            // remove user's session
+            const isRemoved = await UserSession.removeSession(request);
+            if (isRemoved) {
+                // clear session cookie
+                response.clearCookie('session_TP');
+                return response.status(200).json({ message: 'Logout successful' });
+            }
+
+        } catch (error) {
+            return response.status(500).json({ error: 'Internal server error' });
+        }
+    }
+
+    /**
+     * gets a user information
+     * @type {Handler}
+     */
+    static async getUser(request, response) {
+        // get user from previous middleware
+        const user = response.locals.user;
 
         try {
-            // validate user existence
-            const user = await User.getUserById(userId);
-            if (!user) {
-                return response.status(404).json({ error: 'User not found' });
-            }
-            // clear cookie in response object
-            response.clearCookie('rememberUserTechPros');
-
-            return response.status(200).json({ message: 'Logout successful' });
+            const returnData = { message: 'success', ...user };
+            return response.status(200).json(returnData);
 
         } catch (error) {
             return response.status(500).json({ error: 'Internal server error' });

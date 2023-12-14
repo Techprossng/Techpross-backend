@@ -114,6 +114,8 @@ class UserController {
         const user = response.locals.user;
 
         try {
+            // remove password
+            delete user.password;
             const returnData = { message: 'success', ...user };
             return response.status(200).json(returnData);
 
@@ -128,26 +130,15 @@ class UserController {
      */
     static async update(request, response) {
         const { userId } = request.params;
-        const { firstName, lastName, bio, phoneNumber } = request.body;
-        if (!userId) {
-            return response.status(400).json({ error: 'Missing userId' });
-        }
+        // get update body from previous middleware
+        const { updateBody } = response.locals;
 
-        /** @see Util for implemtation details */
-        // check for valid id
-        if (!Util.checkDigit(userId)) {
-            return response.status(400).json({ error: 'Invalid userId' });
-        }
-
-        /** @type {IUserUpdate} */
-        const dataToUpdate = {
-            firstName, lastName, bio, phoneNumber
-        }
+        const userIdNum = parseInt(userId, 10);
 
         try {
-            const updatedData = await User.updateUser(dataToUpdate, userId);
+            const updatedData = await User.updateUser(updateBody, userIdNum);
 
-            const returnData = { message: 'Update successful', ...updatedData };
+            const returnData = { message: 'success', ...updatedData };
             return response.status(200).json(returnData);
 
         } catch (error) {

@@ -16,6 +16,7 @@ chai.use(chaiHttp);
 describe('Contact model', function () {
     it('adds a contact to the database', function (done) {
         chai.request(baseUrl)
+
             .post('/contacts')
             .set('Content-Type', 'application/json')
             .send({ ...contact })
@@ -29,6 +30,7 @@ describe('Contact model', function () {
                 expect(respJson).to.have.property('description');
                 done();
             });
+
     });
 
     it('gets a contact by email and id', async function () {
@@ -57,6 +59,7 @@ describe('Contact model', function () {
         const { email, ...rest } = contact;
 
         chai.request(baseUrl)
+
             .post('/contacts')
             .set('Content-Type', 'application/json')
             .send({ ...rest })
@@ -66,10 +69,12 @@ describe('Contact model', function () {
                 expect(respJson).to.deep.equal({ error: 'Missing email' });
                 done();
             });
+
     });
 
     it('tests unknown email request fail as expected', function (done) {
         chai.request(baseUrl)
+
             .get('/contacts/emails/unknown@email.com')
             .end((error, res) => {
                 expect(res).to.have.status(404);
@@ -82,6 +87,7 @@ describe('Contact model', function () {
     it('tests invalid id request fail as expected', function (done) {
         // get subscriber with invalid id
         chai.request(baseUrl)
+
             .get('/contacts/4ty5')
             .end((error, res) => {
                 expect(res).to.have.status(400);
@@ -93,6 +99,7 @@ describe('Contact model', function () {
 
     it('get all contacts array', function (done) {
         chai.request(baseUrl)
+
             .get('/contacts')
             .end((error, res) => {
                 expect(res).to.have.status(200);
@@ -108,6 +115,7 @@ describe('Contact model', function () {
 
     it('returns an appropriate response for first deletion: 204', function (done) {
         chai.request(baseUrl)
+
             .delete(`/contacts/emails/${contact.email}`)
             .end((error, res) => {
                 expect(res).to.have.status(204);
@@ -119,6 +127,7 @@ describe('Contact model', function () {
 
     it('tests idempotent response for second deletion: 404', function (done) {
         chai.request(baseUrl)
+
             .delete(`/contacts/emails/${contact.email}`)
             .end((error, res) => {
                 expect(res).to.have.status(404);

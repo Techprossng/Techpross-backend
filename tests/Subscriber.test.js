@@ -50,6 +50,7 @@ describe('Subscriber model', function () {
 
         // send without email in json
         chai.request(baseUrl)
+
             .post('/subscribers')
             .set('Content-Type', 'application/json')
             .send({})
@@ -63,6 +64,7 @@ describe('Subscriber model', function () {
 
     it('tests unknown email request fail as expected', function (done) {
         chai.request(baseUrl)
+
             .get('/subscribers/emails/unknown@email.com')
             .end((error, res) => {
                 expect(res).to.have.status(404);
@@ -75,6 +77,7 @@ describe('Subscriber model', function () {
     it('tests invalid id request fail as expected', function (done) {
         // get subscriber with invalid id
         chai.request(baseUrl)
+
             .get('/subscribers/notanumber')
             .end((error, res) => {
                 expect(res).to.have.status(400);
@@ -82,10 +85,12 @@ describe('Subscriber model', function () {
                 expect(respJson).to.deep.equal({ error: 'Invalid id' });
                 done();
             });
+
     });
 
     it('get all subscribers array', function (done) {
         chai.request(baseUrl)
+
             .get('/subscribers')
             .end((error, res) => {
                 expect(res).to.have.status(200);
@@ -101,6 +106,7 @@ describe('Subscriber model', function () {
 
     it('tests successful deletion by email', function (done) {
         chai.request(baseUrl)
+
             .delete(`/subscribers/emails/${subs.email}`)
             .end((error, res) => {
                 expect(res).to.have.status(204);

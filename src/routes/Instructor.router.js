@@ -4,9 +4,8 @@ const router = Router();
 
 //middlewares
 const {
-  validateInstructorBody,
-  validateInstructorEmailParam,
-  validateInstructorIdParam,
+  validateInstructorBody, validateInstructorEmailParam,
+  validateInstructorIdParam, validateUpdateBody, validateUpdateIds
 } = require("../middlewares/validateInstructor");
 
 //controllers
@@ -19,7 +18,7 @@ router.post(
   Instructor.createInstructor
 );
 
-//GET /instructors/:id
+// GET /instructors/:id
 router.get(
   "/instructors/:id",
   validateInstructorIdParam,
@@ -39,8 +38,15 @@ router.get("/instructors", Instructor.getAllInstructors);
 //PUT /instructors/:id
 router.put(
   "/instructors/:id",
-  validateInstructorIdParam,
+  validateInstructorIdParam, validateUpdateBody,
   Instructor.updateInstructor
+);
+
+// PUT /instructors/:id/courses/:id
+router.put(
+  "/instructors/:id/courses/:courseId",
+  validateUpdateIds,
+  Instructor.updateInstructorCourse
 );
 
 //DELETE /instructors/:id

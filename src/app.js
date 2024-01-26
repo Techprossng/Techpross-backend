@@ -2,6 +2,7 @@
 // entry point of server
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
 const loggingMiddleware = require("./middlewares/logging");
 const { Buffer } = require("node:buffer");
 
@@ -11,6 +12,9 @@ const contactRouter = require("./routes/Contact.router");
 const courseRouter = require("./routes/Course.router");
 const instructorRouter = require("./routes/Instructor.router");
 const path = require('path');
+
+// session object
+const SessionAuth = require('./session');
 
 // initialize express app
 const app = express();
@@ -35,8 +39,15 @@ app.use(
   })
 );
 
+// Use cookie
+app.use(cookieParser());
+
 // Use the logging middleware
 app.use(loggingMiddleware);
+
+// use session object
+const sessionObj = SessionAuth.getSessionInstance();
+app.use(sessionObj);
 
 // CORS
 const corsOptions = {

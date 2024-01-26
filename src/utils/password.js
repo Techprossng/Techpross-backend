@@ -11,11 +11,11 @@ async function hashPassword(password) {
     const saltRounds = 10;
     try {
         const salt = await bcrypt.genSalt(saltRounds);
-        // promisify the synchronous hashing function
+
         const hash = await bcrypt.hash(password, salt);
         return hash;
     } catch (error) {
-        console.error(error)
+        console.error(error);
         throw new Error('Could not generate hash');
     }
 }

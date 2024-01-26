@@ -5,9 +5,9 @@ const router = express.Router();
 
 // MIDDLEWARES
 const {
-  validateUserBody, validateUserSession, validateLoginInput, validateLogoutParam, validateIdParam
+  validateUserBody, validateUserSession, validateLoginInput,
+  validateLogoutParam, validateIdParam, validateUpdateBody
 } = require('../middlewares/validateUser');
-
 
 // CONTROLLERS
 const UserController = require("../controllers/User.controller");
@@ -22,8 +22,14 @@ router.post(
   "/auth/users/:userId/logout", validateLogoutParam,
   validateUserSession, UserController.logout
 );
-router.get("/users/:userId", validateIdParam, validateUserSession, UserController.getUser)
-router.put("/users/:userId", validateIdParam, validateUserSession, UserController.update);
+
+// User GET
+router.get("/users/:userId", validateIdParam, validateUserSession, UserController.getUser);
+// User update (PUT)
+router.put("/users/:userId",
+  validateIdParam, validateUserSession,
+  validateUpdateBody, UserController.update
+);
 
 
 module.exports = router;

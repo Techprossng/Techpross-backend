@@ -187,7 +187,7 @@ async function validateUpdateIds(request, response, next) {
   // check course existence
   const instructor = await Instructor.getInstructorById(instructorId)
   if (!instructor) {
-    return response.status(400).json({ error: 'Instructor Not Found' });
+    return response.status(404).json({ error: 'Instructor Not Found' });
   }
 
   // courseId can have a zero value
@@ -195,7 +195,7 @@ async function validateUpdateIds(request, response, next) {
   if (courseIdNum) {
     course = await Course.getCourseById(courseIdNum)
     if (!course) {
-      return response.status(400).json({ error: 'Course Not Found' });
+      return response.status(404).json({ error: 'Course Not Found' });
     }
   }
   // pass objects to next middleware of handler

@@ -86,7 +86,6 @@ async function validateLoginInput(request, response, next) {
     if (typeof password !== 'string') {
         return response.status(400).json({ error: 'Invalid password' });
     }
-    console.log(user);
     const isMatch = await Util.verifyPassword(password, user.password);
     if (!isMatch) {
         return response.status(400).json({ error: 'Invalid password' });
@@ -209,9 +208,62 @@ async function validateIdParam(request, response, next) {
     next();
 }
 
+/**
+ * ### validates the body properties for `PUT` request
+ * @type {Handler} 
+ */
+async function validateUpdateBody(request, response, next) {
+    const { firstName, lastName, phoneNumber, bio } = request.body;
+
+    // update object
+    const updateBody = { firstName, lastName, phoneNumber, bio };
+
+    const updateBodyValues = Object.values(updateBody).filter(
+        (value) => value !== null || value !== undefined
+    );
+
+    // check empty body
+    if (updateBodyValues.length === 0) {
+        return response.status(204).json({})
+    }
+
+    // names
+    if (
+        firstName &&
+        (typeof firstName !== 'string' || !/^[A-Za-z].+$/.test(firstName))
+    ) {
+        return response.status(400).json({ error: 'Invalid firstName' });
+    }
+
+    if (
+        lastName &&
+        (typeof lastName !== 'string' || !/^[A-Za-z].+$/.test(lastName))
+    ) {
+        return response.status(400).json({ error: 'Invalid lastName' });
+    }
+
+    if (
+        phoneNumber &&
+        (typeof phoneNumber !== 'string' || !Util.checkPhone(phoneNumber))
+    ) {
+        return response.status(400).json({ error: 'Invalid phone' });
+    }
+
+    if (
+        bio &&
+        (typeof bio !== 'string' || !/^[A-Za-z].+$/.test(bio))
+    ) {
+        return response.status(400).json({ error: 'Invalid bio' });
+    }
+    // pass update body to next handler
+    response.locals.updateBody = updateBody;
+    return next();
+}
+
 module.exports = {
     validateUserBody,
     validateEmailParam, validateIdParam,
     validateUserSession,
-    validateLoginInput, validateLogoutParam
+    validateLoginInput, validateLogoutParam,
+    validateUpdateBody
 };

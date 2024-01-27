@@ -35,6 +35,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: npm install
+        
+      # try mysql client upgrade
+      - name: Install Dependencies
+        run: |
+          sudo apt-get install mysql-client
+          sudo apt-get install --only-upgrade mysql-client
       
       # start the mysql and give some time for MySQL to start
       - name: Start MySQL Service

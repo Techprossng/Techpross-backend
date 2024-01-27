@@ -51,10 +51,10 @@ jobs:
           until nc -zv localhost 3306; do sleep 1; done
       
       # Update user 
-      - name:  create and mysql user
-        run: |
-          mysql -e "CREATE USER IF NOT EXISTS '${{ env.DB_USER }}'@'localhost' IDENTIFIED BY '${{ env.DB_PASS }}';" -u ${{ env.ROOT_USER }}
-          mysql --host=localhost -u${{ env.ROOT_USER }} -e "ALTER USER '${{ env.DB_USER }}'@'localhost' IDENTIFIED WITH mysql_native_password BY '${{ env.DB_PASS }}';"
+      # - name:  create and mysql user
+      #   run: |
+      #     mysql -e "CREATE USER IF NOT EXISTS '${{ env.DB_USER }}'@'localhost' IDENTIFIED BY '${{ env.DB_PASS }}';" -u ${{ env.ROOT_USER }}
+      #     mysql --host=localhost -u${{ env.ROOT_USER }} -e "ALTER USER '${{ env.DB_USER }}'@'localhost' IDENTIFIED WITH mysql_native_password BY '${{ env.DB_PASS }}';"
 
       
       # run migrations in with package.json

@@ -1,4 +1,4 @@
-name: Node.js CI with tests
+name: MySQL CI with tests
 
 on:
   push:
@@ -9,49 +9,54 @@ on:
       - development
 
 jobs:
-  build:
+  mysql-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: ['14.x', '18.x', '20.x']
+    
+    
+    env:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: test_user
+      MYSQL_PASSWORD: test_password
 
-    # services:
-    #   mysql:
-    #     image: mysql:latest
-    #     env:
-    #       MYSQL_ROOT_PASSWORD: password
-    #       MYSQL_DATABASE: test_db
-    #       MYSQL_USER: test_user
-    #       MYSQL_PASSWORD: password
-    #     ports:
-    #       - 3306:3306
 
     steps:
+      # checkout repo onto the runner
       - name: Checkout code
-        uses: actions/checkout@v3
-
+        uses: actions/checkout@v4
+      
+      # setup node in path and install dependencies
       - name: use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm install
+      
+      # start the mysql and give some time for MySQL to start
+      - name: Start MySQL Service
+        run: |
+          sudo /etc/init.d/mysql start
+          sleep 5
+      
+      # scan for open ports with netcat
+      - name: Wait for MySQL
+        run: |
+          until nc -zv localhost 3306; do sleep 1; done
+      
+      # run migrations in with package.json
+      - name: Run migrations
+        run: npm run db-migrate-dev
+      
+      # start server
+      - name: start express server
+        run: npm run start-server
 
-      # - name: Start MySQL Service
-      #   run: |
-      #     sudo service mysql start
-      #     sleep 5 # Give some time for MySQL to start
-
-      # - name: Wait for MySQL
-      #   run: |
-      #     until nc -zv localhost 3306; do sleep 1; done
-
-      # - name: Create Database Schema
-      #   run: |
-      #     # mysql -u root -p < schema.sql
-      #     mysql -u test_user -p test_db < schema.sql
-
-      # - name: Run Database Tests
-      #   run: |
-      #      npm run test:db
+      - name: Run Database Tests
+        run: npm run test
 
       - name: npm install, build, and test
         run: |
@@ -59,12 +64,12 @@ jobs:
             npm run build --if-present
             npm run test --if-present
 
-      - name: Deployment - Sync Files to FTP
-        if: success() # Only deploy if previous steps (tests) were successful
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
-        with:
-          server: techprosnaija.com
-          username: ${{ secrets.ftp_username }}
-          password: ${{ secrets.ftp_password }}
-          server-dir: techprosnaija.com
+      # - name: Deployment - Sync Files to FTP
+      #   if: success() # Only deploy if previous steps (tests) were successful
+      #   uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      #   with:
+      #     server: techprosnaija.com
+      #     username: ${{ secrets.ftp_username }}
+      #     password: ${{ secrets.ftp_password }}
+      #     server-dir: techprosnaija.com
           

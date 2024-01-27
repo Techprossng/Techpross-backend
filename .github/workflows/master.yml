@@ -18,9 +18,10 @@ jobs:
     
     env:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: test_db
+      TEST_DB: test_db
       MYSQL_USER: test_user
       MYSQL_PASSWORD: test_password
+      DB_PASS: test_password
 
 
     steps:
@@ -35,12 +36,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: npm install
-        
-      # try mysql client upgrade
-      - name: Install Dependencies
-        run: |
-          sudo apt-get install mysql-client
-          sudo apt-get install --only-upgrade mysql-client
+
+      
       
       # start the mysql and give some time for MySQL to start
       - name: Start MySQL Service
@@ -52,6 +49,12 @@ jobs:
       - name: Wait for MySQL
         run: |
           until nc -zv localhost 3306; do sleep 1; done
+      
+      # Update user 
+      - name: Update MySQL User Password
+        run: |
+          mysql --host=localhost --user=root --password=$MYSQL_ROOT_PASSWORD --execute="ALTER USER 'test_user'@'localhost' IDENTIFIED WITH mysql_native_password BY '$DB_PASS'"
+
       
       # run migrations in with package.json
       - name: Run migrations

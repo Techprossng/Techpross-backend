@@ -53,7 +53,7 @@ jobs:
       # Update user 
       - name:  create and mysql user
         run: |
-          sudo mysql --host=localhost --user=root --password=root -e "CREATE DATABASE IF NOT EXISTS '${{ env.TEST_DB }}';"
+          sudo mysql --host=localhost --user=root --password=root -e "CREATE DATABASE IF NOT EXISTS ${{ env.TEST_DB }};"
           sudo mysql --host=localhost --user=root --password=root -e "CREATE USER IF NOT EXISTS '${{ env.DB_USER }}'@'localhost' IDENTIFIED BY '${{ env.DB_PASS }}';"
           sudo mysql --host=localhost --user=root --password=root -e "GRANT ALL PRIVILEGES ON ${{ env.TEST_DB }}.* TO '${{ env.DB_USER }}'@'localhost';"
           sudo mysql --host=localhost -u${{ env.ROOT_USER }} --password=${{ env.MYSQL_ROOT_PASSWORD }} -e "ALTER USER '${{ env.DB_USER }}'@'localhost' IDENTIFIED WITH mysql_native_password BY '${{ env.DB_PASS }}';"

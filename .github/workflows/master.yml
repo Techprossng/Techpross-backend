@@ -19,8 +19,7 @@ jobs:
     env:
       MYSQL_ROOT_PASSWORD: root
       TEST_DB: test_db
-      MYSQL_USER: test_user
-      MYSQL_PASSWORD: test_password
+      DB_USER: test_user
       DB_PASS: test_password
 
 
@@ -51,9 +50,10 @@ jobs:
           until nc -zv localhost 3306; do sleep 1; done
       
       # Update user 
-      - name: Update MySQL User Password
+      - name:  create and mysql user
         run: |
-          mysql --host=localhost --user=root --password=$MYSQL_ROOT_PASSWORD --execute="ALTER USER 'test_user'@'localhost' IDENTIFIED WITH mysql_native_password BY '$DB_PASS'"
+          mysql -e 'CREATE USER IF NOT EXISTS '${{ env.DB_USER }}'@'localhost' IDENTIFIED BY ${{ env.DB_PASS }}';' -u ROOT -proot
+          mysql --host=localhost --user=root -p ${{ env.MYSQL_ROOT_PASSWORD }} -e "ALTER USER 'test_user'@'localhost' IDENTIFIED WITH mysql_native_password BY '${{ env.DB_PASS }}';"
 
       
       # run migrations in with package.json

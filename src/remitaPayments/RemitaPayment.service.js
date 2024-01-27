@@ -24,10 +24,6 @@ require('dotenv').config();
 
 
 
-
-
-
-
 /**
  * ## Remita Payment service class
  */
@@ -71,11 +67,6 @@ class RemitaPaymentService {
 
     /**
      * ### Checks the user transaction status with RRR
-     * #### status codes
-     * - 00: successful payment
-     * - 012: Aborted transaction
-     * - 02: Transaction failed
-     * - 021: Transaction pending
      * @param {string} rrr 
      * 
      * @returns {Promise<string>}
@@ -97,6 +88,7 @@ class RemitaPaymentService {
                 }
             }
             const response = await axios(config);
+            console.log(response.data);
 
             const { status } = response.data;
 

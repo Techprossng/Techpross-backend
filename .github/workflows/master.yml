@@ -21,6 +21,7 @@ jobs:
       TEST_DB: test_db
       DB_USER: test_user
       DB_PASS: test_password
+      DB_NAME: test_db
       ROOT_USER: root
 
 
@@ -62,6 +63,12 @@ jobs:
       # run migrations in with package.json
       - name: Run migrations
         run: npm run db-migrate-dev
+        env:
+          DB_HOST: localhost
+          DB_USER: ${{ env.DB_USER }}
+          DB_PASS: ${{ env.DB_PASS }}
+          TEST_DB: ${{ env.TEST_DB }}
+          DB_NAME: ${{ env.DB_NAME }}
       
       # start server
       - name: start express server

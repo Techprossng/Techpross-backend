@@ -72,8 +72,8 @@ jobs:
 
       
       # start server
-      - name: start express server
-        run: npm run start-test-server
+      - name: start express server in background
+        run: npm run start-test-server &
         env:
           DB_HOST: '127.0.0.1'
           DB_USER: ${{ env.DB_USER }}

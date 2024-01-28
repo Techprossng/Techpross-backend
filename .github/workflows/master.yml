@@ -80,6 +80,11 @@ jobs:
           DB_PASS: ${{ env.DB_PASS }}
           TEST_DB: ${{ env.TEST_DB }}
           DB_NAME: ${{ env.DB_NAME }}
+      
+      # scan for open ports with netcat
+      - name: Wait for server
+        run: |
+          until nc -zv localhost 3000; do sleep 1; done
 
 
       - name: Run Database Tests

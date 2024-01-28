@@ -64,24 +64,38 @@ jobs:
       - name: Run migrations
         run: npm run db-migrate-dev
         env:
-          DB_HOST: localhost
+          DB_HOST: '127.0.0.1'
           DB_USER: ${{ env.DB_USER }}
           DB_PASS: ${{ env.DB_PASS }}
           TEST_DB: ${{ env.TEST_DB }}
           DB_NAME: ${{ env.DB_NAME }}
+
       
       # start server
       - name: start express server
-        run: npm run start-server
+        run: npm run start-test-server
+        env:
+          DB_HOST: '127.0.0.1'
+          DB_USER: ${{ env.DB_USER }}
+          DB_PASS: ${{ env.DB_PASS }}
+          TEST_DB: ${{ env.TEST_DB }}
+          DB_NAME: ${{ env.DB_NAME }}
+
 
       - name: Run Database Tests
         run: npm run test
+        env:
+          DB_HOST: '127.0.0.1'
+          DB_USER: ${{ env.DB_USER }}
+          DB_PASS: ${{ env.DB_PASS }}
+          TEST_DB: ${{ env.TEST_DB }}
+          DB_NAME: ${{ env.DB_NAME }}
 
-      - name: npm install, build, and test
-        run: |
-            npm install
-            npm run build --if-present
-            npm run test --if-present
+      # - name: npm install, build, and test
+      #   run: |
+      #       npm install
+      #       npm run build --if-present
+      #       npm run test --if-present
 
       # - name: Deployment - Sync Files to FTP
       #   if: success() # Only deploy if previous steps (tests) were successful

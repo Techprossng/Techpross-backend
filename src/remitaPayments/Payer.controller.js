@@ -2,6 +2,7 @@
 
 const Payer = require('../models/Payer');
 const RemitaPaymentService = require('./RemitaPayment.service');
+const { Util } = require("../utils")
 
 /**
  * @callback Handler
@@ -40,6 +41,37 @@ class PayerController {
         try {
             const returnData = { message: 'success', payer: { ...payer } };
             return response.status(200).json(returnData);
+        } catch (error) {
+            return response.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+
+    /**
+     * ### Get payers by page
+     * @type {Handler}
+     */
+    static async getPayers(request, response) {
+        let pageNum;
+
+        /**@type {string} */
+        const page = request.query.page;
+
+        // parse page number
+        if (!page || !Util.checkDigit(page)) {
+            pageNum = 1;
+        } else {
+            // page number must be greater than 0
+            pageNum = parseInt(page, 10) <= 0 ? 1 : parseInt(page, 10);
+        }
+
+        try {
+            // get instructors by page
+            const { payers, nextPageNum } = await Payer.getAllPayers(
+                pageNum
+            );
+            const toReturn = { payers, current: pageNum, next: nextPageNum };
+
+            return response.status(200).json({ message: "success", ...toReturn });
         } catch (error) {
             return response.status(500).json({ error: "Internal Server Error" });
         }

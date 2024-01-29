@@ -1,4 +1,4 @@
-import Payer from '../../models/Payer';
+const Payer = require('../../models/Payer');
 
 const { Util } = require('../../utils');
 const Payment = require('../../remitaPayments/Payer.database');

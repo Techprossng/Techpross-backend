@@ -15,7 +15,7 @@ const Payment = require('../../remitaPayments/Payer.database');
  * ### Validates Payee's details
  * @type {Handler}
  */
-export async function validatePayerBody(request, response, next) {
+async function validatePayerBody(request, response, next) {
 
     const { firstName, lastName, email, course } = request.body;
 
@@ -62,7 +62,7 @@ export async function validatePayerBody(request, response, next) {
  * ### Verifies the email and payer's existence for GET and DELETE requests
  * @type {Handler}
  */
-export async function validatePayerEmail(request, response, next) {
+async function validatePayerEmail(request, response, next) {
     const { email } = request.params;
 
     // request method
@@ -102,7 +102,7 @@ export async function validatePayerEmail(request, response, next) {
  * ### Verifies the id and payer's existence for GET and DELETE requests
  * @type {Handler}
  */
-export async function validatePayerId(request, response, next) {
+async function validatePayerId(request, response, next) {
     const { id } = request.params;
 
     // request method
@@ -150,7 +150,7 @@ export async function validatePayerId(request, response, next) {
  * ### validate parameters and body in update request
  * @type {Handler}
  */
-export async function validateUpdate(request, response, next) {
+async function validateUpdate(request, response, next) {
     const { id } = request.params;
     const { RRR } = request.body;
 

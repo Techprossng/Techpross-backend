@@ -97,7 +97,7 @@ class Payer {
                 .orderBy('id')
 
             if (!allPayees) {
-                return { payees: [], nextPageNum: null };
+                return { payers: [], nextPageNum: null };
             }
 
             // set new offset and get next page number
@@ -106,9 +106,9 @@ class Payer {
                 getNextPage(newOffset, this.pageLimit, TABLES.PAYERS);
 
             // cleanup object. knex returns RowData {}, assign to readable object
-            const payees = allPayees.map(payee => Object.assign({}, payee));
+            const payers = allPayees.map(payer => Object.assign({}, payer));
 
-            return { payees, nextPageNum };
+            return { payers, nextPageNum };
 
         } catch (error) {
             throw new Error(`Could not get payees for ${pageNum}`);

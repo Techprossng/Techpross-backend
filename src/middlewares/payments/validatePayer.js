@@ -45,7 +45,7 @@ async function validatePayerBody(request, response, next) {
     }
 
     if (!course) {
-        return response.status(400).json({ error: 'Missing lastName' });
+        return response.status(400).json({ error: 'Missing course' });
     }
     if (typeof course !== 'string' || !Util.checkString(course)) {
         return response.status(400).json({ error: 'Invalid course' });

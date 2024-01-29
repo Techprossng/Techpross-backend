@@ -8,3 +8,4 @@ database/
 .vscode/
 master.yml
 stage.yml
+package.json

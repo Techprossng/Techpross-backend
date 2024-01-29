@@ -33,4 +33,5 @@ exports.TABLES = {
     INSTRUCTORS: 'instructors',
     SUBSCRIBERS: 'subscribers',
     CONTACTS: 'contacts',
+    PAYERS: 'payers'
 };

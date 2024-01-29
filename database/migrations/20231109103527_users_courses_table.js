@@ -10,8 +10,8 @@ const courses = require('./20231109103424_courses_table');
 exports.up = function (knex) {
   return knex.schema
     .createTable('users_courses', function (table) {
-      table.bigInteger('userId').notNullable();
-      table.bigInteger('courseId').notNullable();
+      table.bigIncrements('userId').notNullable();
+      table.bigIncrements('courseId').notNullable();
       table.datetime('dateEnrolled').notNullable().defaultTo(knex.fn.now());
       table.primary(['userId', 'courseId']);
       table.foreign('userId').references('users.id').onDelete('CASCADE');

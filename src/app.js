@@ -11,6 +11,7 @@ const subscriberRouter = require("./routes/Subscriber.router");
 const contactRouter = require("./routes/Contact.router");
 const courseRouter = require("./routes/Course.router");
 const instructorRouter = require("./routes/Instructor.router");
+const paymentRouter = require("./remitaPayments/Payment.router");
 const path = require('path');
 
 // session object
@@ -63,6 +64,7 @@ app.use("/api/v1", subscriberRouter);
 app.use("/api/v1", contactRouter);
 app.use("/api/v1", courseRouter);
 app.use("/api/v1", instructorRouter);
+app.use("/api/v1", paymentRouter);
 app.use(express.static(path.join(__dirname, '../../Techprossng-website/build')));
 
 // Catch-all route for React app

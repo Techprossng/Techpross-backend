@@ -1,27 +1,41 @@
 // @ts-check
 const { Router } = require('express');
-const { validateAddPayee } = require('../middlewares/payments/validateAddPayee');
 
+const { validatePayerBody, validatePayerEmail, validatePayerId, validateUpdate
+} = require('../middlewares/payments/validatePayer');
+
+const PayerController = require('./Payer.controller');
+
+
+/**
+ * ### Payment Router
+ */
 const router = Router();
 
 
 /**@description Webhook for remita notification on successful participants payments */
-router.post("/training/payments/notification");
+router.post("/payments/notification");
 
 /**@description Endpoint for checking transaction status with RRR */
-router.get("/training/payments/:RRR")
+router.get("/payments/:RRR")
 
 /**@description Endpoint for checking transaction status with orderId */
-router.get("/training/payments/:orderId");
+router.get("/payments/:orderId");
 
 /**@description Endpoint for getting remita secret key */
-router.get("/training/payments/remita/secretKey");
+router.get("/payments/remita/secretKey");
 
 /**@description Add a payer */
-router.post("/training/payers", validateAddPayee);
+router.post("/payers", validatePayerBody, PayerController.addPayer);
 
-router.get("/training/payers");
+/**@description Get payers by page */
+router.get("/payers");
 
-router.get("/training/payers/:id");
+router.get("/payers/:id", validatePayerId, PayerController.getPayer);
 
-router.get("/training/payers/:email");
+router.get("/payers/:email", validatePayerEmail, PayerController.getPayer);
+
+/**@description Update payer's payment status */
+router.put("/payers/:id", validateUpdate, PayerController.updatePayerStatus);
+
+module.exports = router;

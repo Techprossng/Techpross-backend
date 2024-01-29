@@ -1,7 +1,6 @@
 const Payer = require('../../models/Payer');
 
 const { Util } = require('../../utils');
-const Payment = require('../../remitaPayments/Payer.database');
 
 /**
  * @callback Handler
@@ -27,8 +26,8 @@ async function validatePayerBody(request, response, next) {
     }
 
     // validate payee non-existence
-    const payee = await Payment.getPayeeByEmail(email);
-    if (payee) {
+    const payer = await Payer.getPayerByEmail(email);
+    if (payer) {
         return response.status(400).json({ error: 'Payee already exists' });
     }
 

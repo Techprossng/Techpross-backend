@@ -1,27 +1,47 @@
 // @ts-check
 const { Router } = require('express');
-const { validateAddPayee } = require('../middlewares/payments/validateAddPayee');
 
+const { validatePayerBody, validatePayerEmail, validatePayerId, validateUpdate
+} = require('../middlewares/payments/validatePayer');
+
+// Controllers
+const PayerController = require('./Payer.controller');
+const RemitaPaymentController = require('./RemitaPayment.controller');
+const { validateAuthorization } = require('../middlewares/payments/validatePaymentRequest');
+
+
+/**
+ * ### Payment Router
+ */
 const router = Router();
 
 
 /**@description Webhook for remita notification on successful participants payments */
-router.post("/training/payments/notification");
+router.post("/payments/notification");
 
 /**@description Endpoint for checking transaction status with RRR */
-router.get("/training/payments/:RRR")
+router.get("/payments/transactions/:RRR", RemitaPaymentController.checkPaymentStatusWithRRR);
 
 /**@description Endpoint for checking transaction status with orderId */
-router.get("/training/payments/:orderId");
+// router.get("/payments/:orderId");
 
-/**@description Endpoint for getting remita secret key */
-router.get("/training/payments/remita/secretKey");
+/**@description Endpoint for getting remita secret keys */
+router.get("/payments/remita/keys",
+    validateAuthorization, RemitaPaymentController.getRemitaSecretKey);
 
 /**@description Add a payer */
-router.post("/training/payers", validateAddPayee);
+router.post("/payers", validatePayerBody, PayerController.addPayer);
 
-router.get("/training/payers");
+/**@description Get payers by page */
+router.get("/payers", PayerController.getPayers);
 
-router.get("/training/payers/:id");
+/**@description get payer by id */
+router.get("/payers/:id", validatePayerId, PayerController.getPayer);
 
-router.get("/training/payers/:email");
+/**@description get payer by email */
+router.get("/payers/emails/:email", validatePayerEmail, PayerController.getPayer);
+
+/**@description Update payer's payment status */
+router.put("/payers/:id", validateUpdate, PayerController.updatePayerStatus);
+
+module.exports = router;

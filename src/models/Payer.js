@@ -61,6 +61,25 @@ class Payer {
     }
 
     /**
+     * retrieves a payee resource
+     * @param {number} payerId 
+     * @returns {Promise<object | null>} a payee resource
+     */
+    static async getPayerById(payerId) {
+        try {
+            const payee = await db(TABLES.PAYERS)
+                .where({ id: payerId }).first();
+
+            if (!payee) {
+                return null;
+            }
+            return Object.assign({}, payee);
+        } catch (error) {
+            throw new Error('Could not get payee');
+        }
+    }
+
+    /**
      * retrieves all payees by page
      * @param {number} pageNum 
      * @returns {Promise<object>} contains payees data by page and
@@ -78,7 +97,7 @@ class Payer {
                 .orderBy('id')
 
             if (!allPayees) {
-                return { payees: [], nextPageNum: null };
+                return { payers: [], nextPageNum: null };
             }
 
             // set new offset and get next page number
@@ -87,12 +106,31 @@ class Payer {
                 getNextPage(newOffset, this.pageLimit, TABLES.PAYERS);
 
             // cleanup object. knex returns RowData {}, assign to readable object
-            const payees = allPayees.map(payee => Object.assign({}, payee));
+            const payers = allPayees.map(payer => Object.assign({}, payer));
 
-            return { payees, nextPageNum };
+            return { payers, nextPageNum };
 
         } catch (error) {
             throw new Error(`Could not get payees for ${pageNum}`);
+        }
+    }
+
+    /**
+     * ### Updates a payer's payment status
+     * @param {number} payerId
+     * @returns {Promise<boolean>}
+     */
+    static async updatePayer(payerId) {
+
+        try {
+            await db(TABLES.PAYERS)
+                .where({ id: payerId })
+                .update({ isPaid: true })
+
+            return true;
+
+        } catch (error) {
+            throw new Error('Unable to update');
         }
     }
 

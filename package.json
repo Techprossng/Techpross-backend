@@ -12,9 +12,9 @@
     "db-make-migration": "knex migrate:make",
     "db-migrate-dev": "knex migrate:latest",
     "db-migrate-prod": "knex migrate:latest --env production",
-    "db-rollback": "knex migrate:rollback database/migrations",
-    "db-migrate-up": "knex migrate:up database/migrations",
-    "db-migrate-down": "knex migrate:down database/migrations"
+    "db-rollback": "knex migrate:rollback ./database/migrations",
+    "db-migrate-up": "knex migrate:up ./database/migrations",
+    "db-migrate-down": "knex migrate:down ./database/migrations"
   },
   "keywords": [],
   "author": "",

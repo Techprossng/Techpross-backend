@@ -1,3 +1,4 @@
+const Payer = require('../models/Payer');
 const RemitaPaymentService = require('./RemitaPayment.service');
 
 // @ts-check
@@ -48,10 +49,28 @@ class RemitaPaymentController {
 
     /**
      * ### Listens to remita webhook for payment notifications and updates payer's info
+     * @type {Handler}
      */
-    // static async receivePaymentNotification(request, response) {
-    //     return;
-    // }
+    static async receivePaymentNotification(request, response) {
+        // A payment notification is an array object
+        /**@type {Array<Record<string, any>>} */
+        const [remitaNotification] = request.body;
+
+        const { payerEmail } = remitaNotification;
+
+        // check payer's data and update payment status
+        const payer = await Payer.getPayerByEmail(payerEmail);
+
+        // Send the response to remita even if payer is not seeded in the database
+        if (!payer) {
+            return response.status(200).send('Ok');
+        }
+
+        // update payer's payment status
+        await Payer.updatePayerByEmail(payerEmail, true);
+
+        return response.status(200).send('Ok');
+    }
 
     /**
      * ### gets remita secret key for payment transactions

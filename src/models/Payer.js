@@ -134,6 +134,26 @@ class Payer {
         }
     }
 
+    /**
+     * ### Updates a payer's payment status
+     * @param {number} payerEmail
+     * @param {boolean} [isPaid = true] 
+     * @returns {Promise<boolean>}
+     */
+    static async updatePayerByEmail(payerEmail, isPaid = true) {
+
+        try {
+            await db(TABLES.PAYERS)
+                .where({ email: payerEmail })
+                .update({ isPaid: isPaid })
+
+            return true;
+
+        } catch (error) {
+            throw new Error('Unable to update');
+        }
+    }
+
 }
 
 module.exports = Payer;

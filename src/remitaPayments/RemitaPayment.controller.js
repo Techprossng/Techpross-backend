@@ -78,7 +78,7 @@ class RemitaPaymentController {
      */
     static async getRemitaSecretKey(request, response) {
 
-        return response.status(200).json({ ...this.apiObject });
+        return response.status(200).json({ message: 'success', ...this.apiObject });
     }
 }
 

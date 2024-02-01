@@ -17,7 +17,7 @@ const router = Router();
 
 
 /**@description Webhook for remita notification on successful participants payments */
-router.post("/payments/notification");
+router.post("/payments/notification", RemitaPaymentController.receivePaymentNotification);
 
 /**@description Endpoint for checking transaction status with RRR */
 router.get("/payments/transactions/:RRR", RemitaPaymentController.checkPaymentStatusWithRRR);

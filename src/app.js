@@ -65,11 +65,11 @@ app.use("/api/v1", contactRouter);
 app.use("/api/v1", courseRouter);
 app.use("/api/v1", instructorRouter);
 app.use("/api/v1", paymentRouter);
-app.use(express.static(path.join(__dirname, '../../Techprossng-website/build')));
+app.use(express.static(path.join(__dirname, '../../Techprossng-website/dist')));
 
 // Catch-all route for React app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../Techprossng-website/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../../Techprossng-website/dist', '../../Techprossng-website/dist/index.html'));
 });
 
 

@@ -8,6 +8,11 @@ const { Util } = require('../utils/index');
  * @property {string} lastName
  * @property {string} email
  * @property {string} course
+ * 
+ * @typedef {object} TUpdate
+ * @property {string} payerEmail
+ * @property {string} rrr
+ * @property {boolean} isPaid
  */
 
 /** ## Payment class for mysql database actions */
@@ -118,14 +123,15 @@ class Payer {
     /**
      * ### Updates a payer's payment status
      * @param {number} payerId
+     * @param {boolean} isPaid
      * @returns {Promise<boolean>}
      */
-    static async updatePayer(payerId) {
+    static async updatePayer(payerId, isPaid) {
 
         try {
             await db(TABLES.PAYERS)
                 .where({ id: payerId })
-                .update({ isPaid: true })
+                .update({ isPaid: isPaid })
 
             return true;
 
@@ -137,15 +143,15 @@ class Payer {
     /**
      * ### Updates a payer's payment status
      * @param {number} payerEmail
-     * @param {boolean} [isPaid = true] 
+     * @param {TUpdate} updateData 
      * @returns {Promise<boolean>}
      */
-    static async updatePayerByEmail(payerEmail, isPaid = true) {
+    static async updatePayerByEmail(payerEmail, updateData) {
 
         try {
             await db(TABLES.PAYERS)
                 .where({ email: payerEmail })
-                .update({ isPaid: isPaid })
+                .update({ ...updateData })
 
             return true;
 

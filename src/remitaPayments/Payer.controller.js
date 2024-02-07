@@ -103,7 +103,8 @@ class PayerController {
                     error: updateError, RemitaError: remitaResponse
                 });
             }
-            await Payer.updatePayer(payerId);
+            const isPaid = true;
+            await Payer.updatePayer(payerId, isPaid);
 
             const returnData = { message: 'Payment status updated successfully', id: payerId };
             return response.status(200).json(returnData);

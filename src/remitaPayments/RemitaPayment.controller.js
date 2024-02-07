@@ -56,7 +56,7 @@ class RemitaPaymentController {
         /**@type {Array<Record<string, any>>} */
         const [remitaNotification] = request.body;
 
-        const { payerEmail } = remitaNotification;
+        const { payerEmail, rrr } = remitaNotification;
 
         // check payer's data and update payment status
         const payer = await Payer.getPayerByEmail(payerEmail);
@@ -67,7 +67,9 @@ class RemitaPaymentController {
         }
 
         // update payer's payment status
-        await Payer.updatePayerByEmail(payerEmail, true);
+        const updateData = { payerEmail, rrr, isPaid: true };
+
+        await Payer.updatePayerByEmail(payerEmail, updateData);
 
         return response.status(200).send('Ok');
     }

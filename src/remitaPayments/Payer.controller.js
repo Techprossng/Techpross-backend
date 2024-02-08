@@ -87,10 +87,15 @@ class PayerController {
      */
     static async updatePayerStatus(request, response) {
         const { id } = request.params;
-        const { RRR } = request.body;
+        /**@type {string} */
+        const RRR = request.body.RRR;
 
         const payerId = parseInt(id, 10);
         const updateError = "Cannot update payer's status";
+
+        // sanitize RRR
+        /** @type {string} */
+        const payerRRR = RRR.indexOf("-") === -1 ? RRR : RRR.replace(/-/g, "");
 
 
 
@@ -103,8 +108,8 @@ class PayerController {
                     error: updateError, RemitaError: remitaResponse
                 });
             }
-            const isPaid = true;
-            await Payer.updatePayer(payerId, isPaid);
+            const updateData = { payerRRR, isPaid: true };
+            await Payer.updatePayerById(payerId, updateData);
 
             const returnData = { message: 'Payment status updated successfully', id: payerId };
             return response.status(200).json(returnData);

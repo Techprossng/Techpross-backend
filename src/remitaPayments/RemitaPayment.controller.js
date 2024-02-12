@@ -66,8 +66,11 @@ class RemitaPaymentController {
             return response.status(200).send('Ok');
         }
 
+        /** @type {string} */
+        const payerRRR = rrr.indexOf("-") === -1 ? rrr : rrr.replace(/-/g, "");
+
         // update payer's payment status
-        const updateData = { payerEmail, rrr, isPaid: true };
+        const updateData = { payerRRR, isPaid: true };
 
         await Payer.updatePayerByEmail(payerEmail, updateData);
 

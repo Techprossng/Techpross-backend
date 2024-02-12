@@ -10,8 +10,7 @@ const { Util } = require('../utils/index');
  * @property {string} course
  * 
  * @typedef {object} TUpdate
- * @property {string} payerEmail
- * @property {string} rrr
+ * @property {string} payerRRR
  * @property {boolean} isPaid
  */
 
@@ -123,15 +122,15 @@ class Payer {
     /**
      * ### Updates a payer's payment status
      * @param {number} payerId
-     * @param {boolean} isPaid
+     * @param {TUpdate} updateData
      * @returns {Promise<boolean>}
      */
-    static async updatePayer(payerId, isPaid) {
+    static async updatePayerById(payerId, updateData) {
 
         try {
             await db(TABLES.PAYERS)
                 .where({ id: payerId })
-                .update({ isPaid: isPaid })
+                .update({ ...updateData })
 
             return true;
 

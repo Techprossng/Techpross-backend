@@ -76,7 +76,7 @@ class RemitaPaymentService {
         try {
             const { merchantId, apiKey } = this.apiObject;
 
-            const stringToHash = `${rrr}${apiKey}${merchantId}`; // RRR + apiKey + merchantId
+            const stringToHash = rrr + apiKey + merchantId; // RRR + apiKey + merchantId
             const apiHash = await this.createApiHash(stringToHash);
 
             const config = {
@@ -88,11 +88,12 @@ class RemitaPaymentService {
                 }
             }
             const response = await axios(config);
-            console.log(response.data);
 
-            const { status } = response.data;
+            const { status, message } = response.data;
 
-            return this.getStatusMessage(status);
+            const generatedMessage = this.getStatusMessage(status);
+
+            return !generatedMessage.length ? message : generatedMessage;
 
         } catch (error) {
             if (error.name === 'AxiosError') {
@@ -105,7 +106,7 @@ class RemitaPaymentService {
 
 
     /**
-     * 
+     * ### Get status message
      * @param {string} remitaStatusCode 
      * @returns {string}
      */

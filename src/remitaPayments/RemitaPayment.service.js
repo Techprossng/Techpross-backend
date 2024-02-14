@@ -2,6 +2,7 @@
 
 const axios = require('axios').default;
 const { createHash } = require('node:crypto');
+const envConfigVars = require('../utils/envConfig');
 
 // @ts-ignore
 require('dotenv').config();
@@ -30,12 +31,14 @@ require('dotenv').config();
 class RemitaPaymentService {
 
     /**@private @readonly */
-    static checkPaymentBaseUrl = 'https://remitademo.net/remita/exapp/api/v1/send/api/echannelsvc/2547916';
 
     /**@private @readonly */
     static apiObject = {
-        merchantId: process.env.REMITA_MERCHANT_ID,
-        apiKey: process.env.REMITA_API_KEY,
+        merchantId: envConfigVars.REMITA_MERCHANT_ID,
+        apiKey: envConfigVars.REMITA_API_KEY,
+        demoUrl: envConfigVars.REMITA_DEMO_URL,
+        liveURL: envConfigVars.REMITA_LIVE_URL,
+        environment: envConfigVars.ENV
     };
 
     /**
@@ -74,14 +77,16 @@ class RemitaPaymentService {
     static async checkPaymentStatusWithRRR(rrr) {
 
         try {
-            const { merchantId, apiKey } = this.apiObject;
+            const { merchantId, apiKey, liveURL, demoUrl, environment } = this.apiObject;
+            const useUrl = environment === "development" || environment === "test"
+                ? demoUrl : liveURL;
 
             const stringToHash = rrr + apiKey + merchantId; // RRR + apiKey + merchantId
             const apiHash = await this.createApiHash(stringToHash);
 
             const config = {
                 method: 'get',
-                url: `${this.checkPaymentBaseUrl}/${rrr}/${apiHash}/status.reg`,
+                url: `${useUrl}/${rrr}/${apiHash}/status.reg`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `remitaConsumerKey=2547916,remitaConsumerToken=${apiHash}`

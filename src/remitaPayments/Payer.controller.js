@@ -2,7 +2,8 @@
 
 const Payer = require('../models/Payer');
 const RemitaPaymentService = require('./RemitaPayment.service');
-const { Util } = require("../utils")
+const { Util } = require("../utils");
+const BrokerService = require('../services/brokerService');
 
 /**
  * @callback Handler
@@ -24,6 +25,11 @@ class PayerController {
 
         try {
             const savedPayer = await Payer.addPayer(payer);
+            const { email, firstName } = savedPayer;
+
+            // send to message broker
+            await BrokerService.sendToEmailQueue(email, firstName, "registration");
+
             return response.status(201).json({ message: "success", payer: savedPayer })
 
         } catch (error) {

@@ -42,10 +42,19 @@ class EmailService {
 
     /**
      * ### gets the handlebar config based on the email category
-     * @param {string} category 
+     * 
+     * @param {string} category must be `registration` or `payments`
      */
     static getHandlebarConfig(category) {
-        const viewPath = category === "registration" ? "registration" : "payments";
+        /**@type {string} */
+        let viewPath;
+
+        if (this.categories.indexOf(category) !== -1) {
+            viewPath = category === "registration" ? "registration" : "payments";
+        } else {
+            viewPath = "registration"
+        }
+
 
         /**@type {hbs.NodemailerExpressHandlebarsOptions} */
         const handlebarOptions = {

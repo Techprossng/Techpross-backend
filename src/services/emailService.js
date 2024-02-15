@@ -26,6 +26,18 @@ class EmailService {
     }
 
     /**@private @readonly */
+    static categoryOptions = {
+        registration: {
+            regConfirmation: "Welcome To TechProsNaija Career LaunchPad",
+            template: "welcome"
+        },
+        payment: {
+            paymentConfirmation: "TechProsNaija Career LaunchPad Payment Confirmation",
+            template: ""
+        }
+    }
+
+    /**@private @readonly */
     static categories = ["payments", "registration"];
 
     static transporter = nodemailer.createTransport({
@@ -93,9 +105,8 @@ class EmailService {
                 }
             }
 
-            const mailSentResponse = await EmailService.transporter.sendMail(mailOptions);
 
-            console.log(`confirmation mail sent!: ${mailSentResponse.response}`);
+            const mailSentResponse = await EmailService.transporter.sendMail(mailOptions);
 
             if (mailSentResponse) {
                 return mailSentResponse.response;
@@ -104,7 +115,7 @@ class EmailService {
             }
 
         } catch (error) {
-            console.log(error);
+
             return null;
         }
     }

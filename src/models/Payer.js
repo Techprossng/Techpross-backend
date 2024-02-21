@@ -52,15 +52,15 @@ class Payer {
      */
     static async getPayerByEmail(payerEmail) {
         try {
-            const payee = await db(TABLES.PAYERS)
+            const payer = await db(TABLES.PAYERS)
                 .where({ email: payerEmail }).first();
 
-            if (!payee) {
+            if (!payer) {
                 return null;
             }
-            return Object.assign({}, payee);
+            return Object.assign({}, payer);
         } catch (error) {
-            throw new Error('Could not get payee');
+            throw new Error('Could not get payer');
         }
     }
 
@@ -71,15 +71,15 @@ class Payer {
      */
     static async getPayerById(payerId) {
         try {
-            const payee = await db(TABLES.PAYERS)
+            const payer = await db(TABLES.PAYERS)
                 .where({ id: payerId }).first();
 
-            if (!payee) {
+            if (!payer) {
                 return null;
             }
-            return Object.assign({}, payee);
+            return Object.assign({}, payer);
         } catch (error) {
-            throw new Error('Could not get payee');
+            throw new Error('Could not get payer');
         }
     }
 

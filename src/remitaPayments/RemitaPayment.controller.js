@@ -24,6 +24,50 @@ class RemitaPaymentController {
     };
 
     /**
+     * ### Generates a Remita Retrieval Reference for a payer and gets
+     * ### remita secret key for payment transactions
+     * @type {Handler} 
+     */
+    static async generateRRRForPayment(request, response) {
+        const { amount } = request.body;
+
+        // get payer info/object for previous handler
+        const payer = response.locals.payer;
+
+        if (!amount || typeof amount !== 'number') {
+            return response.status(400).json({ error: 'Invalid amount' });
+        }
+
+        try {
+            const dataForPayment = {
+                name: payer.firstName + ' ' + payer.lastName,
+                email: payer.email, payerId: payer.id
+            }
+
+            const generatedRRR = await RemitaPaymentService.generateRRR(amount, dataForPayment);
+
+            if (!generatedRRR) {
+                return response.status(400).json({ error: 'RRR could not be generated. Bad Gateway' });
+            }
+
+            // update payer info
+            // @ts-ignore
+            await Payer.updatePayerById(payer.id, { payerRRR: generatedRRR });
+
+            const dataToReturn = {
+                message: 'success', ...RemitaPaymentController.apiObject,
+                RRR: generatedRRR, amount: amount
+            };
+
+            return response.status(200).json(dataToReturn);
+        } catch (error) {
+            return response.status(500).json({ error: 'Internal server error' });
+        }
+
+
+    }
+
+    /**
      * add a payee information
      * @type {Handler}
      */

@@ -35,6 +35,8 @@ async function validateAuthorization(request, response, next) {
     if (!payer) {
         return response.status(401).json({ error: 'Not Authorized' });
     }
+
+    response.locals.payer = payer;
     next();
 }
 

@@ -2,9 +2,18 @@
 
 const axios = require('axios').default;
 const { createHash } = require('node:crypto');
+const envConfigVars = require('../utils/envConfig');
 
 // @ts-ignore
 require('dotenv').config();
+
+
+/**
+ * @typedef {object} IRemitaUser
+ * @prop {string} name
+ * @prop {string} email
+ * @prop {number} payerId
+ */
 
 
 // PLEASE READ!!
@@ -29,13 +38,26 @@ require('dotenv').config();
  */
 class RemitaPaymentService {
 
-    /**@private @readonly */
-    static checkPaymentBaseUrl = 'https://remitademo.net/remita/exapp/api/v1/send/api/echannelsvc/2547916';
 
     /**@private @readonly */
     static apiObject = {
-        merchantId: process.env.REMITA_MERCHANT_ID,
-        apiKey: process.env.REMITA_API_KEY,
+        merchantId: envConfigVars.REMITA_MERCHANT_ID,
+        apiKey: envConfigVars.REMITA_API_KEY,
+        demoUrl: envConfigVars.REMITA_DEMO_URL,
+        liveURL: envConfigVars.REMITA_LIVE_URL,
+        generateRRRDemo: {
+            url: envConfigVars.REMITA_GENERATE_RRR_URL_DEMO,
+            merchantId: envConfigVars.REMITA_MERCHANT_ID,
+            serviceTypeId: envConfigVars.REMITA_SERVICE_TYPE_ID,
+            apiKey: envConfigVars.REMITA_API_KEY
+        },
+        generateRRRLive: {
+            url: envConfigVars.REMITA_GENERATE_RRR_URL_LIVE,
+            merchantId: envConfigVars.REMITA_MERCHANT_ID_LIVE,
+            serviceTypeId: envConfigVars.REMITA_SERVICE_TYPE_ID_LIVE,
+            apiKey: envConfigVars.REMITA_API_KEY_LIVE
+        },
+        environment: envConfigVars.ENV
     };
 
     /**
@@ -74,17 +96,23 @@ class RemitaPaymentService {
     static async checkPaymentStatusWithRRR(rrr) {
 
         try {
-            const { merchantId, apiKey } = this.apiObject;
+            const { liveURL, demoUrl, environment } = this.apiObject;
+
+            const { merchantId, apiKey } = environment === "development" || environment === "test"
+                ? this.apiObject.generateRRRDemo : this.apiObject.generateRRRLive;
+
+            const useUrl = environment === "development" || environment === "test"
+                ? demoUrl : liveURL;
 
             const stringToHash = rrr + apiKey + merchantId; // RRR + apiKey + merchantId
             const apiHash = await this.createApiHash(stringToHash);
 
             const config = {
                 method: 'get',
-                url: `${this.checkPaymentBaseUrl}/${rrr}/${apiHash}/status.reg`,
+                url: `${useUrl}/${rrr}/${apiHash}/status.reg`,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `remitaConsumerKey=2547916,remitaConsumerToken=${apiHash}`
+                    'Authorization': `remitaConsumerKey=${merchantId},remitaConsumerToken=${apiHash}`
                 }
             }
             const response = await axios(config);
@@ -104,6 +132,83 @@ class RemitaPaymentService {
 
     }
 
+    /**
+     * ### Genrates RRR for remita payment
+     * @param {number} paymentAmount
+     * @param {IRemitaUser} payer - used as the orderId
+     * @returns {Promise<string | null>} The remita generated RRR
+     */
+    static async generateRRR(paymentAmount, payer) {
+        const { environment } = this.apiObject;
+        const { name, email, payerId } = payer;
+
+        try {
+            const { merchantId, serviceTypeId, apiKey, url } = environment === "development"
+                || environment === "test"
+                ? this.apiObject.generateRRRDemo : this.apiObject.generateRRRLive;
+            console.log(merchantId, serviceTypeId, apiKey, url)
+
+            // @ts-ignore
+            const stringToHash = merchantId + serviceTypeId + payerId + paymentAmount + apiKey;
+
+            const apiHash = await this.createApiHash(stringToHash);
+
+            /**@type {import('axios').AxiosRequestConfig} */
+            const config = {
+                method: 'post',
+                url: url,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `remitaConsumerKey=${merchantId},remitaConsumerToken=${apiHash}`
+                },
+                data: JSON.stringify({
+                    serviceTypeId: serviceTypeId, amount: paymentAmount,
+                    orderId: payerId, payerName: name, payerEmail: email,
+                    description: 'TechProsNaija payment'
+                }),
+            }
+
+            const response = await axios(config);
+
+            // check for jsonp
+            const data = response.data;
+            let remitaData;
+
+            if (typeof data === 'string') {
+
+                // jsonp (json padding) is a string: 'jsonp ({ data: value })'
+                // get the object and parse
+                const [jsonStartIndex, jsonEndIndex] = [data.indexOf('{'), data.lastIndexOf('}')];
+
+                const jsonString = data.substring(jsonStartIndex, jsonEndIndex + 1);
+
+                remitaData = JSON.parse(jsonString);
+
+
+            } else {
+                remitaData = data;
+            }
+
+            console.log(remitaData)
+
+            // remitaData = data;
+            const { status, RRR } = remitaData;
+
+            if (!RRR || status !== 'Payment Reference generated') {
+                return null
+            }
+
+            return RRR;
+
+        } catch (error) {
+            console.error(error);
+            if (error.name === 'AxiosError') {
+                throw new Error(`Error with Axios, ${error.message}`);
+            }
+            throw new Error('Error with Server');
+        }
+    }
+
 
     /**
      * ### Get status message
@@ -117,6 +222,8 @@ class RemitaPaymentService {
         }
 
         switch (remitaStatusCode) {
+            case '025':
+                return 'Payment Reference generated';
             case '022':
                 return 'Invalid RRR';
             case '012':

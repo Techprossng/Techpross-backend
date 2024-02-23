@@ -37,7 +37,7 @@ router.post("/payers", validatePayerBody, PayerController.addPayer);
  * @description Generate a Remita Retrieval Reference for a user
  * `/payments/remita/keys` redirects here
 */
-router.get("/payments/remita/parameters", validateAuthorization,
+router.post("/payments/remita/parameters", validateAuthorization,
     RemitaPaymentController.generateRRRForPayment
 );
 

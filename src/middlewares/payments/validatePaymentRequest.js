@@ -1,5 +1,6 @@
 // @ts-check
 const Payer = require('../../models/Payer');
+const { Util } = require('../../utils');
 
 /**
  * @callback Handler
@@ -14,8 +15,14 @@ const Payer = require('../../models/Payer');
  * @type {Handler}
  */
 async function validateAuthorization(request, response, next) {
-    // check authorization header params
+    /**@type {string} */
+    // @ts-ignore
+    const amount = request.query.amount;
     const authHeader = request.get("Authorization");
+
+    if (!amount || !Util.checkDigit(amount)) {
+        return response.status(400).json({ error: 'Invalid amount' });
+    }
 
     if (!authHeader) {
         return response.status(401).json({ error: 'Not Authorized' });

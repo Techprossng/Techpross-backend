@@ -29,14 +29,10 @@ class RemitaPaymentController {
      * @type {Handler} 
      */
     static async generateRRRForPayment(request, response) {
-        const { amount } = request.body;
+        const amount = request.query.amount;
 
         // get payer info/object for previous handler
         const payer = response.locals.payer;
-
-        if (!amount || typeof amount !== 'number') {
-            return response.status(400).json({ error: 'Invalid amount' });
-        }
 
         try {
             const dataForPayment = {
@@ -44,7 +40,9 @@ class RemitaPaymentController {
                 email: payer.email, payerId: payer.id
             }
 
-            const generatedRRR = await RemitaPaymentService.generateRRR(amount, dataForPayment);
+            const amountInt = Number(amount);
+
+            const generatedRRR = await RemitaPaymentService.generateRRR(amountInt, dataForPayment);
 
             if (!generatedRRR) {
                 return response.status(400).json({ error: 'RRR could not be generated. Bad Gateway' });

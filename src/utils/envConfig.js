@@ -22,4 +22,5 @@ const envConfigVars = {
     ENV: process.env.NODE_ENV
 }
 
+
 module.exports = envConfigVars;

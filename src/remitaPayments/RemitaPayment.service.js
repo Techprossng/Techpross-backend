@@ -12,7 +12,6 @@ require('dotenv').config();
  * @typedef {object} IRemitaUser
  * @prop {string} name
  * @prop {string} email
- * @prop {number} payerId
  */
 
 
@@ -140,7 +139,7 @@ class RemitaPaymentService {
      */
     static async generateRRR(paymentAmount, payer) {
         const { environment } = this.apiObject;
-        const { name, email, payerId } = payer;
+        const { name, email } = payer;
 
         try {
             const { merchantId, serviceTypeId, apiKey, url } = environment === "development"
@@ -148,8 +147,11 @@ class RemitaPaymentService {
                 ? this.apiObject.generateRRRDemo : this.apiObject.generateRRRLive;
 
 
+            // generate orderId with date
+            const currentDate = new Date();
+            const orderId = currentDate.getTime();
             // @ts-ignore
-            const stringToHash = merchantId + serviceTypeId + payerId + paymentAmount + apiKey;
+            const stringToHash = merchantId + serviceTypeId + orderId + paymentAmount + apiKey;
 
             const apiHash = await this.createApiHash(stringToHash);
 
@@ -163,7 +165,7 @@ class RemitaPaymentService {
                 },
                 data: JSON.stringify({
                     serviceTypeId: serviceTypeId, amount: paymentAmount,
-                    orderId: payerId, payerName: name, payerEmail: email,
+                    orderId: orderId, payerName: name, payerEmail: email,
                     description: 'TechProsNaija payment'
                 }),
             }

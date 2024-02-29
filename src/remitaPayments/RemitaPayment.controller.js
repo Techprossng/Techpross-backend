@@ -37,7 +37,7 @@ class RemitaPaymentController {
         try {
             const dataForPayment = {
                 name: payer.firstName + ' ' + payer.lastName,
-                email: payer.email, payerId: payer.id
+                email: payer.email,
             }
 
             const amountInt = Number(amount);
@@ -45,7 +45,9 @@ class RemitaPaymentController {
             const generatedRRR = await RemitaPaymentService.generateRRR(amountInt, dataForPayment);
 
             if (!generatedRRR) {
-                return response.status(400).json({ error: 'RRR could not be generated. Bad Gateway' });
+                return response.status(400).json({
+                    error: 'RRR already generated for this user. Duplicate request'
+                });
             }
 
             // update payer info
@@ -59,6 +61,7 @@ class RemitaPaymentController {
 
             return response.status(200).json(dataToReturn);
         } catch (error) {
+
             return response.status(500).json({ error: 'Internal server error' });
         }
 

@@ -13,7 +13,7 @@ exports.up = function (knex) {
             table.string('email', 128).unique().notNullable();
             table.string('course', 128).notNullable();
             table.boolean('isPaid').defaultTo(false);
-            table.boolean('payerRRR').nullable();
+            table.string('payerRRR', 128).nullable();
 
             // Indexes
             table.index('email');

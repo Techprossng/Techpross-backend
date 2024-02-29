@@ -146,7 +146,7 @@ class RemitaPaymentService {
             const { merchantId, serviceTypeId, apiKey, url } = environment === "development"
                 || environment === "test"
                 ? this.apiObject.generateRRRDemo : this.apiObject.generateRRRLive;
-            console.log(merchantId, serviceTypeId, apiKey, url)
+
 
             // @ts-ignore
             const stringToHash = merchantId + serviceTypeId + payerId + paymentAmount + apiKey;
@@ -184,12 +184,9 @@ class RemitaPaymentService {
 
                 remitaData = JSON.parse(jsonString);
 
-
             } else {
                 remitaData = data;
             }
-
-            console.log(remitaData)
 
             // remitaData = data;
             const { status, RRR } = remitaData;

@@ -16,7 +16,7 @@ const path = require('path');
 
 // session object
 const SessionAuth = require('./session');
-const BrokerService = require("./services/brokerService");
+// const BrokerService = require("./services/brokerService");
 
 // initialize express app
 const app = express();
@@ -79,7 +79,8 @@ const port = 3000;
 
 app.listen(port, async () => {
   // start rabbitmq email worker
-  await BrokerService.startEmailWorker();
+  // ![NOTE] Broker service not supported on server
+  // await BrokerService.startEmailWorker();
   console.log(`Server is listening on port ${port}`);
 });
 

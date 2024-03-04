@@ -13,7 +13,7 @@ const instructorRouter = require("./routes/Instructor.router");
 const paymentRouter = require("./remitaPayments/Payment.router");
 const path = require('path');
 
-const BrokerService = require("./services/brokerService");
+// const BrokerService = require("./services/brokerService");
 
 // session object
 const SessionAuth = require('./session');
@@ -82,7 +82,7 @@ const port = 3000;
 app.listen(port, async () => {
   // start rabbitmq email worker
   // ![NOTE] Broker service not supported on server
-  await BrokerService.startEmailWorker();
+  // await BrokerService.startEmailWorker();
   console.log(`Server is listening on port ${port}`);
 });
 

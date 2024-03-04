@@ -1,5 +1,4 @@
 // @ts-check
-// entry point of server
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
@@ -14,9 +13,11 @@ const instructorRouter = require("./routes/Instructor.router");
 const paymentRouter = require("./remitaPayments/Payment.router");
 const path = require('path');
 
+const BrokerService = require("./services/brokerService");
+
 // session object
 const SessionAuth = require('./session');
-// const BrokerService = require("./services/brokerService");
+
 
 // initialize express app
 const app = express();
@@ -35,6 +36,7 @@ app.use(
       try {
         JSON.parse(data);
       } catch (error) {
+        // @ts-ignore
         return res.status(400).json({ error: "Not a JSON" });
       }
     },
@@ -80,7 +82,7 @@ const port = 3000;
 app.listen(port, async () => {
   // start rabbitmq email worker
   // ![NOTE] Broker service not supported on server
-  // await BrokerService.startEmailWorker();
+  await BrokerService.startEmailWorker();
   console.log(`Server is listening on port ${port}`);
 });
 
